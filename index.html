@@ -3,258 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Flipbook Viewer</title>
+    <title>MLFS - Machine Learning From Scratch</title>
     <style>
-        /* Basic styling for the body and flipbook container */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
+        /* Basic Setup and Background */
+        :root {
+            /* The book's height is now based on the viewport height to ensure padding */
+            --book-height: 90vh; 
+            /* The width is calculated from the height to maintain the aspect ratio */
+            --book-width: calc(var(--book-height) / 1.414); 
+            --background-color: #f0f0f0;
+            --dot-color: #d0d0d0;
+            --dot-size: 1px;
+            --dot-space: 20px;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: var(--background-color);
+            background-image: 
+                radial-gradient(circle at var(--dot-size) var(--dot-size), 
+                var(--dot-color) var(--dot-size), 
+                transparent 0);
+            background-size: var(--dot-space) var(--dot-space);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             overflow: hidden;
         }
 
-        /* Container for the flipbook */
-        #flipbook-container {
-            width: 90vw;
-            height: 80vh;
-            display: none; /* Hidden until PDF is loaded */
-            position: relative;
+        /* Book Container - Now handles clicks */
+        .book-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2500px;
+            cursor: pointer; /* Indicates the area is clickable */
+            user-select: none; /* Prevents text selection when clicking */
+            /* Added transition for smooth size changes */
+            transition: width 0.5s ease;
         }
 
-        #flipbook {
-            width: 100%;
-            height: 100%;
+        .book {
+            display: flex;
+            width: calc(var(--book-width) * 2);
+            height: var(--book-height);
+            transition: transform 0.5s;
+        }
+        
+        /* Style for when the book is showing the single cover page */
+        .book.cover-mode {
+            width: var(--book-width);
         }
 
-        /* Styling for each page (canvas) */
-        #flipbook .page {
+        /* Page Styling */
+        .page {
+            width: var(--book-width);
+            height: var(--book-height);
             background-color: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        }
-
-        #flipbook .page canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* Styling for hardcovers */
-        #flipbook .hard {
-            background-color: #333;
-            background-image: linear-gradient(to right, #444, #222);
-            color: white;
-            font-size: 2em;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-
-        /* Loading and error message styling */
-        #loader, #error-message {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            color: #555;
+            overflow: hidden;
+            transition: transform 1s, box-shadow 0.7s;
+            transform-origin: left center;
         }
         
-        #loader .spinner {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 2s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Navigation buttons styling */
-        .nav-buttons {
-            margin-top: 20px;
-            display: none; /* Hidden until PDF is loaded */
-        }
-
-        .nav-buttons button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1em;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: background-color 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .nav-buttons button:hover {
-            background-color: #2980b9;
+        .page.left {
+            transform-origin: right center;
+            border-right: 1px solid #ccc;
         }
         
-        .nav-buttons button:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
+        .page.right {
+            transform-origin: left center;
+            border-left: 1px solid #ccc;
         }
+
+        .page img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            pointer-events: none; /* Ensures clicks go to the container */
+        }
+        
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design for smaller screens */
+        @media (max-width: 1024px) {
+            :root {
+                /* On mobile, width is the primary constraint */
+                --book-width: 90vw;
+                --book-height: calc(var(--book-width) * 1.414);
+            }
+            .book, .book.cover-mode {
+                 width: var(--book-width);
+            }
+            .page.left {
+                display: none; /* On mobile, show one page at a time */
+            }
+            .page.right {
+                border-left: none;
+            }
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Loading spinner and status message -->
-    <div id="loader">
-        <div class="spinner"></div>
-        <p id="loading-status">Loading PDF viewer...</p>
+    <!-- Book Structure -->
+    <div class="book-container">
+        <div class="book" id="book">
+            <div class="page left" id="left-page">
+                <img id="left-page-img" src="" alt="Left Page">
+            </div>
+            <div class="page right" id="right-page">
+                <img id="right-page-img" src="" alt="Right Page">
+            </div>
+        </div>
     </div>
 
-    <!-- Error message container -->
-    <div id="error-message" style="display: none;">
-        <h2>Could not load PDF</h2>
-        <p>Please make sure 'MLFS.pdf' is in the same directory as this HTML file.</p>
-    </div>
-
-    <!-- Flipbook container -->
-    <div id="flipbook-container">
-        <div id="flipbook"></div>
-    </div>
-
-    <!-- Navigation buttons -->
-    <div class="nav-buttons" id="nav-controls">
-        <button id="prev-btn">Previous</button>
-        <button id="next-btn">Next</button>
-    </div>
-
-    <!-- External Libraries -->
-    <!-- Using Google Fonts for a nice, clean font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- jQuery is a dependency for turn.js -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- pdf.js from Mozilla CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-    
-    <!-- turn.js for the flipbook effect -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+    <!-- Navigation Buttons have been removed -->
 
     <script>
-        // Set the workerSrc for pdf.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+        // --- CONFIGURATION ---
+        const TOTAL_PAGES = 70;
+        const PAGE_FILENAME_PREFIX = './book/MLFS_final_page-';
+        const PAGE_FILENAME_SUFFIX = '.jpg';
+        // ---------------------
 
-        // --- Configuration ---
-        const PDF_PATH = './MLFS.pdf';
-        const flipbook = $('#flipbook');
-        const loader = $('#loader');
-        const loadingStatus = $('#loading-status');
-        const errorMessage = $('#error-message');
-        const flipbookContainer = $('#flipbook-container');
-        const navControls = $('#nav-controls');
-        const prevBtn = $('#prev-btn');
-        const nextBtn = $('#next-btn');
+        // --- DOM ELEMENTS ---
+        const bookContainer = document.querySelector('.book-container');
+        const book = document.getElementById('book');
+        const leftPage = document.getElementById('left-page');
+        const rightPage = document.getElementById('right-page');
+        const leftPageImg = document.getElementById('left-page-img');
+        const rightPageImg = document.getElementById('right-page-img');
 
+        // --- STATE ---
+        // currentPage now tracks the left-most visible page. 1 for cover, 2 for 2-3, 4 for 4-5 etc.
+        let currentPage = 1; 
 
-        // --- Main PDF Loading and Rendering Logic ---
-        async function loadFlipbook() {
-            try {
-                loadingStatus.text('Loading PDF file...');
-                const pdf = await pdfjsLib.getDocument(PDF_PATH).promise;
-                const numPages = pdf.numPages;
-                loadingStatus.text(`Rendering ${numPages} pages...`);
+        // --- FUNCTIONS ---
 
-                // Render each page and append it to the flipbook
-                for (let i = 1; i <= numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({ scale: 1.5 });
+        /**
+         * Generates the full image path for a given page number.
+         * @param {number} pageNum - The page number.
+         * @returns {string} The full image path.
+         */
+        function getPageImagePath(pageNum) {
+            const pageStr = pageNum.toString().padStart(4, '0');
+            return `${PAGE_FILENAME_PREFIX}${pageStr}${PAGE_FILENAME_SUFFIX}`;
+        }
+
+        /**
+         * Updates the book's view based on the currentPage state.
+         */
+        function updateBookView() {
+            const isSinglePageView = window.innerWidth <= 1024;
+            
+            if (currentPage === 1 && !isSinglePageView) {
+                // --- DESKTOP COVER VIEW ---
+                book.classList.add('cover-mode');
+                leftPage.classList.add('hidden');
+                rightPage.classList.remove('hidden');
+                rightPageImg.src = getPageImagePath(1);
+            } else {
+                // --- SPREAD VIEW (Desktop) or SINGLE PAGE VIEW (Mobile) ---
+                book.classList.remove('cover-mode');
+
+                if (isSinglePageView) {
+                    // --- MOBILE VIEW (Always single page) ---
+                    leftPage.classList.add('hidden');
+                    rightPage.classList.remove('hidden');
+                    rightPageImg.src = getPageImagePath(currentPage);
+                } else {
+                    // --- DESKTOP SPREAD VIEW ---
+                    leftPage.classList.remove('hidden');
+                    rightPage.classList.remove('hidden');
                     
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
+                    const leftPageNumber = currentPage;
+                    const rightPageNumber = currentPage + 1;
 
-                    const pageDiv = $('<div>').addClass('page').append(canvas);
-                    flipbook.append(pageDiv);
-
-                    await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    loadingStatus.text(`Rendered page ${i} of ${numPages}`);
+                    leftPageImg.src = getPageImagePath(leftPageNumber);
+                    
+                    if (rightPageNumber <= TOTAL_PAGES) {
+                        rightPageImg.src = getPageImagePath(rightPageNumber);
+                        rightPage.classList.remove('hidden');
+                    } else {
+                        rightPage.classList.add('hidden');
+                    }
                 }
-
-                // Hide loader and show flipbook
-                loader.hide();
-                flipbookContainer.show();
-                navControls.show();
-
-                // Initialize turn.js
-                initializeTurnJs(numPages);
-
-            } catch (error) {
-                console.error('Error loading PDF:', error);
-                loader.hide();
-                errorMessage.show();
             }
         }
         
-        // --- Turn.js Initialization and Control ---
-        function initializeTurnJs(numPages) {
-            const containerWidth = flipbookContainer.width();
-            const containerHeight = flipbookContainer.height();
+        /**
+         * Navigates to the next page or spread.
+         */
+        function goToNextPage() {
+            const isSinglePageView = window.innerWidth <= 1024;
 
-            flipbook.turn({
-                width: containerWidth,
-                height: containerHeight,
-                autoCenter: true,
-                elevation: 50,
-                gradients: true,
-                when: {
-                    turned: function(event, page, view) {
-                        updateNavButtons(page, numPages);
-                    }
+            if (isSinglePageView) {
+                if (currentPage < TOTAL_PAGES) currentPage++;
+            } else { // Desktop logic
+                if (currentPage === 1) {
+                    currentPage = 2; // From cover to first spread (pg 2-3)
+                } else if (currentPage + 2 <= TOTAL_PAGES) {
+                    currentPage += 2; // Go to next spread
                 }
-            });
-            
-            // Initial button state
-            updateNavButtons(1, numPages);
-
-            // Button event listeners
-            prevBtn.on('click', () => flipbook.turn('previous'));
-            nextBtn.on('click', () => flipbook.turn('next'));
-
-            // Keyboard navigation
-            $(document).on('keydown', function(e) {
-                if (e.key === "ArrowLeft") {
-                    flipbook.turn('previous');
-                } else if (e.key === "ArrowRight") {
-                    flipbook.turn('next');
-                }
-            });
-            
-            // Handle window resizing
-            $(window).on('resize', function() {
-                const newWidth = flipbookContainer.width();
-                const newHeight = flipbookContainer.height();
-                flipbook.turn('size', newWidth, newHeight);
-            }).trigger('resize');
+            }
+            updateBookView();
         }
 
-        // --- UI Helper Functions ---
-        function updateNavButtons(currentPage, totalPages) {
-            prevBtn.prop('disabled', currentPage === 1);
-            nextBtn.prop('disabled', currentPage === totalPages);
+        /**
+         * Navigates to the previous page or spread.
+         */
+        function goToPrevPage() {
+            const isSinglePageView = window.innerWidth <= 1024;
+
+            if (isSinglePageView) {
+                if (currentPage > 1) currentPage--;
+            } else { // Desktop logic
+                if (currentPage === 2) {
+                    currentPage = 1; // From first spread back to cover
+                } else if (currentPage > 2) {
+                    currentPage -= 2; // Go to previous spread
+                }
+            }
+            updateBookView();
         }
 
-        // --- Start the application ---
-        $(document).ready(function() {
-            loadFlipbook();
+        // --- EVENT LISTENERS ---
+
+        // Listen for keyboard arrow keys
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                goToNextPage();
+            } else if (e.key === 'ArrowLeft') {
+                goToPrevPage();
+            }
         });
+
+        // Listen for clicks on the book container
+        bookContainer.addEventListener('click', (e) => {
+            // On cover, any click goes next
+            if (currentPage === 1 && window.innerWidth > 1024) {
+                goToNextPage();
+                return;
+            }
+
+            const rect = bookContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+
+            if (clickX > rect.width / 2) {
+                goToNextPage();
+            } else {
+                goToPrevPage();
+            }
+        });
+        
+        // Update view on window resize to handle responsive layout changes
+        window.addEventListener('resize', updateBookView);
+
+        // --- INITIALIZATION ---
+        // Set the initial view when the page loads
+        document.addEventListener('DOMContentLoaded', updateBookView);
 
     </script>
 </body>
