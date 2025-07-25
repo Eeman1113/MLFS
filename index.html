@@ -42,7 +42,6 @@
             perspective: 2500px;
             cursor: pointer; /* Indicates the area is clickable */
             user-select: none; /* Prevents text selection when clicking */
-            /* Added transition for smooth size changes */
             transition: width 0.5s ease;
         }
 
@@ -68,7 +67,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: transform 1s, box-shadow 0.7s;
+            transition: transform 1s; /* Removed background and shadow transitions */
             transform-origin: left center;
         }
         
@@ -85,12 +84,23 @@
         .page img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* Use contain to ensure the whole image is visible */
             pointer-events: none; /* Ensures clicks go to the container */
         }
         
+        /* New style for the cover page to make its background transparent */
+        .page.is-cover {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        /* Remove the left border specifically for the cover page */
+        .page.right.is-cover {
+            border-left: none;
+        }
+
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         /* Responsive Design for smaller screens */
@@ -127,13 +137,13 @@
         </div>
     </div>
 
-    <!-- Navigation Buttons have been removed -->
-
     <script>
         // --- CONFIGURATION ---
         const TOTAL_PAGES = 70;
         const PAGE_FILENAME_PREFIX = './book/MLFS_final_page-';
         const PAGE_FILENAME_SUFFIX = '.jpg';
+        const DARK_COVER_PATH = './book/dark.png';
+        const LIGHT_COVER_PATH = './book/light.png';
         // ---------------------
 
         // --- DOM ELEMENTS ---
@@ -145,17 +155,28 @@
         const rightPageImg = document.getElementById('right-page-img');
 
         // --- STATE ---
-        // currentPage now tracks the left-most visible page. 1 for cover, 2 for 2-3, 4 for 4-5 etc.
-        let currentPage = 1; 
+        // currentPage tracks the content page number. 0 means cover.
+        let currentPage = 0; 
 
         // --- FUNCTIONS ---
 
         /**
-         * Generates the full image path for a given page number.
+         * Gets the appropriate cover image based on the user's system theme.
+         * @returns {string} The path to the cover image.
+         */
+        function getCoverImagePath() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return DARK_COVER_PATH;
+            }
+            return LIGHT_COVER_PATH;
+        }
+        
+        /**
+         * Generates the full image path for a given content page number.
          * @param {number} pageNum - The page number.
          * @returns {string} The full image path.
          */
-        function getPageImagePath(pageNum) {
+        function getContentPageImagePath(pageNum) {
             const pageStr = pageNum.toString().padStart(4, '0');
             return `${PAGE_FILENAME_PREFIX}${pageStr}${PAGE_FILENAME_SUFFIX}`;
         }
@@ -165,37 +186,55 @@
          */
         function updateBookView() {
             const isSinglePageView = window.innerWidth <= 1024;
-            
-            if (currentPage === 1 && !isSinglePageView) {
-                // --- DESKTOP COVER VIEW ---
-                book.classList.add('cover-mode');
+
+            // Reset cover class state on each update
+            rightPage.classList.remove('is-cover');
+            leftPage.classList.remove('is-cover'); // Also reset for left page
+
+            if (isSinglePageView) {
+                // --- MOBILE VIEW ---
+                book.classList.add('cover-mode'); // Always single page on mobile
                 leftPage.classList.add('hidden');
                 rightPage.classList.remove('hidden');
-                rightPageImg.src = getPageImagePath(1);
-            } else {
-                // --- SPREAD VIEW (Desktop) or SINGLE PAGE VIEW (Mobile) ---
-                book.classList.remove('cover-mode');
 
-                if (isSinglePageView) {
-                    // --- MOBILE VIEW (Always single page) ---
+                if (currentPage === 0) {
+                    rightPage.classList.add('is-cover');
+                    rightPageImg.src = getCoverImagePath();
+                } else {
+                    rightPageImg.src = getContentPageImagePath(currentPage);
+                }
+
+            } else {
+                // --- DESKTOP VIEW ---
+                if (currentPage === 0 || currentPage === 1) {
+                    // This is for the cover (0) or the first page (1) which are shown alone
+                    book.classList.add('cover-mode');
                     leftPage.classList.add('hidden');
                     rightPage.classList.remove('hidden');
-                    rightPageImg.src = getPageImagePath(currentPage);
+
+                    if (currentPage === 0) {
+                        rightPage.classList.add('is-cover');
+                        rightPageImg.src = getCoverImagePath();
+                    } else { // currentPage is 1
+                        rightPageImg.src = getContentPageImagePath(1);
+                    }
                 } else {
-                    // --- DESKTOP SPREAD VIEW ---
+                    // This is for all two-page spreads (page 2 and beyond)
+                    book.classList.remove('cover-mode');
                     leftPage.classList.remove('hidden');
                     rightPage.classList.remove('hidden');
-                    
-                    const leftPageNumber = currentPage;
-                    const rightPageNumber = currentPage + 1;
 
-                    leftPageImg.src = getPageImagePath(leftPageNumber);
-                    
+                    // Ensure the left page is always an even number
+                    const leftPageNumber = (currentPage % 2 === 0) ? currentPage : currentPage - 1;
+                    const rightPageNumber = leftPageNumber + 1;
+
+                    leftPageImg.src = getContentPageImagePath(leftPageNumber);
+
                     if (rightPageNumber <= TOTAL_PAGES) {
-                        rightPageImg.src = getPageImagePath(rightPageNumber);
+                        rightPageImg.src = getContentPageImagePath(rightPageNumber);
                         rightPage.classList.remove('hidden');
                     } else {
-                        rightPage.classList.add('hidden');
+                        rightPage.classList.add('hidden'); // Hide right page if it's past the end
                     }
                 }
             }
@@ -208,10 +247,14 @@
             const isSinglePageView = window.innerWidth <= 1024;
 
             if (isSinglePageView) {
-                if (currentPage < TOTAL_PAGES) currentPage++;
+                if (currentPage < TOTAL_PAGES) {
+                    currentPage++;
+                }
             } else { // Desktop logic
-                if (currentPage === 1) {
-                    currentPage = 2; // From cover to first spread (pg 2-3)
+                if (currentPage === 0) {
+                    currentPage = 1; // From cover to page 1
+                } else if (currentPage === 1) {
+                    currentPage = 2; // From page 1 to the 2-3 spread
                 } else if (currentPage + 2 <= TOTAL_PAGES) {
                     currentPage += 2; // Go to next spread
                 }
@@ -226,10 +269,14 @@
             const isSinglePageView = window.innerWidth <= 1024;
 
             if (isSinglePageView) {
-                if (currentPage > 1) currentPage--;
+                if (currentPage > 0) {
+                    currentPage--;
+                }
             } else { // Desktop logic
-                if (currentPage === 2) {
-                    currentPage = 1; // From first spread back to cover
+                if (currentPage === 1) {
+                    currentPage = 0; // From page 1 to cover
+                } else if (currentPage === 2) {
+                    currentPage = 1; // From 2-3 spread to page 1
                 } else if (currentPage > 2) {
                     currentPage -= 2; // Go to previous spread
                 }
@@ -250,15 +297,10 @@
 
         // Listen for clicks on the book container
         bookContainer.addEventListener('click', (e) => {
-            // On cover, any click goes next
-            if (currentPage === 1 && window.innerWidth > 1024) {
-                goToNextPage();
-                return;
-            }
-
             const rect = bookContainer.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
 
+            // Click on the right half to go next, left half to go prev
             if (clickX > rect.width / 2) {
                 goToNextPage();
             } else {
