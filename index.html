@@ -129,10 +129,10 @@
     <div class="book-container">
         <div class="book" id="book">
             <div class="page left" id="left-page">
-                <img id="left-page-img" src="" alt="Left Page">
+                <img id="left-page-img" src="" alt="Left Page" onerror="this.style.display='none'">
             </div>
             <div class="page right" id="right-page">
-                <img id="right-page-img" src="" alt="Right Page">
+                <img id="right-page-img" src="" alt="Right Page" onerror="this.style.display='none'">
             </div>
         </div>
     </div>
@@ -140,10 +140,12 @@
     <script>
         // --- CONFIGURATION ---
         const TOTAL_PAGES = 70;
-        const PAGE_FILENAME_PREFIX = './book/MLFS_final_page-';
+        // IMPORTANT: Replace this with the actual path to your book's image files.
+        const PAGE_FILENAME_PREFIX = 'https://storage.googleapis.com/gemini-prod-us-west1-assets/images/mlfs_book/MLFS_final_page-';
         const PAGE_FILENAME_SUFFIX = '.jpg';
-        const DARK_COVER_PATH = './book/dark.png';
-        const LIGHT_COVER_PATH = './book/light.png';
+        const DARK_COVER_PATH = 'https://storage.googleapis.com/gemini-prod-us-west1-assets/images/mlfs_book/dark.png';
+        const LIGHT_COVER_PATH = 'https://storage.googleapis.com/gemini-prod-us-west1-assets/images/mlfs_book/light.png';
+        const PRELOAD_AHEAD_COUNT = 4; // How many pages to preload
         // ---------------------
 
         // --- DOM ELEMENTS ---
@@ -179,6 +181,34 @@
         function getContentPageImagePath(pageNum) {
             const pageStr = pageNum.toString().padStart(4, '0');
             return `${PAGE_FILENAME_PREFIX}${pageStr}${PAGE_FILENAME_SUFFIX}`;
+        }
+
+        /**
+         * Preloads the next set of pages to ensure a smooth user experience.
+         */
+        function preloadNextPages() {
+            const isSinglePageView = window.innerWidth <= 1024;
+            let startPage;
+
+            // Determine the actual next page that will be viewed
+            if (isSinglePageView) {
+                startPage = currentPage + 1;
+            } else { // Desktop view
+                if (currentPage === 0) { // On cover
+                    startPage = 1;
+                } else { // On any content page
+                    startPage = (currentPage % 2 === 0) ? currentPage + 2 : currentPage + 1;
+                }
+            }
+
+            // Preload a number of pages ahead of the current view
+            for (let i = 0; i < PRELOAD_AHEAD_COUNT; i++) {
+                const pageToPreload = startPage + i;
+                if (pageToPreload > 0 && pageToPreload <= TOTAL_PAGES) {
+                    const img = new Image();
+                    img.src = getContentPageImagePath(pageToPreload);
+                }
+            }
         }
 
         /**
@@ -260,6 +290,7 @@
                 }
             }
             updateBookView();
+            preloadNextPages(); // Preload after navigation
         }
 
         /**
@@ -282,6 +313,7 @@
                 }
             }
             updateBookView();
+            preloadNextPages(); // Preload after navigation
         }
 
         // --- EVENT LISTENERS ---
@@ -313,7 +345,10 @@
 
         // --- INITIALIZATION ---
         // Set the initial view when the page loads
-        document.addEventListener('DOMContentLoaded', updateBookView);
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBookView();
+            preloadNextPages(); // Initial preload
+        });
 
     </script>
 </body>
