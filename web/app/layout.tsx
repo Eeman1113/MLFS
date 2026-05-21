@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PyodideProvider } from "@/components/pyodide-provider";
 import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -38,7 +37,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <PyodideProvider>
             <SiteHeader />
             <main className="relative z-10">{children}</main>
-            <SiteFooter />
           </PyodideProvider>
         </ThemeProvider>
       </body>

@@ -18,9 +18,9 @@ export function ReadingProgress() {
     };
   }, []);
   return (
-    <div className="fixed top-16 left-0 right-0 z-40 h-[2px] bg-transparent pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-40 h-px bg-transparent pointer-events-none">
       <div
-        className="h-full bg-foreground transition-[width] duration-150"
+        className="h-full bg-foreground/70 transition-[width] duration-150"
         style={{ width: `${p}%` }}
       />
     </div>

@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ChevronLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getChapter, getNext, getPrev } from "@/lib/chapters";
-import { Button } from "./ui/button";
 import { ReadingProgress } from "./reading-progress";
+import { RightRail } from "./right-rail";
+import { WordCount } from "./word-count";
 
 export function ChapterShell({
   slug,
@@ -18,67 +19,51 @@ export function ChapterShell({
   return (
     <>
       <ReadingProgress />
-      <article className="mx-auto max-w-3xl px-6 py-12 md:py-16">
-        <Link
-          href="/#toc"
-          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
-        >
-          <ChevronLeft className="size-3.5" /> All chapters
-        </Link>
-
-        <div className="mt-6 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          Part {meta.partNum} · Chapter {String(meta.num).padStart(2, "0")}
-        </div>
-        <h1 className="mt-2 font-display font-bold tracking-tight text-3xl md:text-5xl leading-[1.1]">
+      <RightRail />
+      <WordCount />
+      <article className="mx-auto max-w-2xl px-6 md:px-8 pt-20 md:pt-28 pb-32">
+        <h1 className="font-display font-bold tracking-tight text-3xl md:text-4xl leading-[1.18]">
           {meta.title}
         </h1>
-        <p className="mt-4 text-base text-muted-foreground max-w-2xl leading-relaxed">
+        <p className="mt-2 text-muted-foreground text-sm">
+          Part {meta.partNum} · Chapter {String(meta.num).padStart(2, "0")}
+        </p>
+        <p className="mt-6 text-base text-muted-foreground leading-relaxed italic">
           {meta.blurb}
         </p>
-        <hr className="mt-8 mb-10" />
 
-        <div className="prose-book max-w-none">{children}</div>
+        <div className="prose-book max-w-none mt-12">{children}</div>
 
-        <div className="mt-20 pt-6 border-t flex flex-col sm:flex-row gap-3 sm:items-stretch sm:justify-between">
+        <nav className="mt-24 pt-6 border-t flex items-center justify-between text-sm">
           {prev ? (
-            <Button asChild variant="outline" className="h-auto py-3 px-4 justify-start">
-              <Link href={`/chapters/${prev.slug}`} className="gap-3">
-                <ArrowLeft className="size-4 shrink-0" />
-                <span className="text-left min-w-0">
-                  <span className="block text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                    Previous
-                  </span>
-                  <span className="block text-sm font-medium truncate">
-                    Ch. {prev.num} · {prev.title}
-                  </span>
-                </span>
-              </Link>
-            </Button>
+            <Link
+              href={`/chapters/${prev.slug}`}
+              className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="size-3.5" />
+              <span className="hidden sm:inline">{prev.title}</span>
+              <span className="sm:hidden">Previous</span>
+            </Link>
           ) : (
-            <span />
+            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              ← Home
+            </Link>
           )}
           {next ? (
-            <Button asChild className="h-auto py-3 px-4 justify-end">
-              <Link href={`/chapters/${next.slug}`} className="gap-3">
-                <span className="text-right min-w-0">
-                  <span className="block text-[10px] uppercase tracking-[0.18em] text-primary-foreground/70">
-                    Next
-                  </span>
-                  <span className="block text-sm font-medium truncate">
-                    Ch. {next.num} · {next.title}
-                  </span>
-                </span>
-                <ArrowRight className="size-4 shrink-0" />
-              </Link>
-            </Button>
+            <Link
+              href={`/chapters/${next.slug}`}
+              className="group flex items-center gap-2 text-foreground hover:opacity-70 transition-opacity"
+            >
+              <span className="hidden sm:inline">{next.title}</span>
+              <span className="sm:hidden">Next</span>
+              <ArrowRight className="size-3.5" />
+            </Link>
           ) : (
-            <Button asChild variant="outline">
-              <Link href="/" className="gap-2">
-                Back to home <ArrowRight className="size-4" />
-              </Link>
-            </Button>
+            <Link href="/" className="text-foreground hover:opacity-70 transition-opacity">
+              Home →
+            </Link>
           )}
-        </div>
+        </nav>
       </article>
     </>
   );

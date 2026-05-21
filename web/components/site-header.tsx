@@ -9,46 +9,35 @@ export function SiteHeader() {
   const { theme, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 4);
+    const on = () => setScrolled(window.scrollY > 8);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors ${
-        scrolled ? "bg-background/85 backdrop-blur" : "bg-background border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-opacity ${
+        scrolled ? "opacity-100" : "opacity-60 hover:opacity-100"
       }`}
     >
-      <div className="mx-auto max-w-5xl px-6 flex h-14 items-center justify-between">
-        <Link href="/" className="font-display font-semibold tracking-tight text-sm">
+      <div className="mx-auto max-w-2xl px-6 md:px-8 flex h-14 items-center justify-between">
+        <Link
+          href="/"
+          className="text-xs uppercase tracking-[0.22em] text-muted-foreground hover:text-foreground transition-colors"
+        >
           MLFS
         </Link>
-        <nav className="flex items-center gap-1 text-sm">
+        <div className="flex items-center gap-1">
           <Link
             href="/#toc"
-            className="px-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs uppercase tracking-[0.22em] px-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             Chapters
           </Link>
-          <Link
-            href="/authors-note"
-            className="px-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Author's Note
-          </Link>
-          <a
-            href="https://github.com/Eeman1113/MLFS"
-            target="_blank"
-            rel="noreferrer"
-            className="px-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            GitHub
-          </a>
-          <Button variant="ghost" size="icon" onClick={toggle} aria-label="toggle theme">
-            {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          <Button variant="ghost" size="icon" onClick={toggle} aria-label="toggle theme" className="size-8">
+            {theme === "dark" ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
           </Button>
-        </nav>
+        </div>
       </div>
     </header>
   );

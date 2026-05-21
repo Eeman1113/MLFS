@@ -1,115 +1,100 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { CHAPTERS, PARTS } from "@/lib/chapters";
 
 export default function Home() {
   return (
-    <div>
-      {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pt-20 md:pt-28 pb-16">
-        <div className="max-w-3xl">
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-5">
-            Machine Learning From Scratch
-          </div>
-          <h1 className="font-display font-bold tracking-tight text-4xl md:text-6xl leading-[1.05]">
-            A 69-page seduction into ML — now an interactive, runnable book.
-          </h1>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            For those who have the urge to learn everything. Read the same words from the book;
-            run the algorithms inline in Python; watch the charts update as you tweak.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild>
-              <Link href="/chapters/01-flowcharts">Start reading</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href="#toc">Browse chapters</Link>
-            </Button>
-            <Button asChild variant="ghost">
-              <a href="./MLFS.pdf" target="_blank" rel="noreferrer" className="gap-1.5">
-                PDF <ArrowUpRight className="size-3.5" />
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
+    <article className="mx-auto max-w-2xl px-6 md:px-8 pt-24 md:pt-32 pb-32">
+      <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+        Machine Learning From Scratch
+      </p>
+      <h1 className="mt-4 font-display font-bold tracking-tight text-4xl md:text-5xl leading-[1.1]">
+        A 69-page seduction into ML — now an interactive, runnable book.
+      </h1>
+      <p className="mt-6 text-lg text-muted-foreground leading-relaxed italic">
+        For those who have the urge to learn everything.
+      </p>
 
-      {/* Parts */}
-      <section id="parts" className="mx-auto max-w-5xl px-6 pb-16">
-        <div className="grid md:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden border">
+      <div className="mt-10 prose-book max-w-none">
+        <p>
+          Same words from the book, every chapter intact. Every algorithm is
+          also a live cell on the page — real Python (numpy works!) executing
+          in your browser, with charts that respond to your every keystroke.
+        </p>
+        <p>
+          Read it in order, or jump anywhere from the index below.
+        </p>
+        <p>
+          <Link
+            href="/chapters/01-flowcharts"
+            className="underline underline-offset-4 hover:no-underline"
+          >
+            Start at chapter one →
+          </Link>
+        </p>
+      </div>
+
+      <section id="toc" className="mt-20 scroll-mt-20">
+        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+          Index
+        </p>
+        <div className="mt-8 flex flex-col gap-10">
           {PARTS.map((p) => {
             const chapters = CHAPTERS.filter((c) => c.partNum === p.num);
             return (
-              <div key={p.num} className="bg-background p-6">
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              <div key={p.num}>
+                <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-1">
                   Part {p.num}
                 </div>
-                <h3 className="font-display font-semibold text-lg mt-1 tracking-tight">
+                <h2 className="font-display font-semibold text-xl tracking-tight">
                   {p.title}
-                </h3>
-                <div className="text-sm text-muted-foreground italic">{p.subtitle}</div>
-                <ul className="mt-4 flex flex-col gap-1.5">
+                </h2>
+                <p className="text-sm text-muted-foreground italic mb-4">
+                  {p.subtitle}
+                </p>
+                <ol className="flex flex-col gap-2">
                   {chapters.map((c) => (
                     <li key={c.slug}>
                       <Link
                         href={`/chapters/${c.slug}`}
-                        className="flex items-center gap-3 text-sm py-0.5 hover:underline underline-offset-4"
+                        className="group grid grid-cols-[2.5rem_1fr] gap-3 items-baseline py-1.5 hover:text-foreground"
                       >
-                        <span className="text-xs text-muted-foreground tabular-nums w-6">
+                        <span className="text-xs text-muted-foreground tabular-nums">
                           {String(c.num).padStart(2, "0")}
                         </span>
-                        <span>{c.title}</span>
+                        <span>
+                          <span className="group-hover:underline underline-offset-4">
+                            {c.title}
+                          </span>
+                          <span className="block text-sm text-muted-foreground mt-0.5">
+                            {c.blurb}
+                          </span>
+                        </span>
                       </Link>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* TOC */}
-      <section id="toc" className="mx-auto max-w-5xl px-6 pb-20 scroll-mt-20">
-        <div className="mb-6 flex items-baseline justify-between">
-          <h2 className="font-display font-bold text-2xl tracking-tight">All chapters</h2>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            15 chapters
-          </div>
-        </div>
-        <ol className="divide-y border-y">
-          {CHAPTERS.map((c) => (
-            <li key={c.slug}>
-              <Link
-                href={`/chapters/${c.slug}`}
-                className="group flex items-baseline gap-5 py-4 px-1 hover:bg-muted/40 transition-colors"
-              >
-                <span className="text-xs text-muted-foreground tabular-nums w-8 shrink-0 mt-1">
-                  {String(c.num).padStart(2, "0")}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium">{c.title}</div>
-                  <div className="text-sm text-muted-foreground mt-0.5 truncate">{c.blurb}</div>
-                </div>
-                <ArrowRight className="size-4 text-muted-foreground shrink-0 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition" />
-              </Link>
-            </li>
-          ))}
-        </ol>
+      <section className="mt-24">
+        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">
+          Dedication
+        </p>
+        <p className="font-display italic text-lg leading-relaxed">
+          To mumma and papa for being such amazing parents, love you both.
+        </p>
       </section>
 
-      {/* Dedication */}
-      <section className="mx-auto max-w-5xl px-6 pb-24">
-        <div className="border-l-2 pl-5 max-w-xl">
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">
-            Dedication
-          </div>
-          <p className="font-display italic text-lg leading-relaxed">
-            To mumma and papa for being such amazing parents, love you both.
-          </p>
-        </div>
-      </section>
-    </div>
+      <footer className="mt-24 pt-6 border-t flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
+        <a href="./MLFS.pdf" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">PDF</a>
+        <Link href="/authors-note" className="hover:text-foreground transition-colors">Author's Note</Link>
+        <a href="./backup_index.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Original flipbook</a>
+        <a href="https://github.com/Eeman1113/MLFS" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+        <span className="ml-auto">© {new Date().getFullYear()} Eeman Majumder · MIT</span>
+      </footer>
+    </article>
   );
 }
