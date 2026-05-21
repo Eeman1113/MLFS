@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { CHAPTERS, PARTS } from "@/lib/chapters";
 import { DocsSidebar } from "@/components/docs-sidebar";
 import { OnThisPage } from "@/components/on-this-page";
 import { withBase } from "@/lib/utils";
@@ -63,39 +62,6 @@ export default function Home() {
                 Start at chapter one →
               </Link>
             </p>
-
-            <h2 id="toc">Index</h2>
-            {PARTS.map((p) => {
-              const chapters = CHAPTERS.filter((c) => c.partNum === p.num);
-              return (
-                <div key={p.num} className="mt-8">
-                  <h3>
-                    Part {p.num} — {p.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground italic !mt-0">{p.subtitle}</p>
-                  <ol className="!list-none !pl-0 flex flex-col gap-1.5 !mt-4">
-                    {chapters.map((c) => (
-                      <li key={c.slug} className="!my-0">
-                        <Link
-                          href={`/chapters/${c.slug}`}
-                          className="group grid grid-cols-[2rem_1fr] gap-3 items-baseline py-1 hover:text-foreground"
-                        >
-                          <span className="text-xs text-muted-foreground tabular-nums">
-                            {String(c.num).padStart(2, "0")}
-                          </span>
-                          <span>
-                            <span className="group-hover:underline underline-offset-4">
-                              {c.title}
-                            </span>
-                            <span className="block text-sm text-muted-foreground">{c.blurb}</span>
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              );
-            })}
 
             <h2 id="dedication">Dedication</h2>
             <p className="italic">
