@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CHAPTERS, PARTS } from "@/lib/chapters";
 import { DocsSidebar } from "@/components/docs-sidebar";
 import { OnThisPage } from "@/components/on-this-page";
+import { withBase } from "@/lib/utils";
 
 export default function Home() {
   return (
@@ -9,6 +11,14 @@ export default function Home() {
       <DocsSidebar />
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
         <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
+          <Image
+            src={withBase("/logo.png")}
+            alt="MLFS"
+            width={88}
+            height={88}
+            className="size-[88px] mb-8"
+            priority
+          />
           <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">
             Machine Learning From Scratch
           </p>

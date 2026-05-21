@@ -21,13 +21,13 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 bg-background">
       <div className="mx-auto max-w-screen-2xl flex h-14 items-center px-4 md:px-6 gap-4">
-        <Link href="/" className="flex items-center gap-2 mr-1">
+        <Link href="/" className="flex items-center gap-2.5 mr-1">
           <Image
             src={withBase("/logo.png")}
             alt="MLFS"
-            width={28}
-            height={28}
-            className="size-7 shrink-0"
+            width={40}
+            height={40}
+            className="size-10 shrink-0"
             priority
           />
           <span className="font-semibold text-sm tracking-tight">MLFS</span>
