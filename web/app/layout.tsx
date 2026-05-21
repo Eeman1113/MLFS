@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PyodideProvider } from "@/components/pyodide-provider";
 import { SiteHeader } from "@/components/site-header";
+import { withBase } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "MLFS – Machine Learning From Scratch",
@@ -13,11 +14,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Eeman Majumder" }],
   icons: {
     icon: [
-      { url: "/icon-light.png", type: "image/png" },
-      { url: "/icon-light.png", type: "image/png", media: "(prefers-color-scheme: light)" },
-      { url: "/icon-dark.png", type: "image/png", media: "(prefers-color-scheme: dark)" },
+      { url: withBase("/icon-light.png"), type: "image/png" },
+      { url: withBase("/icon-light.png"), type: "image/png", media: "(prefers-color-scheme: light)" },
+      { url: withBase("/icon-dark.png"), type: "image/png", media: "(prefers-color-scheme: dark)" },
     ],
-    apple: "/icon-light.png",
+    apple: withBase("/icon-light.png"),
   },
   openGraph: {
     title: "MLFS – Machine Learning From Scratch",

@@ -565,45 +565,54 @@ export function AlignmentPipeline() {
 /* ─────────────────────────────────────────── 10. DECODE LOOP + KV CACHE ── */
 
 export function DecodeLoopKV() {
+  // token strip on top → transformer (+ KV cache to its right) → sampler → "mat".
+  // the dashed loop-back routes around the FAR right edge so it never crosses
+  // the KV cache box.
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 880 460" width="100%" className="max-w-3xl mx-auto">
+      <svg viewBox="0 0 920 440" width="100%" className="max-w-3xl mx-auto">
         <Defs />
 
-        {/* prompt token strip across the top */}
+        {/* prompt token strip */}
         {["The", "cat", "sat", "on", "the"].map((tok, i) => (
-          <Box key={tok} x={130 + i * 80} y={60} w={66} h={32} fill="green" font={11}>{tok}</Box>
+          <Box key={tok} x={120 + i * 78} y={70} w={64} h={32} fill="green" font={11}>{tok}</Box>
         ))}
-        <Box x={530} y={60} w={66} h={32} fill="yellow" font={12}>?</Box>
+        <Box x={510} y={70} w={64} h={32} fill="yellow" font={12}>?</Box>
 
         {/* transformer stack */}
-        <Box x={320} y={200} w={400} h={60} fill="blue" font={12}>N transformer blocks (with KV cache)</Box>
+        <Box x={360} y={210} w={400} h={58} fill="blue" font={12}>N transformer blocks (with KV cache)</Box>
 
-        {/* KV cache off to the right */}
-        <Box x={790} y={200} w={140} h={60} fill="purple" font={11}>KV cache (per layer)</Box>
+        {/* KV cache to the right of the transformer */}
+        <Box x={770} y={210} w={150} h={58} fill="purple" font={11}>KV cache (per layer)</Box>
 
         {/* sampler row */}
-        <Box x={320} y={320} w={400} h={44} fill="orange" font={11.5}>
+        <Box x={360} y={330} w={400} h={44} fill="orange" font={11.5}>
           temperature → top-k → top-p → sample
         </Box>
 
         {/* sampled token */}
-        <Box x={790} y={320} w={140} h={44} fill="yellow" font={12}>&quot;mat&quot;</Box>
+        <Box x={770} y={330} w={150} h={44} fill="yellow" font={12}>&quot;mat&quot;</Box>
 
-        {/* arrows */}
-        <Arrow d="M 530 76 L 530 170" />
-        <Arrow d="M 520 200 L 720 200" head={false} />
-        <Arrow d="M 720 200 L 520 200" head={false} />
-        <Arrow d="M 320 230 L 320 298" />
-        <Arrow d="M 520 342 L 720 342" />
+        {/* "?" token feeds the transformer */}
+        <Arrow d="M 510 86 L 510 181" />
 
-        {/* loop back: "mat" returns to the prompt strip */}
-        <Arrow d="M 790 298 L 790 110 L 610 76" dashed />
+        {/* transformer ↔ KV cache (read + write) */}
+        <Arrow d="M 560 203 L 690 203" />
+        <Arrow d="M 690 217 L 560 217" />
+
+        {/* transformer → sampler */}
+        <Arrow d="M 360 239 L 360 308" />
+
+        {/* sampler → "mat" */}
+        <Arrow d="M 560 330 L 690 330" />
+
+        {/* loop-back: "mat" routes around the far-right edge, clear of KV cache */}
+        <Arrow d="M 845 330 L 890 330 L 890 38 L 510 38 L 510 54" dashed />
 
         {/* notes in safe margins */}
-        <Note x={790} y={148} size={10}>grows by one row / token / layer</Note>
-        <Note x={520} y={395} size={11}>vLLM · SGLang · llama.cpp do this for a living</Note>
-        <Note x={790} y={395} size={10}>append → reuse cache → repeat</Note>
+        <Note x={770} y={160} size={10}>grows by one row / token / layer</Note>
+        <Note x={360} y={405} size={11}>vLLM · SGLang · llama.cpp do this for a living</Note>
+        <Note x={770} y={300} size={10}>append → reuse cache → repeat</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         The autoregressive loop. KV cache is why this is fast.
