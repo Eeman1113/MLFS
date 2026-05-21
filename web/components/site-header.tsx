@@ -6,7 +6,7 @@ const items = [
   { label: "Docs", href: "/" },
   { label: "Chapters", href: "/#toc" },
   { label: "Author's Note", href: "/authors-note" },
-  { label: "PDF", href: "./MLFS.pdf", external: true },
+  { label: "PDF", href: "https://tinyurl.com/mlfs-study", external: true },
 ];
 
 export function SiteHeader() {

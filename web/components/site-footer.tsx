@@ -9,7 +9,7 @@ export function SiteFooter() {
           <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
           <Link href="/authors-note" className="hover:text-foreground transition-colors">Author's Note</Link>
           <Link href="/#toc" className="hover:text-foreground transition-colors">Chapters</Link>
-          <a href="./MLFS.pdf" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">PDF</a>
+          <a href="https://tinyurl.com/mlfs-study" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">PDF</a>
           <a href="./backup_index.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Flipbook</a>
           <a href="https://github.com/Eeman1113/MLFS" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
         </nav>

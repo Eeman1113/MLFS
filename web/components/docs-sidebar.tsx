@@ -9,7 +9,7 @@ const sections: Entry[] = [
   { label: "Introduction", href: "/" },
   { label: "Author's Note", href: "/authors-note" },
   { label: "Index", href: "/#toc" },
-  { label: "PDF", href: "./MLFS.pdf" },
+  { label: "PDF", href: "https://tinyurl.com/mlfs-study" },
   { label: "Flipbook", href: "./backup_index.html" },
   { label: "GitHub", href: "https://github.com/Eeman1113/MLFS" },
 ];
