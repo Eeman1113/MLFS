@@ -3,7 +3,7 @@ import { CHAPTERS, PARTS } from "@/lib/chapters";
 
 export default function Home() {
   return (
-    <article className="mx-auto max-w-2xl px-6 md:px-8 pt-24 md:pt-32 pb-32">
+    <article className="mx-auto w-full max-w-[760px] px-6 md:px-10 pt-24 md:pt-32 pb-32">
       <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
         Machine Learning From Scratch
       </p>

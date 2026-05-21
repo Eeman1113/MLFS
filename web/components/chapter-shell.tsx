@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getChapter, getNext, getPrev } from "@/lib/chapters";
+import { Button } from "./ui/button";
 import { ReadingProgress } from "./reading-progress";
 import { RightRail } from "./right-rail";
 import { WordCount } from "./word-count";
@@ -21,7 +22,15 @@ export function ChapterShell({
       <ReadingProgress />
       <RightRail />
       <WordCount />
-      <article className="mx-auto max-w-2xl px-6 md:px-8 pt-20 md:pt-28 pb-32">
+      {/* A4-width centered column */}
+      <article className="mx-auto w-full max-w-[760px] px-6 md:px-10 pt-20 md:pt-24 pb-32">
+        <Button asChild variant="outline" size="sm" className="mb-10">
+          <Link href="/#toc">
+            <ArrowLeft className="size-3.5" />
+            Back
+          </Link>
+        </Button>
+
         <h1 className="font-display font-bold tracking-tight text-3xl md:text-4xl leading-[1.18]">
           {meta.title}
         </h1>
@@ -38,7 +47,7 @@ export function ChapterShell({
           {prev ? (
             <Link
               href={`/chapters/${prev.slug}`}
-              className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="size-3.5" />
               <span className="hidden sm:inline">{prev.title}</span>
@@ -52,7 +61,7 @@ export function ChapterShell({
           {next ? (
             <Link
               href={`/chapters/${next.slug}`}
-              className="group flex items-center gap-2 text-foreground hover:opacity-70 transition-opacity"
+              className="flex items-center gap-2 text-foreground hover:opacity-70 transition-opacity"
             >
               <span className="hidden sm:inline">{next.title}</span>
               <span className="sm:hidden">Next</span>

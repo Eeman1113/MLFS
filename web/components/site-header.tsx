@@ -20,7 +20,7 @@ export function SiteHeader() {
         scrolled ? "opacity-100" : "opacity-60 hover:opacity-100"
       }`}
     >
-      <div className="mx-auto max-w-2xl px-6 md:px-8 flex h-14 items-center justify-between">
+      <div className="mx-auto w-full max-w-[760px] px-6 md:px-10 flex h-14 items-center justify-between">
         <Link
           href="/"
           className="text-xs uppercase tracking-[0.22em] text-muted-foreground hover:text-foreground transition-colors"

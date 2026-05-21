@@ -4,7 +4,7 @@ export const metadata = { title: "Author's Note · MLFS" };
 
 export default function AuthorsNotePage() {
   return (
-    <article className="mx-auto max-w-2xl px-6 md:px-8 pt-24 md:pt-28 pb-32">
+    <article className="mx-auto w-full max-w-[760px] px-6 md:px-10 pt-24 md:pt-28 pb-32">
       <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
         Author's Note
       </p>
