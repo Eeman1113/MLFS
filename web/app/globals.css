@@ -111,3 +111,45 @@ body {
 .cm-editor .cm-scroller { font-family: var(--font-mono) !important; }
 
 ::selection { background: hsl(var(--foreground)); color: hsl(var(--background)); }
+
+/* Sidebar scrollbar hidden; text fades into nothing top + bottom. */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+.fade-mask-y {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 32px,
+    #000 calc(100% - 48px),
+    transparent 100%
+  );
+          mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 32px,
+    #000 calc(100% - 48px),
+    transparent 100%
+  );
+}
+
+/* Hairline fade on the right edge of the sidebar — replaces the hard border-r. */
+.fade-edge-r {
+  position: relative;
+}
+.fade-edge-r::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    hsl(var(--border)) 18%,
+    hsl(var(--border)) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
+}

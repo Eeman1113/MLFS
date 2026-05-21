@@ -17,8 +17,8 @@ const sections: Entry[] = [
 export function DocsSidebar() {
   const pathname = usePathname();
   return (
-    <aside className="hidden md:block w-64 shrink-0 border-r">
-      <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto px-4 py-6">
+    <aside className="hidden md:block w-64 shrink-0 fade-edge-r">
+      <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto no-scrollbar fade-mask-y px-4 py-8">
         <Group label="Sections">
           {sections.map((s) => (
             <Row
