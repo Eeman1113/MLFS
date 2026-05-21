@@ -1,6 +1,11 @@
 /** LLM-specific SVG figures for the bonus chapter.
- *  Style: same hand-drawn flowchart vibe as components/flowcharts.tsx —
- *  pastel fills, hairline strokes, viewBox-scaled.
+ *  Same hand-drawn flowchart style as components/flowcharts.tsx —
+ *  pastel fills, hairline strokes, generous padding so nothing overlaps.
+ *
+ *  Every diagram is laid out on a clean grid:
+ *  - boxes are positioned by CENTER (x, y) with explicit (w, h)
+ *  - arrows are drawn from one box's EDGE to another's EDGE (no slicing through)
+ *  - notes / metadata live in empty margin zones, never on top of geometry
  */
 
 type Fill = "yellow" | "green" | "blue" | "red" | "purple" | "orange" | "plain";
@@ -19,10 +24,10 @@ const Box = ({
   x,
   y,
   w = 130,
-  h = 40,
+  h = 42,
   rx = 6,
   fill = "plain",
-  font = 11.5,
+  font = 12,
   bold = 500,
   children,
 }: {
@@ -69,26 +74,76 @@ const Arrow = ({ d, head = true, dashed = false }: { d: string; head?: boolean; 
     strokeWidth={1.2}
     strokeDasharray={dashed ? "4 3" : undefined}
     strokeLinecap="round"
+    strokeLinejoin="round"
     markerEnd={head ? "url(#llmarrow)" : undefined}
   />
 );
 
 const Defs = () => (
   <defs>
-    <marker id="llmarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker
+      id="llmarrow"
+      viewBox="0 0 10 10"
+      refX="9"
+      refY="5"
+      markerWidth="6"
+      markerHeight="6"
+      orient="auto-start-reverse"
+    >
       <path d="M 0 0 L 10 5 L 0 10 z" className="fill-foreground" />
     </marker>
   </defs>
 );
 
-const Label = ({ x, y, children, size = 10, bold = 600 }: { x: number; y: number; children: React.ReactNode; size?: number; bold?: number }) => (
-  <text x={x} y={y} fontSize={size} fontWeight={bold} className="fill-foreground" textAnchor="middle">
+const Note = ({
+  x,
+  y,
+  children,
+  anchor = "middle" as const,
+  size = 11,
+}: {
+  x: number;
+  y: number;
+  children: React.ReactNode;
+  anchor?: "start" | "middle" | "end";
+  size?: number;
+}) => (
+  <text
+    x={x}
+    y={y}
+    fontSize={size}
+    className="fill-muted-foreground"
+    textAnchor={anchor}
+    dominantBaseline="middle"
+  >
     {children}
   </text>
 );
 
-const Note = ({ x, y, children, anchor = "middle" as const }: { x: number; y: number; children: React.ReactNode; anchor?: "start" | "middle" | "end" }) => (
-  <text x={x} y={y} fontSize={10} className="fill-muted-foreground" textAnchor={anchor}>
+const Label = ({
+  x,
+  y,
+  children,
+  anchor = "middle" as const,
+  bold = 700,
+  size = 12,
+}: {
+  x: number;
+  y: number;
+  children: React.ReactNode;
+  anchor?: "start" | "middle" | "end";
+  bold?: number;
+  size?: number;
+}) => (
+  <text
+    x={x}
+    y={y}
+    fontSize={size}
+    fontWeight={bold}
+    className="fill-foreground"
+    textAnchor={anchor}
+    dominantBaseline="middle"
+  >
     {children}
   </text>
 );
@@ -96,25 +151,39 @@ const Note = ({ x, y, children, anchor = "middle" as const }: { x: number; y: nu
 /* ─────────────────────────────────────────── 1. TOKENIZATION ── */
 
 export function TokenizationFlow() {
+  // four-box horizontal chain at y=170, then one orange box below for IDs+embedding.
+  // notes pinned to safe margins (top + bottom) so nothing collides.
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 720 240" width="100%" className="max-w-3xl mx-auto">
+      <svg viewBox="0 0 820 340" width="100%" className="max-w-3xl mx-auto">
         <Defs />
-        <Box x={70} y={120} w={120} h={48} fill="yellow">&quot;strawberry&quot;</Box>
-        <Box x={230} y={120} w={120} h={48} fill="blue">pre-tokenizer (regex)</Box>
-        <Box x={390} y={120} w={120} h={48} fill="blue">byte-level BPE merges</Box>
-        <Box x={560} y={120} w={120} h={48} fill="green">[str, aw, berry]</Box>
 
-        <Arrow d="M 132 120 L 168 120" />
-        <Arrow d="M 292 120 L 328 120" />
-        <Arrow d="M 452 120 L 498 120" />
+        {/* top meta lines */}
+        <Note x={410} y={32}>raw string → integer IDs (and back)</Note>
+        <Note x={410} y={52} size={10}>
+          vocab size: GPT-4 ≈ 100k · Llama 3 ≈ 128k · Gemma 256k
+        </Note>
 
-        <Box x={560} y={200} w={210} h={32} fill="orange" font={10.5}>[496, 707, 15717] → embedding</Box>
-        <Arrow d="M 560 146 L 560 182" />
+        {/* main chain */}
+        <Box x={90} y={170} w={150} h={50} fill="yellow">&quot;strawberry&quot;</Box>
+        <Box x={290} y={170} w={170} h={50} fill="blue" font={11.5}>pre-tokenizer (regex)</Box>
+        <Box x={490} y={170} w={170} h={50} fill="blue" font={11.5}>byte-level BPE merges</Box>
+        <Box x={690} y={170} w={150} h={50} fill="green" font={11.5}>[str, aw, berry]</Box>
 
-        <Note x={360} y={32}>raw string → integer IDs (and back)</Note>
-        <Note x={360} y={50}>vocab size: GPT-4 ≈ 100k · Llama 3 ≈ 128k · Gemma 256k</Note>
-        <Note x={360} y={222}>the model never sees the letter &quot;R&quot; — only three opaque chunks</Note>
+        <Arrow d="M 165 170 L 205 170" />
+        <Arrow d="M 375 170 L 405 170" />
+        <Arrow d="M 575 170 L 615 170" />
+
+        {/* downstream: token IDs + embedding */}
+        <Box x={690} y={260} w={230} h={42} fill="orange" font={11}>
+          [496, 707, 15717] → embedding
+        </Box>
+        <Arrow d="M 690 195 L 690 239" />
+
+        {/* caption */}
+        <Note x={410} y={310} size={11}>
+          the model never sees the letter &quot;R&quot; — only three opaque chunks
+        </Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Why &quot;how many R&apos;s in strawberry?&quot; trips up GPT.
@@ -128,20 +197,29 @@ export function TokenizationFlow() {
 export function EmbeddingPlusPosition() {
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 640 240" width="100%" className="max-w-2xl mx-auto">
+      <svg viewBox="0 0 720 280" width="100%" className="max-w-2xl mx-auto">
         <Defs />
-        <Box x={90} y={70} w={150} h={42} fill="green">token embedding E[id]</Box>
-        <Box x={90} y={170} w={150} h={42} fill="purple">positional encoding</Box>
-        <Box x={300} y={120} w={50} h={50} rx={25} fill="yellow" font={20}>＋</Box>
-        <Box x={490} y={120} w={130} h={50} fill="blue">into block 1</Box>
 
-        <Arrow d="M 165 70 L 270 110" />
-        <Arrow d="M 165 170 L 270 130" />
-        <Arrow d="M 325 120 L 425 120" />
+        <Box x={130} y={90} w={200} h={46} fill="green" font={11.5}>token embedding E[id]</Box>
+        <Box x={130} y={200} w={200} h={46} fill="purple" font={11.5}>positional encoding</Box>
 
-        <Note x={90} y={102} anchor="middle">vocab × d_model lookup</Note>
-        <Note x={90} y={202} anchor="middle">sinusoidal · learned · RoPE · ALiBi</Note>
-        <Note x={490} y={158}>same shape, now order-aware</Note>
+        {/* + node */}
+        <g>
+          <circle cx={370} cy={145} r={26} className="fill-yellow-100 stroke-foreground" strokeWidth={1.3} />
+          <text x={370} y={145} textAnchor="middle" dominantBaseline="middle" fontSize={20} fontWeight={600} className="fill-foreground">＋</text>
+        </g>
+
+        <Box x={560} y={145} w={170} h={50} fill="blue" font={12}>into block 1</Box>
+
+        {/* arrows: emb and pos meet at + */}
+        <Arrow d="M 230 95 L 344 132" />
+        <Arrow d="M 230 195 L 344 158" />
+        <Arrow d="M 396 145 L 475 145" />
+
+        {/* notes below each source box */}
+        <Note x={130} y={134} size={10}>vocab × d_model lookup</Note>
+        <Note x={130} y={244} size={10}>sinusoidal · learned · RoPE · ALiBi</Note>
+        <Note x={560} y={190} size={10}>same shape, now order-aware</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Token embeddings + positions → the input to block 1.
@@ -153,40 +231,54 @@ export function EmbeddingPlusPosition() {
 /* ─────────────────────────────────────────── 3. ATTENTION FLOW ── */
 
 export function AttentionFlow() {
+  // X on the left fans out into Q, K, V.
+  // Q+K feed the score chain along the top row.
+  // V meets the softmax output at the "attention · V" box, producing Y.
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 760 320" width="100%" className="max-w-3xl mx-auto">
+      <svg viewBox="0 0 880 380" width="100%" className="max-w-3xl mx-auto">
         <Defs />
-        <Box x={70} y={160} w={70} h={42} fill="yellow">X</Box>
 
-        <Box x={210} y={70} w={70} h={36} fill="blue">Q = XW_Q</Box>
-        <Box x={210} y={160} w={70} h={36} fill="blue">K = XW_K</Box>
-        <Box x={210} y={250} w={70} h={36} fill="blue">V = XW_V</Box>
+        {/* source */}
+        <Box x={70} y={200} w={70} h={50} fill="yellow">X</Box>
 
-        <Arrow d="M 108 152 L 175 80" />
-        <Arrow d="M 108 160 L 175 160" />
-        <Arrow d="M 108 168 L 175 240" />
+        {/* QKV column */}
+        <Box x={220} y={80} w={110} h={40} fill="blue" font={11.5}>Q = X·W_Q</Box>
+        <Box x={220} y={200} w={110} h={40} fill="blue" font={11.5}>K = X·W_K</Box>
+        <Box x={220} y={320} w={110} h={40} fill="blue" font={11.5}>V = X·W_V</Box>
 
-        <Box x={360} y={115} w={130} h={42} fill="purple">Q·Kᵀ / √d_k</Box>
-        <Arrow d="M 248 78 L 300 110" />
-        <Arrow d="M 248 158 L 300 124" />
+        <Arrow d="M 105 188 L 167 95" />
+        <Arrow d="M 105 200 L 167 200" />
+        <Arrow d="M 105 212 L 167 305" />
 
-        <Box x={500} y={115} w={120} h={42} fill="purple">causal mask</Box>
-        <Arrow d="M 426 115 L 442 115" />
+        {/* score chain across the top */}
+        <Box x={420} y={80} w={140} h={42} fill="purple" font={11.5}>Q · Kᵀ / √d_k</Box>
+        <Box x={600} y={80} w={120} h={42} fill="purple" font={11.5}>causal mask</Box>
+        <Box x={760} y={80} w={90} h={42} fill="purple" font={11.5}>softmax</Box>
 
-        <Box x={640} y={115} w={90} h={42} fill="purple">softmax</Box>
-        <Arrow d="M 562 115 L 596 115" />
+        {/* Q and K both contribute to the score */}
+        <Arrow d="M 275 80 L 350 80" />
+        <Arrow d="M 275 200 L 350 100" />
+        <Arrow d="M 490 80 L 540 80" />
+        <Arrow d="M 660 80 L 715 80" />
 
-        <Box x={500} y={230} w={120} h={42} fill="green">attention · V</Box>
-        <Arrow d="M 640 138 L 580 215" />
-        <Arrow d="M 248 256 L 458 240" />
+        {/* output row */}
+        <Box x={560} y={300} w={150} h={44} fill="green" font={11.5}>attention · V</Box>
+        <Box x={760} y={300} w={80} h={44} fill="yellow" font={12}>Y</Box>
 
-        <Box x={680} y={230} w={70} h={42} fill="yellow">Y</Box>
-        <Arrow d="M 562 230 L 645 230" />
+        {/* softmax flows down into "attention · V" */}
+        <Arrow d="M 760 102 L 615 279" />
 
-        <Note x={500} y={75}>mask future tokens → -∞</Note>
-        <Note x={690} y={85}>row-wise · sums to 1</Note>
-        <Note x={500} y={275}>weighted sum of V rows</Note>
+        {/* V joins from the left */}
+        <Arrow d="M 275 320 L 485 305" />
+
+        {/* attention · V → Y */}
+        <Arrow d="M 635 300 L 720 300" />
+
+        {/* notes pinned safely to the right margin */}
+        <Note x={870} y={50} anchor="end" size={10}>row-wise · sums to 1</Note>
+        <Note x={490} y={140} size={10}>future tokens → −∞</Note>
+        <Note x={560} y={350} size={10}>weighted sum of V rows</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Scaled dot-product self-attention, end to end.
@@ -200,30 +292,31 @@ export function AttentionFlow() {
 export function MultiHeadSplit() {
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 720 280" width="100%" className="max-w-2xl mx-auto">
+      <svg viewBox="0 0 820 360" width="100%" className="max-w-2xl mx-auto">
         <Defs />
-        <Box x={70} y={140} w={70} h={50} fill="yellow">X</Box>
 
-        {[0, 1, 2, 3].map((i) => {
-          const y = 50 + i * 60;
+        <Box x={70} y={180} w={70} h={50} fill="yellow">X</Box>
+
+        {(["blue", "purple", "green", "orange"] as Fill[]).map((c, i) => {
+          const y = 70 + i * 75;
           return (
             <g key={i}>
-              <Box x={250} y={y} w={150} h={36} fill={i === 0 ? "blue" : i === 1 ? "purple" : i === 2 ? "green" : "orange"}>
-                {`head ${i + 1} (Q,K,V)`}
+              <Box x={290} y={y} w={170} h={40} fill={c} font={11.5}>
+                {`head ${i + 1} · own Q,K,V`}
               </Box>
-              <Arrow d={`M 108 138 L 168 ${y}`} />
-              <Arrow d={`M 328 ${y} L 410 140`} />
+              <Arrow d={`M 105 ${180 + (y - 180) * 0.05} L 205 ${y}`} />
+              <Arrow d={`M 375 ${y} L 460 180`} />
             </g>
           );
         })}
 
-        <Box x={470} y={140} w={110} h={50} fill="yellow">concat</Box>
-        <Box x={620} y={140} w={70} h={50} fill="yellow">W_O</Box>
-        <Arrow d="M 528 140 L 583 140" />
+        <Box x={530} y={180} w={110} h={50} fill="yellow">concat</Box>
+        <Box x={690} y={180} w={80} h={50} fill="yellow">W_O</Box>
+        <Arrow d="M 585 180 L 650 180" />
 
-        <Note x={250} y={28}>each head: own subspace, own Q/K/V</Note>
-        <Note x={620} y={195}>back to d_model</Note>
-        <Note x={620} y={210}>MHA · MQA · GQA all live here</Note>
+        <Note x={290} y={30} size={10}>each head: own subspace, own Q/K/V</Note>
+        <Note x={690} y={240} size={10}>back to d_model</Note>
+        <Note x={690} y={258} size={10}>MHA · MQA · GQA all live here</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Multi-head attention: parallel committee, then merge.
@@ -235,34 +328,63 @@ export function MultiHeadSplit() {
 /* ─────────────────────────────────────────── 5. TRANSFORMER BLOCK ── */
 
 export function TransformerBlock() {
+  // Vertical residual stream column down the centre.
+  // Two side-branches tap off to the LEFT (attention, then FFN),
+  // each rejoining via a "+" merge node back on the stream.
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 640 360" width="100%" className="max-w-md mx-auto">
+      <svg viewBox="0 0 680 580" width="100%" className="max-w-md mx-auto">
         <Defs />
+
         {/* residual stream column */}
-        <rect x="295" y="30" width="50" height="300" rx="6" className="fill-muted/40 stroke-foreground/30" strokeWidth="1" />
-        <Label x={320} y={22}>residual stream</Label>
+        <rect
+          x={310}
+          y={50}
+          width={50}
+          height={490}
+          rx={6}
+          className="fill-muted/40 stroke-foreground/30"
+          strokeWidth={1}
+        />
+        <Note x={335} y={36} size={11}>residual stream</Note>
 
-        <Box x={320} y={60} w={170} h={32} fill="plain" font={10.5}>x (d_model)</Box>
+        {/* stream tokens */}
+        <Box x={335} y={80} w={170} h={32} fill="plain" font={11}>x (d_model)</Box>
 
-        <Box x={170} y={130} w={100} h={32} fill="purple">RMSNorm</Box>
-        <Box x={170} y={180} w={100} h={32} fill="blue">attention</Box>
-        <Box x={320} y={210} w={60} h={36} rx={18} fill="yellow" font={18}>＋</Box>
+        {/* attention branch on the left */}
+        <Box x={140} y={170} w={120} h={36} fill="purple" font={11.5}>RMSNorm</Box>
+        <Box x={140} y={230} w={120} h={36} fill="blue" font={11.5}>attention</Box>
 
-        <Box x={170} y={270} w={100} h={32} fill="purple">RMSNorm</Box>
-        <Box x={170} y={320} w={100} h={32} fill="green">SwiGLU FFN</Box>
-        <Box x={320} y={330} w={60} h={20} fill="plain" font={9}>(no add yet)</Box>
+        {/* + merge for attention */}
+        <g>
+          <circle cx={335} cy={300} r={20} className="fill-yellow-100 stroke-foreground" strokeWidth={1.3} />
+          <text x={335} y={300} textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight={600} className="fill-foreground">＋</text>
+        </g>
 
-        <Arrow d="M 295 75 L 230 122" />
-        <Arrow d="M 170 148 L 170 162" />
-        <Arrow d="M 230 188 L 300 208" />
+        {/* FFN branch on the left */}
+        <Box x={140} y={380} w={120} h={36} fill="purple" font={11.5}>RMSNorm</Box>
+        <Box x={140} y={440} w={120} h={36} fill="green" font={11.5}>SwiGLU FFN</Box>
 
-        <Arrow d="M 295 215 L 230 262" />
-        <Arrow d="M 170 288 L 170 302" />
-        <Arrow d="M 230 328 L 300 332" />
+        {/* + merge for FFN */}
+        <g>
+          <circle cx={335} cy={510} r={20} className="fill-yellow-100 stroke-foreground" strokeWidth={1.3} />
+          <text x={335} y={510} textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight={600} className="fill-foreground">＋</text>
+        </g>
 
-        <Note x={500} y={140}>read · norm · attend · write</Note>
-        <Note x={500} y={290}>read · norm · MLP · write</Note>
+        {/* arrows: stream → branch in, branch out → merge */}
+        <Arrow d="M 310 95 L 310 170 L 205 170" />
+        <Arrow d="M 140 188 L 140 212" />
+        <Arrow d="M 205 230 L 315 290" />
+
+        <Arrow d="M 310 320 L 310 380 L 205 380" />
+        <Arrow d="M 140 398 L 140 422" />
+        <Arrow d="M 205 440 L 315 500" />
+
+        {/* labels on the right margin (well clear of the stream box) */}
+        <Note x={400} y={200} anchor="start" size={11}>read · norm · attend · write</Note>
+        <Note x={400} y={410} anchor="start" size={11}>read · norm · MLP · write</Note>
+
+        <Note x={335} y={555} size={10}>stream continues to next block</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         One block: two taps on the residual stream.
@@ -276,30 +398,33 @@ export function TransformerBlock() {
 export function FullTransformerStack() {
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 520 460" width="100%" className="max-w-md mx-auto">
+      <svg viewBox="0 0 600 600" width="100%" className="max-w-md mx-auto">
         <Defs />
-        <Box x={260} y={30} w={220} h={32} fill="yellow">token IDs</Box>
-        <Box x={260} y={80} w={220} h={32} fill="green">embedding + position</Box>
+
+        <Box x={300} y={40} w={240} h={36} fill="yellow">token IDs</Box>
+        <Box x={300} y={100} w={240} h={36} fill="green">embedding + position</Box>
 
         {[0, 1, 2, 3, 4].map((i) => (
-          <Box key={i} x={260} y={140 + i * 50} w={260} h={36} fill="blue">
+          <Box key={i} x={300} y={170 + i * 56} w={280} h={40} fill="blue">
             transformer block {i + 1}
           </Box>
         ))}
 
-        <text x={260} y={400} textAnchor="middle" fontSize={13} className="fill-muted-foreground">⋮ (N total)</text>
+        <text x={300} y={460} textAnchor="middle" fontSize={14} className="fill-muted-foreground">⋮ (N blocks total)</text>
 
-        <Box x={260} y={430} w={260} h={30} fill="purple">final RMSNorm → logits (vocab)</Box>
+        <Box x={300} y={510} w={280} h={36} fill="purple" font={11.5}>final RMSNorm → logits (vocab)</Box>
 
-        <Arrow d="M 260 46 L 260 64" />
-        <Arrow d="M 260 96 L 260 122" />
+        <Arrow d="M 300 58 L 300 82" />
+        <Arrow d="M 300 118 L 300 150" />
         {[0, 1, 2, 3].map((i) => (
-          <Arrow key={i} d={`M 260 ${158 + i * 50} L 260 ${172 + i * 50}`} />
+          <Arrow key={i} d={`M 300 ${190 + i * 56} L 300 ${206 + i * 56}`} />
         ))}
-        <Arrow d="M 260 408 L 260 415" />
+        <Arrow d="M 300 472 L 300 492" />
 
-        <Note x={460} y={140} anchor="end">Llama 3 8B · N=32</Note>
-        <Note x={460} y={155} anchor="end">Llama 3 70B · N=80</Note>
+        {/* notes BELOW everything so they never collide */}
+        <Note x={300} y={570} size={11}>
+          Llama 3 8B · N=32   ·   Llama 3 70B · N=80   ·   Llama 3.1 405B · N=126
+        </Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         The whole show: embed → N blocks → unembed.
@@ -311,26 +436,37 @@ export function FullTransformerStack() {
 /* ─────────────────────────────────────────── 7. THREE ARCHITECTURES ── */
 
 export function ThreeArchitectures() {
-  const stack = (x: number, label: string, dir: string, fill: Fill) => (
+  const stack = (cx: number, label: string, sub: string, fill: Fill) => (
     <g>
-      <Box x={x} y={30} w={130} h={26} fill="yellow" font={10.5}>input</Box>
+      <Box x={cx} y={40} w={150} h={32} fill="yellow" font={11.5}>input</Box>
       {[0, 1, 2].map((i) => (
-        <Box key={i} x={x} y={75 + i * 42} w={130} h={32} fill={fill} font={10.5}>
+        <Box key={i} x={cx} y={95 + i * 48} w={150} h={36} fill={fill} font={11.5}>
           block {i + 1}
         </Box>
       ))}
-      <Box x={x} y={220} w={130} h={26} fill="green" font={10.5}>output</Box>
-      <text x={x} y={262} textAnchor="middle" fontSize={11} fontWeight={700} className="fill-foreground">{label}</text>
-      <text x={x} y={278} textAnchor="middle" fontSize={9.5} className="fill-muted-foreground">{dir}</text>
+      <Box x={cx} y={250} w={150} h={32} fill="green" font={11.5}>output</Box>
+      <text x={cx} y={300} textAnchor="middle" fontSize={12} fontWeight={700} className="fill-foreground">
+        {label}
+      </text>
+      <text x={cx} y={318} textAnchor="middle" fontSize={10} className="fill-muted-foreground">
+        {sub}
+      </text>
+
+      {/* connectors */}
+      <Arrow d={`M ${cx} 58 L ${cx} 75`} />
+      {[0, 1].map((i) => (
+        <Arrow key={i} d={`M ${cx} ${115 + i * 48} L ${cx} ${122 + i * 48}`} />
+      ))}
+      <Arrow d={`M ${cx} 213 L ${cx} 232`} />
     </g>
   );
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 640 300" width="100%" className="max-w-2xl mx-auto">
+      <svg viewBox="0 0 720 360" width="100%" className="max-w-2xl mx-auto">
         <Defs />
-        {stack(110, "encoder-decoder", "T5 · BART · NMT", "purple")}
-        {stack(320, "encoder-only", "BERT · retrievers", "blue")}
-        {stack(520, "decoder-only", "GPT · Llama · Claude", "orange")}
+        {stack(130, "encoder-decoder", "T5 · BART · NMT", "purple")}
+        {stack(360, "encoder-only", "BERT · retrievers", "blue")}
+        {stack(590, "decoder-only", "GPT · Llama · Claude", "orange")}
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Same Lego bricks. Three instruction manuals. One ate the planet.
@@ -342,22 +478,29 @@ export function ThreeArchitectures() {
 /* ─────────────────────────────────────────── 8. TRAINING LOOP ── */
 
 export function TrainingLoopDiagram() {
+  // forward arrows along the top row; backward path is a clean
+  // rectangular loop UNDER the row, with its label safely below it.
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 720 280" width="100%" className="max-w-2xl mx-auto">
+      <svg viewBox="0 0 820 340" width="100%" className="max-w-2xl mx-auto">
         <Defs />
-        <Box x={100} y={140} w={130} h={42} fill="yellow">token stream</Box>
-        <Box x={290} y={140} w={130} h={42} fill="blue">transformer (bf16)</Box>
-        <Box x={480} y={140} w={130} h={42} fill="purple">cross-entropy</Box>
-        <Box x={620} y={140} w={80} h={42} fill="green">AdamW</Box>
 
-        <Arrow d="M 165 140 L 224 140" />
-        <Arrow d="M 355 140 L 414 140" />
-        <Arrow d="M 545 140 L 580 140" />
-        <Arrow d="M 620 162 L 290 220 L 100 162" />
+        <Note x={410} y={32} size={11}>~15T tokens · ~$10M – $100M · weeks on thousands of GPUs</Note>
 
-        <Note x={400} y={210}>backward pass + grad all-reduce across GPUs</Note>
-        <Note x={400} y={50}>~15T tokens · ~$10M–$100M · weeks on thousands of GPUs</Note>
+        <Box x={110} y={150} w={140} h={48} fill="yellow">token stream</Box>
+        <Box x={310} y={150} w={150} h={48} fill="blue">transformer (bf16)</Box>
+        <Box x={510} y={150} w={150} h={48} fill="purple">cross-entropy</Box>
+        <Box x={690} y={150} w={100} h={48} fill="green">AdamW</Box>
+
+        {/* forward arrows */}
+        <Arrow d="M 180 150 L 235 150" />
+        <Arrow d="M 385 150 L 435 150" />
+        <Arrow d="M 585 150 L 640 150" />
+
+        {/* backward loop (rectangular, well below the row) */}
+        <Arrow d="M 690 174 L 690 250 L 110 250 L 110 174" />
+
+        <Note x={410} y={285} size={11}>backward pass + grad all-reduce across GPUs</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Pretraining: shift-by-one, repeat a trillion times.
@@ -369,34 +512,48 @@ export function TrainingLoopDiagram() {
 /* ─────────────────────────────────────────── 9. ALIGNMENT (RLHF vs DPO) ── */
 
 export function AlignmentPipeline() {
+  // top row = full RLHF chain
+  // middle row = base → SFT → chat model
+  // bottom row = DPO shortcut
+  // SFT splits up (to pref data) and down (to DPO loss); both rejoin at "chat model"
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 760 280" width="100%" className="max-w-3xl mx-auto">
+      <svg viewBox="0 0 880 380" width="100%" className="max-w-3xl mx-auto">
         <Defs />
-        <Box x={70} y={140} w={90} h={42} fill="yellow">base LM</Box>
-        <Box x={210} y={140} w={70} h={42} fill="blue">SFT</Box>
+
+        {/* main column */}
+        <Box x={80} y={200} w={100} h={44} fill="yellow">base LM</Box>
+        <Box x={220} y={200} w={80} h={44} fill="blue">SFT</Box>
+        <Box x={790} y={200} w={130} h={44} fill="blue">chat model</Box>
 
         {/* RLHF top branch */}
-        <Box x={350} y={70} w={130} h={36} fill="purple">preference data</Box>
-        <Box x={510} y={70} w={130} h={36} fill="purple">reward model</Box>
-        <Box x={680} y={70} w={70} h={36} fill="orange">PPO</Box>
+        <Box x={380} y={80} w={140} h={36} fill="purple" font={11}>preference data</Box>
+        <Box x={550} y={80} w={130} h={36} fill="purple" font={11}>reward model</Box>
+        <Box x={690} y={80} w={80} h={36} fill="orange">PPO</Box>
 
-        {/* DPO bottom shortcut */}
-        <Box x={510} y={210} w={130} h={36} fill="green">DPO loss (closed-form)</Box>
+        {/* DPO bottom branch */}
+        <Box x={550} y={320} w={200} h={36} fill="green" font={11}>DPO loss (closed-form)</Box>
 
-        <Arrow d="M 116 140 L 174 140" />
-        <Arrow d="M 246 140 L 280 140" />
+        {/* base → SFT */}
+        <Arrow d="M 130 200 L 180 200" />
 
-        <Arrow d="M 280 130 L 290 90" />
-        <Arrow d="M 280 150 L 450 210" />
+        {/* SFT branches: up to RLHF, down to DPO */}
+        <Arrow d="M 260 192 L 310 95" />
+        <Arrow d="M 260 208 L 450 312" />
 
-        <Arrow d="M 415 70 L 444 70" />
-        <Arrow d="M 575 70 L 644 70" />
-        <Arrow d="M 715 90 L 715 240" dashed />
+        {/* RLHF chain */}
+        <Arrow d="M 450 80 L 485 80" />
+        <Arrow d="M 615 80 L 650 80" />
 
-        <Note x={420} y={48}>three models in memory · KL leash</Note>
-        <Note x={510} y={250}>same data, no RM, no rollouts</Note>
-        <Note x={750} y={170} anchor="end">→ chat model</Note>
+        {/* PPO → chat model */}
+        <Arrow d="M 730 98 L 765 180" />
+
+        {/* DPO → chat model */}
+        <Arrow d="M 650 320 L 785 222" />
+
+        {/* notes in safe zones */}
+        <Note x={550} y={38} size={11}>RLHF · three models in memory · KL leash</Note>
+        <Note x={550} y={358} size={11}>DPO · same data, no RM, no rollouts</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         RLHF (top) vs DPO&apos;s shortcut (bottom). Same destination.
@@ -410,34 +567,43 @@ export function AlignmentPipeline() {
 export function DecodeLoopKV() {
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 720 320" width="100%" className="max-w-3xl mx-auto">
+      <svg viewBox="0 0 880 460" width="100%" className="max-w-3xl mx-auto">
         <Defs />
-        {/* token strip */}
-        <Box x={130} y={40} w={60} h={28} fill="green" font={11}>The</Box>
-        <Box x={200} y={40} w={60} h={28} fill="green" font={11}>cat</Box>
-        <Box x={270} y={40} w={60} h={28} fill="green" font={11}>sat</Box>
-        <Box x={340} y={40} w={60} h={28} fill="green" font={11}>on</Box>
-        <Box x={410} y={40} w={60} h={28} fill="green" font={11}>the</Box>
-        <Box x={480} y={40} w={60} h={28} fill="yellow" font={11}>?</Box>
+
+        {/* prompt token strip across the top */}
+        {["The", "cat", "sat", "on", "the"].map((tok, i) => (
+          <Box key={tok} x={130 + i * 80} y={60} w={66} h={32} fill="green" font={11}>{tok}</Box>
+        ))}
+        <Box x={530} y={60} w={66} h={32} fill="yellow" font={12}>?</Box>
 
         {/* transformer stack */}
-        <Box x={335} y={140} w={300} h={50} fill="blue">N transformer blocks (with KV cache)</Box>
+        <Box x={320} y={200} w={400} h={60} fill="blue" font={12}>N transformer blocks (with KV cache)</Box>
 
-        {/* KV cache */}
-        <Box x={620} y={140} w={140} h={50} fill="purple" font={10.5}>KV cache (per layer)</Box>
-        <Arrow d="M 555 165 L 549 165" head={false} />
-        <Arrow d="M 480 60 L 480 115" />
-        <Arrow d="M 335 165 L 240 165 L 240 80" />
+        {/* KV cache off to the right */}
+        <Box x={790} y={200} w={140} h={60} fill="purple" font={11}>KV cache (per layer)</Box>
 
-        {/* sampler */}
-        <Box x={335} y={240} w={300} h={42} fill="orange">temperature → top-k → top-p → sample</Box>
-        <Arrow d="M 335 190 L 335 219" />
-        <Box x={620} y={240} w={140} h={42} fill="yellow">&quot;mat&quot;</Box>
-        <Arrow d="M 485 240 L 550 240" />
-        <Arrow d="M 620 220 L 540 75" dashed />
+        {/* sampler row */}
+        <Box x={320} y={320} w={400} h={44} fill="orange" font={11.5}>
+          temperature → top-k → top-p → sample
+        </Box>
 
-        <Note x={620} y={120} anchor="middle">grows by one row / token / layer</Note>
-        <Note x={335} y={300}>vLLM · SGLang · llama.cpp do this for a living</Note>
+        {/* sampled token */}
+        <Box x={790} y={320} w={140} h={44} fill="yellow" font={12}>&quot;mat&quot;</Box>
+
+        {/* arrows */}
+        <Arrow d="M 530 76 L 530 170" />
+        <Arrow d="M 520 200 L 720 200" head={false} />
+        <Arrow d="M 720 200 L 520 200" head={false} />
+        <Arrow d="M 320 230 L 320 298" />
+        <Arrow d="M 520 342 L 720 342" />
+
+        {/* loop back: "mat" returns to the prompt strip */}
+        <Arrow d="M 790 298 L 790 110 L 610 76" dashed />
+
+        {/* notes in safe margins */}
+        <Note x={790} y={148} size={10}>grows by one row / token / layer</Note>
+        <Note x={520} y={395} size={11}>vLLM · SGLang · llama.cpp do this for a living</Note>
+        <Note x={790} y={395} size={10}>append → reuse cache → repeat</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         The autoregressive loop. KV cache is why this is fast.
@@ -449,29 +615,44 @@ export function DecodeLoopKV() {
 /* ─────────────────────────────────────────── 11. MOE ROUTING ── */
 
 export function MoERouter() {
+  // token → router → 8 experts (only 2 highlighted) → weighted sum
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 720 280" width="100%" className="max-w-2xl mx-auto">
+      <svg viewBox="0 0 820 400" width="100%" className="max-w-2xl mx-auto">
         <Defs />
-        <Box x={80} y={140} w={90} h={42} fill="yellow">token x</Box>
-        <Box x={240} y={140} w={110} h={42} fill="purple">router (softmax)</Box>
 
+        <Box x={90} y={190} w={100} h={44} fill="yellow">token x</Box>
+        <Box x={260} y={190} w={130} h={44} fill="purple" font={11.5}>router (softmax)</Box>
+
+        {/* 8 experts as a column */}
         {["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8"].map((e, i) => (
-          <Box key={e} x={430} y={40 + i * 28} w={70} h={22} fill={i === 1 || i === 4 ? "green" : "plain"} font={10}>
+          <Box
+            key={e}
+            x={470}
+            y={50 + i * 36}
+            w={80}
+            h={26}
+            fill={i === 1 || i === 4 ? "green" : "plain"}
+            font={11}
+          >
             {e}
           </Box>
         ))}
 
-        <Box x={590} y={140} w={90} h={42} fill="orange">weighted sum</Box>
+        <Box x={680} y={190} w={120} h={44} fill="orange" font={11.5}>weighted sum</Box>
 
-        <Arrow d="M 130 140 L 184 140" />
-        <Arrow d="M 296 140 L 395 70" />
-        <Arrow d="M 296 140 L 395 152" />
-        <Arrow d="M 470 70 L 545 130" />
-        <Arrow d="M 470 152 L 545 150" />
+        {/* token → router → highlighted experts */}
+        <Arrow d="M 140 190 L 195 190" />
+        <Arrow d="M 325 185 L 430 86" />
+        <Arrow d="M 325 195 L 430 194" />
 
-        <Note x={430} y={250}>top-2 of N experts fire</Note>
-        <Note x={430} y={266}>Mixtral 8x7B · DeepSeek-V3 256+1</Note>
+        {/* highlighted experts → weighted sum */}
+        <Arrow d="M 510 86 L 620 180" />
+        <Arrow d="M 510 194 L 620 195" />
+
+        {/* notes BELOW the experts column so they never sit on top of E8 */}
+        <Note x={470} y={360} size={11}>top-2 of N experts fire (here: E2 + E5)</Note>
+        <Note x={470} y={378} size={10}>Mixtral 8x7B · DeepSeek-V3 256 + 1</Note>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         Mixture of Experts: huge total params, only a sliver active per token.
@@ -483,29 +664,37 @@ export function MoERouter() {
 /* ─────────────────────────────────────────── 12. TEST-TIME COMPUTE ── */
 
 export function TestTimeCompute() {
+  // three branches from "hard question", each ending in an outcome.
+  // arrows leave from the right edge of the question box and land
+  // cleanly on the LEFT edge of each branch box (no slicing through anything).
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 720 260" width="100%" className="max-w-2xl mx-auto">
+      <svg viewBox="0 0 880 360" width="100%" className="max-w-2xl mx-auto">
         <Defs />
-        <Box x={90} y={130} w={130} h={42} fill="yellow">hard question</Box>
 
-        <Box x={300} y={50} w={150} h={32} fill="blue">classic LLM (1 pass)</Box>
-        <Box x={300} y={130} w={150} h={32} fill="purple">long internal CoT</Box>
-        <Box x={300} y={210} w={150} h={32} fill="green">sample + verify ×N</Box>
+        <Note x={500} y={32} size={11}>more inference compute → better answers</Note>
 
-        <Arrow d="M 155 122 L 265 60" />
-        <Arrow d="M 155 130 L 265 130" />
-        <Arrow d="M 155 138 L 265 210" />
+        <Box x={120} y={180} w={150} h={48} fill="yellow">hard question</Box>
 
-        <Box x={580} y={50} w={120} h={32} fill="red">≈ wrong</Box>
-        <Box x={580} y={130} w={120} h={32} fill="green">often right (o1)</Box>
-        <Box x={580} y={210} w={120} h={32} fill="green">often right (R1)</Box>
+        {/* three branches */}
+        <Box x={460} y={80} w={200} h={40} fill="blue" font={11.5}>classic LLM (1 pass)</Box>
+        <Box x={460} y={180} w={200} h={40} fill="purple" font={11.5}>long internal CoT</Box>
+        <Box x={460} y={280} w={200} h={40} fill="green" font={11.5}>sample + verify ×N</Box>
 
-        <Arrow d="M 380 50 L 520 50" />
-        <Arrow d="M 380 130 L 520 130" />
-        <Arrow d="M 380 210 L 520 210" />
+        {/* outcomes */}
+        <Box x={780} y={80} w={150} h={40} fill="red" font={11.5}>≈ wrong</Box>
+        <Box x={780} y={180} w={150} h={40} fill="green" font={11.5}>often right (o1)</Box>
+        <Box x={780} y={280} w={150} h={40} fill="green" font={11.5}>often right (R1)</Box>
 
-        <Note x={360} y={26}>more inference compute → better answers</Note>
+        {/* question → three branches (arrows land cleanly on left edges) */}
+        <Arrow d="M 195 180 L 360 80" />
+        <Arrow d="M 195 180 L 360 180" />
+        <Arrow d="M 195 180 L 360 280" />
+
+        {/* branches → outcomes */}
+        <Arrow d="M 560 80 L 705 80" />
+        <Arrow d="M 560 180 L 705 180" />
+        <Arrow d="M 560 280 L 705 280" />
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         The new scaling law: thinking time at inference, not just bigger weights.

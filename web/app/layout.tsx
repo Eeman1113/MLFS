@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Eeman Majumder" }],
   icons: {
     icon: [
+      { url: "/icon-light.png", type: "image/png" },
       { url: "/icon-light.png", type: "image/png", media: "(prefers-color-scheme: light)" },
       { url: "/icon-dark.png", type: "image/png", media: "(prefers-color-scheme: dark)" },
     ],
