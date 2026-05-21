@@ -2,7 +2,7 @@ import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { Callout } from "@/components/callout";
 import { RunnableCode } from "@/components/runnable-code";
-import { M, Math } from "@/components/math";
+import { M, Math, tex } from "@/components/math";
 import { DotProductInteractive } from "@/components/interactives/dot-product";
 import { LossCurveExplorer } from "@/components/interactives/parabola";
 
@@ -34,17 +34,17 @@ export default function Page() {
         Imagine you're at a fruit stand. You want to buy 2 apples, 3 bananas, and 4 clementines. You
         can represent your shopping list as a vector:
       </p>
-      <Math>{`\\text{my\\_stuff} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 4 \\end{pmatrix}`}</Math>
+      <Math>{tex`\text{my\_stuff} = \begin{pmatrix} 2 \\ 3 \\ 4 \end{pmatrix}`}</Math>
       <p>
         The fruit stand has prices for each item: $1 for an apple, $2 for a banana, and $3 for a
         clementine. We can represent this as a <code>prices</code> vector:
       </p>
-      <Math>{`\\text{prices} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}`}</Math>
+      <Math>{tex`\text{prices} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}`}</Math>
       <p>
         Now, how do you calculate your total bill? You multiply the corresponding items and add them
         up:
       </p>
-      <Math>{`(2 \\text{ apples} \\times \\$1) + (3 \\text{ bananas} \\times \\$2) + (4 \\text{ clementines} \\times \\$3) = \\$20`}</Math>
+      <Math>{tex`(2 \text{ apples} \times \$1) + (3 \text{ bananas} \times \$2) + (4 \text{ clementines} \times \$3) = \$20`}</Math>
       <p>Congratulations, you just did a <strong>dot product</strong>.</p>
 
       <DotProductInteractive />
@@ -71,7 +71,7 @@ print(f"Total bill: \${total_bill}")  # Total bill: $20`}
         lists. If you had shopping lists for three different people, you could stack them into a
         matrix:
       </p>
-      <Math>{`\\text{all\\_the\\_stuff} = \\begin{pmatrix} 2 & 3 & 4 \\\\ 1 & 1 & 5 \\\\ 3 & 2 & 0 \\end{pmatrix}`}</Math>
+      <Math>{tex`\text{all\_the\_stuff} = \begin{pmatrix} 2 & 3 & 4 \\ 1 & 1 & 5 \\ 3 & 2 & 0 \end{pmatrix}`}</Math>
       <p>
         That's it. Vectors and matrices are just containers for our data. They're spicy arrays that
         let us do math on a whole bunch of numbers at once.
@@ -134,13 +134,13 @@ print(f"Total bill: \${total_bill}")  # Total bill: $20`}
         <li>Probability of losing (not rolling a 6) = 5/6</li>
       </ul>
       <p>The expected value (EV) is calculated like this:</p>
-      <Math>{`\\text{EV} = (P(\\text{win}) \\times \\text{Amount won}) - (P(\\text{lose}) \\times \\text{Amount lost})`}</Math>
-      <Math>{`\\text{EV} = \\left(\\tfrac{1}{6} \\times \\$5\\right) - \\left(\\tfrac{5}{6} \\times \\$1\\right) = \\tfrac{\\$5}{6} - \\tfrac{\\$5}{6} = \\$0`}</Math>
+      <Math>{tex`\text{EV} = (P(\text{win}) \times \text{Amount won}) - (P(\text{lose}) \times \text{Amount lost})`}</Math>
+      <Math>{tex`\text{EV} = \left(\tfrac{1}{6} \times \$5\right) - \left(\tfrac{5}{6} \times \$1\right) = \tfrac{\$5}{6} - \tfrac{\$5}{6} = \$0`}</Math>
       <p>
         Huh. This is a fair game. A casino would never offer this. Let's make it more realistic.
         They pay you $4 if you win.
       </p>
-      <Math>{`\\text{EV} = \\left(\\tfrac{1}{6} \\times \\$4\\right) - \\left(\\tfrac{5}{6} \\times \\$1\\right) = \\tfrac{\\$4}{6} - \\tfrac{\\$5}{6} = -\\tfrac{\\$1}{6} \\approx -\\$0.17`}</Math>
+      <Math>{tex`\text{EV} = \left(\tfrac{1}{6} \times \$4\right) - \left(\tfrac{5}{6} \times \$1\right) = \tfrac{\$4}{6} - \tfrac{\$5}{6} = -\tfrac{\$1}{6} \approx -\$0.17`}</Math>
       <p>
         This means that on average, every time you play, you lose 17 cents. This is the "house
         edge." A machine learning model's performance is similar. Over thousands of predictions, we
@@ -154,15 +154,15 @@ print(f"Total bill: \${total_bill}")  # Total bill: $20`}
       </p>
       <p>
         Let's say the probability that any random person has a peanut allergy is low, maybe 1% (
-        <M>{`P(\\text{Allergy}) = 0.01`}</M>). This is our <strong>prior belief</strong>.
+        <M>{tex`P(\text{Allergy}) = 0.01`}</M>). This is our <strong>prior belief</strong>.
       </p>
       <p>
         Now, your friend eats a cookie and their face swells up. This is <strong>new evidence</strong>.
         We want to calculate the probability they have an allergy <em>given</em> this new evidence:{" "}
-        <M>{`P(\\text{Allergy} \\mid \\text{Swelling})`}</M>.
+        <M>{tex`P(\text{Allergy} \mid \text{Swelling})`}</M>.
       </p>
       <p>Bayes' Theorem gives us the formula:</p>
-      <Math>{`P(\\text{Allergy} \\mid \\text{Swelling}) = \\frac{P(\\text{Swelling} \\mid \\text{Allergy}) \\times P(\\text{Allergy})}{P(\\text{Swelling})}`}</Math>
+      <Math>{tex`P(\text{Allergy} \mid \text{Swelling}) = \frac{P(\text{Swelling} \mid \text{Allergy}) \times P(\text{Allergy})}{P(\text{Swelling})}`}</Math>
       <p>
         This lets us update our initial 1% belief to something much, much higher. This is exactly
         how the Naive Bayes algorithm (Chapter 8) works: it starts with a prior belief about the

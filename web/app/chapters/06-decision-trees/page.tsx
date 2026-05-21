@@ -1,7 +1,7 @@
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
-import { Math } from "@/components/math";
+import { Math, tex } from "@/components/math";
 import { GiniSplitExplorer, PrettyTree } from "@/components/interactives/decision-tree";
 
 export const metadata = { title: "Ch. 6 · Decision Trees · MLFS" };
@@ -82,12 +82,12 @@ export default function Page() {
           <strong>Gini Impurity:</strong> The probability of incorrectly classifying a randomly
           chosen element if it were randomly labeled according to the distribution of labels in the
           subset. It's computationally faster than Entropy because it doesn't involve a logarithm.
-          <Math>{`G = 1 - \\sum_{i=1}^{C} (p_i)^2`}</Math>
+          <Math>{tex`G = 1 - \sum_{i=1}^{C} (p_i)^2`}</Math>
         </li>
         <li>
           <strong>Entropy:</strong> A concept from information theory measuring the level of
           uncertainty or randomness.
-          <Math>{`H = -\\sum_{i=1}^{C} p_i \\log_2(p_i)`}</Math>
+          <Math>{tex`H = -\sum_{i=1}^{C} p_i \log_2(p_i)`}</Math>
         </li>
       </ul>
       <p>

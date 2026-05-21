@@ -1,7 +1,7 @@
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
-import { Math } from "@/components/math";
+import { Math, tex } from "@/components/math";
 import { SigmoidExplorer } from "@/components/interactives/sigmoid";
 import { XORTrainer } from "@/components/interactives/neural-net";
 
@@ -32,7 +32,7 @@ export default function Page() {
       <p>Here's what a neuron does:</p>
       <ol>
         <li>It takes one or more inputs (x₁, x₂, ...).</li>
-        <li>It calculates a weighted sum of those inputs and adds a bias: <Math>{`z = w_1 x_1 + w_2 x_2 + \\ldots + b`}</Math> (Sound familiar? It's the linear regression equation.)</li>
+        <li>It calculates a weighted sum of those inputs and adds a bias: <Math>{tex`z = w_1 x_1 + w_2 x_2 + \ldots + b`}</Math> (Sound familiar? It's the linear regression equation.)</li>
         <li>It passes this result, z, through an <strong>activation function</strong>. (Sound familiar? It's what we did in logistic regression.)</li>
       </ol>
       <p>That's it. A single neuron is just a simple linear model followed by a non-linear activation.</p>
@@ -54,7 +54,7 @@ export default function Page() {
         </li>
         <li>
           <strong>ReLU (Rectified Linear Unit):</strong> The undisputed king of modern deep learning.
-          <Math>{`f(x) = \\max(0, x)`}</Math>
+          <Math>{tex`f(x) = \max(0, x)`}</Math>
           If positive → pass through; if negative → zero. Fast and gradient stays alive for positive values.
         </li>
       </ul>
@@ -102,7 +102,7 @@ export default function Page() {
         <li>It continues this process, propagating the error signal backwards through the network, layer by layer, until it has calculated the gradient (the "blame") for every single weight and bias.</li>
       </ol>
       <p>Once you have all the gradients, you just use our old friend Gradient Descent to update every weight and bias:</p>
-      <Math>{`\\text{weight} = \\text{weight} - \\text{learning\\_rate} \\times \\text{gradient}`}</Math>
+      <Math>{tex`\text{weight} = \text{weight} - \text{learning\_rate} \times \text{gradient}`}</Math>
       <p>
         That's the entire training loop: Forward Pass → Calculate Loss → Backward Pass
         (Backpropagation) → Update Weights. Repeat 10,000 times.

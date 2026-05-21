@@ -1,7 +1,7 @@
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
-import { Math } from "@/components/math";
+import { Math, tex } from "@/components/math";
 
 export const metadata = { title: "Ch. 8 · Naive Bayes · MLFS" };
 
@@ -27,12 +27,12 @@ export default function Page() {
         We're going back to Chapter 2 and dusting off our old friend, Bayes' Theorem. As a reminder,
         it's the formula that lets us update our beliefs in the face of new evidence.
       </p>
-      <Math>{`P(A \\mid B) = \\frac{P(B \\mid A) \\, P(A)}{P(B)}`}</Math>
+      <Math>{tex`P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)}`}</Math>
       <p>
         In classification, we want to calculate the probability of a certain class (C) given some
         observed data (D). For a spam filter, this translates to:
       </p>
-      <Math>{`P(\\text{Spam} \\mid \\text{Words}) = \\frac{P(\\text{Words} \\mid \\text{Spam}) \\, P(\\text{Spam})}{P(\\text{Words})}`}</Math>
+      <Math>{tex`P(\text{Spam} \mid \text{Words}) = \frac{P(\text{Words} \mid \text{Spam}) \, P(\text{Spam})}{P(\text{Words})}`}</Math>
       <p>Let's break this down with a food allergy analogy:</p>
       <ul>
         <li><strong>P(Spam):</strong> The <strong>prior probability</strong>. What's the chance that any random email is spam, before we've even read it? Maybe it's 1 in 5 (20%). This is our starting belief.</li>
@@ -55,7 +55,7 @@ export default function Page() {
         feature, given the class.
       </p>
       <p>So, instead of a complex calculation, it does this:</p>
-      <Math>{`P(\\text{"free money now"} \\mid \\text{Spam}) \\approx P(\\text{free} \\mid S) \\cdot P(\\text{money} \\mid S) \\cdot P(\\text{now} \\mid S)`}</Math>
+      <Math>{tex`P(\text{"free money now"} \mid \text{Spam}) \approx P(\text{free} \mid S) \cdot P(\text{money} \mid S) \cdot P(\text{now} \mid S)`}</Math>
       <p>
         This is obviously wrong. In the real world, words have context. "San" is not independent of
         "Francisco." But this assumption simplifies the math so dramatically that it becomes not
@@ -76,7 +76,7 @@ export default function Page() {
         <li>Create a vocabulary of all unique words in the dataset.</li>
         <li>
           For each word in the vocabulary, calculate its likelihood for each class. For example:
-          <Math>{`P(\\text{"Viagra"} \\mid \\text{Spam}) = \\frac{\\text{count of "Viagra" in spam}}{\\text{total words in spam}}`}</Math>
+          <Math>{tex`P(\text{"Viagra"} \mid \text{Spam}) = \frac{\text{count of "Viagra" in spam}}{\text{total words in spam}}`}</Math>
         </li>
         <li>Store all these probabilities in a dictionary or hash map. That's our "trained" model.</li>
       </ol>
@@ -92,7 +92,7 @@ export default function Page() {
         trick: we pretend we've seen every word in our vocabulary one more time than we actually
         have.
       </p>
-      <Math>{`P(\\text{word} \\mid \\text{Class}) = \\frac{\\text{count(word, Class)} + 1}{\\text{total words in Class} + |\\text{vocab}|}`}</Math>
+      <Math>{tex`P(\text{word} \mid \text{Class}) = \frac{\text{count(word, Class)} + 1}{\text{total words in Class} + |\text{vocab}|}`}</Math>
       <p>This ensures that no word ever has a zero probability. It's like giving every word a tiny head start.</p>
 
       <h3>Step 3: The predict() function</h3>
@@ -106,7 +106,7 @@ export default function Page() {
         into floating-point underflow. The standard trick is to use the log of the probabilities
         instead. Multiplication becomes addition, which is numerically much more stable:
       </p>
-      <Math>{`\\log P(\\text{Class}) + \\sum_i \\log P(\\text{word}_i \\mid \\text{Class})`}</Math>
+      <Math>{tex`\log P(\text{Class}) + \sum_i \log P(\text{word}_i \mid \text{Class})`}</Math>
       <p>Compare the final log-probability scores for 'Spam' and 'Ham'. The class with the higher score is our prediction.</p>
 
       <RunnableCode

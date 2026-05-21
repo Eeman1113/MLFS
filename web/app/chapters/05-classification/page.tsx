@@ -1,7 +1,7 @@
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
-import { Math } from "@/components/math";
+import { Math, tex } from "@/components/math";
 import { SigmoidExplorer } from "@/components/interactives/sigmoid";
 import { DecisionBoundaryExplorer } from "@/components/interactives/logistic";
 
@@ -47,10 +47,10 @@ export default function Page() {
         S-shaped curve that is the absolute hero of binary classification.
       </p>
       <p>The formula is:</p>
-      <Math>{`\\sigma(z) = \\frac{1}{1 + e^{-z}}`}</Math>
+      <Math>{tex`\sigma(z) = \frac{1}{1 + e^{-z}}`}</Math>
       <p>
-        Where <span><Math>{`z`}</Math></span> is just the output of our old friend, the linear equation:{" "}
-        <Math>{`z = mx + b`}</Math>.
+        Where <span><Math>{tex`z`}</Math></span> is just the output of our old friend, the linear equation:{" "}
+        <Math>{tex`z = mx + b`}</Math>.
       </p>
 
       <SigmoidExplorer />
@@ -110,10 +110,10 @@ print(predict_proba(X, m=1.5, b=-7))`}
         punishes the model when it's confidently wrong. We use <strong>Binary Cross-Entropy</strong>{" "}
         (or Log Loss).
       </p>
-      <Math>{`\\text{Loss} = -\\frac{1}{n} \\sum_{i=1}^{n} \\big[ y_i \\log(\\hat{y}_i) + (1-y_i) \\log(1-\\hat{y}_i) \\big]`}</Math>
+      <Math>{tex`\text{Loss} = -\frac{1}{n} \sum_{i=1}^{n} \big[ y_i \log(\hat{y}_i) + (1-y_i) \log(1-\hat{y}_i) \big]`}</Math>
       <ul>
-        <li>If the true label is 1, the loss is <Math>{`-\\log(\\hat{y}_i)`}</Math>. Predict 0.99 → loss tiny. Predict 0.01 → loss huge.</li>
-        <li>If the true label is 0, the loss is <Math>{`-\\log(1-\\hat{y}_i)`}</Math>. Same logic in reverse.</li>
+        <li>If the true label is 1, the loss is <Math>{tex`-\log(\hat{y}_i)`}</Math>. Predict 0.99 → loss tiny. Predict 0.01 → loss huge.</li>
+        <li>If the true label is 0, the loss is <Math>{tex`-\log(1-\hat{y}_i)`}</Math>. Same logic in reverse.</li>
       </ul>
 
       <RunnableCode
@@ -142,8 +142,8 @@ print("Confidently wrong:", loss(y_true, y_pred_confident_wrong))`}
         out to be surprisingly simple.
       </p>
       <ul>
-        <li><Math>{`\\frac{\\partial L}{\\partial m} = \\text{mean}((\\hat{y} - y) \\cdot X)`}</Math></li>
-        <li><Math>{`\\frac{\\partial L}{\\partial b} = \\text{mean}(\\hat{y} - y)`}</Math></li>
+        <li><Math>{tex`\frac{\partial L}{\partial m} = \text{mean}((\hat{y} - y) \cdot X)`}</Math></li>
+        <li><Math>{tex`\frac{\partial L}{\partial b} = \text{mean}(\hat{y} - y)`}</Math></li>
       </ul>
       <p>
         The update loop looks identical to the one in linear regression. We just swapped out the

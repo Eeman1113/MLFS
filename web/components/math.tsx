@@ -1,13 +1,20 @@
 import katex from "katex";
 
+/** Use this for math content so backslashes stay literal:
+ *  <Math>{tex`\text{...} = \begin{pmatrix} 2 \\ 3 \end{pmatrix}`}</Math>
+ *  Bypasses JS escape interpretation (\t / \b / etc).
+ */
+export const tex = String.raw;
+
 function safeRender(src: string, display: boolean) {
   try {
-    return katex.renderToString(src, {
+    const html = katex.renderToString(src, {
       displayMode: display,
       throwOnError: false,
       output: "html",
       strict: "ignore",
     });
+    return html;
   } catch {
     const esc = src
       .replace(/&/g, "&amp;")

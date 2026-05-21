@@ -2,7 +2,7 @@ import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 import { LinearRegressionTrainer } from "@/components/interactives/linear-regression";
-import { Math } from "@/components/math";
+import { Math, tex } from "@/components/math";
 import { Highchart } from "@/components/highchart";
 import { palette } from "@/lib/palette";
 
@@ -82,7 +82,7 @@ export default function Page() {
         line seems like a reasonable way to model this relationship. And what's the equation for a
         straight line? You know this from middle school.
       </p>
-      <Math>{`y = mx + b`}</Math>
+      <Math>{tex`y = mx + b`}</Math>
       <ul>
         <li><strong>y:</strong> The value we want to predict (Exam Score).</li>
         <li><strong>x:</strong> Our input feature (Hours Studied).</li>
@@ -140,7 +140,7 @@ print(y_pred)`}
         </li>
         <li>Calculate the <strong>average</strong> of all these squared errors.</li>
       </ol>
-      <Math>{`\\text{MSE} = \\frac{1}{n} \\sum_{i=1}^{n} (y_{\\text{true}, i} - y_{\\text{pred}, i})^2`}</Math>
+      <Math>{tex`\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_{\text{true}, i} - y_{\text{pred}, i})^2`}</Math>
 
       <RunnableCode
         title="step2_loss.py"
@@ -172,8 +172,8 @@ print("Initial Loss:", loss(y_true, y_pred))`}
       </p>
       <p>I'll spare you the full calculus derivation. The partial derivatives of our MSE loss function are:</p>
       <ul>
-        <li>Derivative w.r.t. m: <Math>{`\\frac{\\partial L}{\\partial m} = -2 \\cdot \\text{mean}\\left(X \\cdot (y_{\\text{true}} - y_{\\text{pred}})\\right)`}</Math></li>
-        <li>Derivative w.r.t. b: <Math>{`\\frac{\\partial L}{\\partial b} = -2 \\cdot \\text{mean}\\left(y_{\\text{true}} - y_{\\text{pred}}\\right)`}</Math></li>
+        <li>Derivative w.r.t. m: <Math>{tex`\frac{\partial L}{\partial m} = -2 \cdot \text{mean}\left(X \cdot (y_{\text{true}} - y_{\text{pred}})\right)`}</Math></li>
+        <li>Derivative w.r.t. b: <Math>{tex`\frac{\partial L}{\partial b} = -2 \cdot \text{mean}\left(y_{\text{true}} - y_{\text{pred}}\right)`}</Math></li>
       </ul>
       <p>To descend the hill, we just need to take a small step in the <em>opposite</em> direction of the gradient.</p>
 
