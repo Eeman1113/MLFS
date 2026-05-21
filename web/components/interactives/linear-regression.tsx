@@ -79,7 +79,7 @@ export function LinearRegressionTrainer() {
   ] as [number, number][];
 
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · gradient descent on hours studied → exam score
@@ -168,7 +168,7 @@ export function LinearRegressionTrainer() {
 
 function Stat({ label, v }: { label: string; v: string }) {
   return (
-    <div className="rounded-xl bg-background border p-3">
+    <div className="rounded-md bg-background border p-3">
       <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
       <div className="font-mono text-lg font-bold">{v}</div>
     </div>

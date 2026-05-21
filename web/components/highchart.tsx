@@ -58,7 +58,7 @@ export function Highchart({
   }, [theme]);
 
   return (
-    <div className={`not-prose my-6 rounded-2xl border bg-card p-4 ${className || ""}`}>
+    <div className={`not-prose my-6 rounded-lg border bg-card p-4 ${className || ""}`}>
       <HighchartsReact highcharts={Highcharts} options={merged} ref={ref} />
     </div>
   );

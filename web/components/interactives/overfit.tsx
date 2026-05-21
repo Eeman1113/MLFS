@@ -63,7 +63,7 @@ export function OverfitExplorer() {
   }, [weights]);
   const mse = ys.reduce((s, v, i) => s + (v - evalPoly(weights, xs[i])) ** 2, 0) / ys.length;
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           live · increase the degree to see overfitting take over

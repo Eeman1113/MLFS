@@ -10,9 +10,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
-    const stored = (typeof window !== "undefined" && window.localStorage.getItem("mlfs-theme")) as Theme | null;
-    const prefersDark = typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial: Theme = stored ?? (prefersDark ? "dark" : "light");
+    const stored =
+      typeof window !== "undefined"
+        ? (window.localStorage.getItem("mlfs-theme") as Theme | null)
+        : null;
+    // Default to light. Only honor explicit user choice from a previous toggle.
+    const initial: Theme = stored === "dark" || stored === "light" ? stored : "light";
     setThemeState(initial);
     document.documentElement.classList.toggle("dark", initial === "dark");
   }, []);
@@ -20,11 +23,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setTheme = (t: Theme) => {
     setThemeState(t);
     document.documentElement.classList.toggle("dark", t === "dark");
-    try { window.localStorage.setItem("mlfs-theme", t); } catch {}
+    try {
+      window.localStorage.setItem("mlfs-theme", t);
+    } catch {}
   };
 
   return (
-    <ThemeCtx.Provider value={{ theme, setTheme, toggle: () => setTheme(theme === "dark" ? "light" : "dark") }}>
+    <ThemeCtx.Provider
+      value={{ theme, setTheme, toggle: () => setTheme(theme === "dark" ? "light" : "dark") }}
+    >
       {children}
     </ThemeCtx.Provider>
   );

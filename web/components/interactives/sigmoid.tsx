@@ -12,7 +12,7 @@ export function SigmoidExplorer() {
     return arr;
   }, []);
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           live · drag z

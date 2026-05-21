@@ -131,7 +131,7 @@ export function XORTrainer() {
   }
 
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · tiny neural net learning XOR · epoch {ep}

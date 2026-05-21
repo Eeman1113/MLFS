@@ -4,40 +4,47 @@
 
 @import "katex/dist/katex.min.css";
 
+/* Plain shadcn defaults with a warm off-white paper background in light mode. */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 4%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 4%;
-  --primary: 0 0% 4%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 96%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 45%;
-  --accent: 0 0% 96%;
-  --accent-foreground: 0 0% 9%;
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --ring: 0 0% 4%;
-  --radius: 0.75rem;
+  --background: 44 35% 96%;       /* warm cream paper */
+  --foreground: 0 0% 8%;
+  --card: 44 35% 96%;
+  --card-foreground: 0 0% 8%;
+  --popover: 44 35% 96%;
+  --popover-foreground: 0 0% 8%;
+  --primary: 0 0% 8%;
+  --primary-foreground: 44 35% 96%;
+  --secondary: 44 20% 92%;
+  --secondary-foreground: 0 0% 8%;
+  --muted: 44 20% 92%;
+  --muted-foreground: 0 0% 38%;
+  --accent: 44 20% 92%;
+  --accent-foreground: 0 0% 8%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 40 12% 86%;
+  --input: 40 12% 86%;
+  --ring: 0 0% 8%;
+  --radius: 0.5rem;
 }
 
 .dark {
-  --background: 0 0% 3.5%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 6%;
-  --card-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 10%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 10%;
-  --muted-foreground: 0 0% 65%;
-  --accent: 0 0% 14%;
-  --accent-foreground: 0 0% 98%;
-  --border: 0 0% 16%;
-  --input: 0 0% 16%;
+  --background: 0 0% 6%;
+  --foreground: 0 0% 96%;
+  --card: 0 0% 8%;
+  --card-foreground: 0 0% 96%;
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 0 0% 96%;
+  --primary-foreground: 0 0% 8%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 64%;
+  --accent: 0 0% 16%;
+  --accent-foreground: 0 0% 96%;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
   --ring: 0 0% 80%;
 }
 
@@ -46,150 +53,59 @@ html { scroll-behavior: smooth; }
 body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Beautiful grain background */
-.grain::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
-  background-size: 18px 18px;
-}
-.dark .grain::before {
-  background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-}
-
-/* Beautiful prose */
+/* Reading prose */
 .prose-book {
-  font-size: 1.05rem;
-  line-height: 1.78;
+  font-size: 1.0625rem;
+  line-height: 1.75;
   color: hsl(var(--foreground));
-  max-width: 72ch;
+  max-width: 68ch;
   margin-inline: auto;
 }
-.prose-book p { margin: 1.05em 0; }
-.prose-book p + p { margin-top: 1.2em; }
+.prose-book p { margin: 1em 0; }
 .prose-book h1, .prose-book h2, .prose-book h3, .prose-book h4 {
   font-family: var(--font-poppins);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   font-weight: 700;
   color: hsl(var(--foreground));
 }
-.prose-book h2 {
-  font-size: 1.85rem;
-  margin-top: 3.2rem;
-  margin-bottom: 1rem;
-  scroll-margin-top: 6rem;
-}
-.prose-book h3 {
-  font-size: 1.35rem;
-  margin-top: 2.4rem;
-  margin-bottom: 0.7rem;
-  scroll-margin-top: 6rem;
-}
-.prose-book h4 {
-  font-size: 1.05rem;
-  margin-top: 1.6rem;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: hsl(var(--muted-foreground));
-}
+.prose-book h2 { font-size: 1.65rem; margin-top: 2.6rem; margin-bottom: 0.8rem; scroll-margin-top: 5rem; }
+.prose-book h3 { font-size: 1.2rem; margin-top: 1.9rem; margin-bottom: 0.55rem; scroll-margin-top: 5rem; }
+.prose-book h4 { font-size: 0.95rem; margin-top: 1.4rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; color: hsl(var(--muted-foreground)); }
 .prose-book ul, .prose-book ol { padding-left: 1.4rem; margin: 1em 0; }
 .prose-book ul { list-style: disc; }
 .prose-book ol { list-style: decimal; }
-.prose-book li { margin: 0.35em 0; }
+.prose-book li { margin: 0.3em 0; }
 .prose-book strong { font-weight: 700; }
 .prose-book em { font-style: italic; }
-.prose-book hr { border: none; border-top: 1px solid hsl(var(--border)); margin: 3rem 0; }
-.prose-book blockquote {
-  border-left: 3px solid hsl(var(--foreground));
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  font-style: italic;
-  color: hsl(var(--muted-foreground));
-}
+.prose-book hr { border: none; border-top: 1px solid hsl(var(--border)); margin: 2.2rem 0; }
+.prose-book blockquote { border-left: 2px solid hsl(var(--foreground)); padding-left: 0.9rem; margin: 1.2rem 0; color: hsl(var(--muted-foreground)); font-style: italic; }
 .prose-book code:not(pre code) {
   font-family: var(--font-mono);
   background: hsl(var(--muted));
-  padding: 0.12em 0.42em;
-  border-radius: 0.3em;
-  font-size: 0.92em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
 }
-.prose-book table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.95rem;
-}
-.prose-book th, .prose-book td {
-  border: 1px solid hsl(var(--border));
-  padding: 0.6rem 0.85rem;
-  text-align: left;
-  vertical-align: top;
-}
+.prose-book table { width: 100%; border-collapse: collapse; margin: 1.3rem 0; font-size: 0.94rem; }
+.prose-book th, .prose-book td { border: 1px solid hsl(var(--border)); padding: 0.55rem 0.8rem; text-align: left; vertical-align: top; }
 .prose-book th { background: hsl(var(--muted)); font-weight: 600; }
-.prose-book figure { margin: 2rem 0; text-align: center; }
-.prose-book figcaption { color: hsl(var(--muted-foreground)); font-size: 0.85rem; margin-top: 0.5rem; }
+.prose-book figure { margin: 1.6rem 0; text-align: center; }
+.prose-book figcaption { color: hsl(var(--muted-foreground)); font-size: 0.85rem; margin-top: 0.4rem; }
 
-/* KaTeX visible math vertical rhythm */
-.katex-display { margin: 1.25rem 0 !important; overflow-x: auto; overflow-y: hidden; }
+/* KaTeX */
+.katex-display { margin: 1rem 0 !important; overflow-x: auto; overflow-y: hidden; }
+.katex { font-size: 1.02em; }
 
-/* Marquee for hero */
-.marquee {
-  --gap: 2rem;
-  display: flex;
-  overflow: hidden;
-  user-select: none;
-  gap: var(--gap);
-}
-.marquee__inner {
-  display: flex;
-  flex-shrink: 0;
-  justify-content: space-around;
-  gap: var(--gap);
-  animation: scroll 40s linear infinite;
-  min-width: 100%;
-}
-@keyframes scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-100% - var(--gap))); }
-}
-
-/* Highcharts background transparent so theme shows through */
+/* Highcharts transparent so card bg shows through */
 .highcharts-background { fill: transparent !important; }
 .highcharts-credits { display: none !important; }
 
-/* Cool border gradient utility */
-.bg-grid {
-  background-image: linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
-                    linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
-}
-
-.shimmer-text {
-  background: linear-gradient(90deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 50%, hsl(var(--foreground)) 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
-}
-
-/* Subtle hover lift */
-.hover-lift { transition: transform 240ms ease, box-shadow 240ms ease; }
-.hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15); }
-
-/* Code editor wrapper */
-.cm-editor { border-radius: 0.6rem; font-size: 0.85rem !important; }
+/* Code editor */
+.cm-editor { font-size: 0.85rem !important; }
 .cm-editor .cm-scroller { font-family: var(--font-mono) !important; }
 
-/* Selection */
 ::selection { background: hsl(var(--foreground)); color: hsl(var(--background)); }

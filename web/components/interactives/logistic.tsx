@@ -35,7 +35,7 @@ export function DecisionBoundaryExplorer() {
   }, [w1, w2, bias]);
 
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · drag the decision boundary
@@ -71,7 +71,7 @@ function Knob({
   label, value, min, max, step, onChange,
 }: { label: string; value: number; min: number; max: number; step: number; onChange: (v: number) => void }) {
   return (
-    <div className="rounded-xl bg-background border p-3">
+    <div className="rounded-md bg-background border p-3">
       <div className="text-[10px] uppercase tracking-wide text-muted-foreground mb-1.5">{label}</div>
       <Slider min={min} max={max} step={step} value={[value]} onValueChange={([v]) => onChange(v)} />
     </div>

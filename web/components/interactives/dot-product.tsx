@@ -10,13 +10,13 @@ export function DotProductInteractive() {
   const total = a.reduce((s, v, i) => s + v * p[i], 0);
 
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
         Live · drag the sliders
       </div>
       <div className="grid md:grid-cols-3 gap-4 mb-4">
         {items.map((label, i) => (
-          <div key={label} className="rounded-xl border p-3 bg-background">
+          <div key={label} className="rounded-md border p-3 bg-background">
             <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
             <div className="text-lg font-display font-bold mb-1">
               {a[i]} × ${p[i]} = <span className="text-foreground">${a[i] * p[i]}</span>

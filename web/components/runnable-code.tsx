@@ -82,7 +82,7 @@ except Exception:
   };
 
   return (
-    <div className="not-prose my-6 rounded-2xl border bg-card overflow-hidden shadow-sm">
+    <div className="not-prose my-6 rounded-lg border bg-card overflow-hidden">
       <div className="flex items-center justify-between px-4 py-2.5 border-b bg-muted/40">
         <div className="flex items-center gap-2 min-w-0">
           <div className="flex gap-1.5">

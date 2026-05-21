@@ -34,7 +34,7 @@ export function GiniSplitExplorer() {
   const gain = giniBefore - giniSplit;
 
   return (
-    <div className="not-prose my-8 rounded-2xl border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · move the threshold, watch impurity drop
@@ -72,31 +72,31 @@ export function GiniSplitExplorer() {
 export function PrettyTree() {
   return (
     <figure className="not-prose my-8">
-      <svg viewBox="0 0 560 360" className="w-full max-w-2xl mx-auto text-foreground">
+      <svg viewBox="0 0 560 360" className="w-full max-w-2xl mx-auto">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+            <path d="M 0 0 L 10 5 L 0 10 z" className="fill-foreground" />
           </marker>
         </defs>
-        <Node x={280} y={40} text="petal length ≤ 2.45?" />
-        <Node x={120} y={130} text="setosa" leaf fill="hsl(150 60% 90%)" />
-        <Node x={400} y={130} text="petal width ≤ 1.75?" />
-        <Node x={310} y={230} text="petal length ≤ 4.95?" />
-        <Node x={490} y={230} text="virginica" leaf fill="hsl(30 80% 90%)" />
-        <Node x={230} y={320} text="versicolor" leaf fill="hsl(210 80% 90%)" />
-        <Node x={400} y={320} text="virginica" leaf fill="hsl(30 80% 90%)" />
-        <path d="M 252 56 L 145 110" stroke="currentColor" markerEnd="url(#arr)" fill="none" />
-        <path d="M 310 56 L 380 110" stroke="currentColor" markerEnd="url(#arr)" fill="none" />
-        <path d="M 380 152 L 320 210" stroke="currentColor" markerEnd="url(#arr)" fill="none" />
-        <path d="M 420 152 L 480 210" stroke="currentColor" markerEnd="url(#arr)" fill="none" />
-        <path d="M 290 252 L 250 300" stroke="currentColor" markerEnd="url(#arr)" fill="none" />
-        <path d="M 330 252 L 390 300" stroke="currentColor" markerEnd="url(#arr)" fill="none" />
-        <text x={195} y={92} fontSize="10" fontWeight="700" fill="currentColor">yes</text>
-        <text x={345} y={92} fontSize="10" fontWeight="700" fill="currentColor">no</text>
-        <text x={335} y={188} fontSize="10" fontWeight="700" fill="currentColor">yes</text>
-        <text x={465} y={188} fontSize="10" fontWeight="700" fill="currentColor">no</text>
-        <text x={250} y={282} fontSize="10" fontWeight="700" fill="currentColor">yes</text>
-        <text x={372} y={282} fontSize="10" fontWeight="700" fill="currentColor">no</text>
+        <TreeNode x={280} y={40} text="petal length ≤ 2.45?" />
+        <TreeNode x={120} y={130} text="setosa" leaf />
+        <TreeNode x={400} y={130} text="petal width ≤ 1.75?" />
+        <TreeNode x={310} y={230} text="petal length ≤ 4.95?" />
+        <TreeNode x={490} y={230} text="virginica" leaf />
+        <TreeNode x={230} y={320} text="versicolor" leaf />
+        <TreeNode x={400} y={320} text="virginica" leaf />
+        <path d="M 252 56 L 145 110" className="stroke-foreground" markerEnd="url(#arr)" fill="none" />
+        <path d="M 310 56 L 380 110" className="stroke-foreground" markerEnd="url(#arr)" fill="none" />
+        <path d="M 380 152 L 320 210" className="stroke-foreground" markerEnd="url(#arr)" fill="none" />
+        <path d="M 420 152 L 480 210" className="stroke-foreground" markerEnd="url(#arr)" fill="none" />
+        <path d="M 290 252 L 250 300" className="stroke-foreground" markerEnd="url(#arr)" fill="none" />
+        <path d="M 330 252 L 390 300" className="stroke-foreground" markerEnd="url(#arr)" fill="none" />
+        <text x={195} y={92} fontSize="10" fontWeight="700" className="fill-foreground">yes</text>
+        <text x={345} y={92} fontSize="10" fontWeight="700" className="fill-foreground">no</text>
+        <text x={335} y={188} fontSize="10" fontWeight="700" className="fill-foreground">yes</text>
+        <text x={465} y={188} fontSize="10" fontWeight="700" className="fill-foreground">no</text>
+        <text x={250} y={282} fontSize="10" fontWeight="700" className="fill-foreground">yes</text>
+        <text x={372} y={282} fontSize="10" fontWeight="700" className="fill-foreground">no</text>
       </svg>
       <figcaption className="text-center mt-2 text-xs text-muted-foreground italic">
         A simple decision tree for classifying Iris flowers.
@@ -105,19 +105,29 @@ export function PrettyTree() {
   );
 }
 
-function Node({
-  x,
-  y,
-  text,
-  leaf,
-  fill = "hsl(var(--background))",
-}: { x: number; y: number; text: string; leaf?: boolean; fill?: string }) {
+function TreeNode({ x, y, text, leaf }: { x: number; y: number; text: string; leaf?: boolean }) {
   const w = 140;
   const h = 38;
   return (
     <g>
-      <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx={leaf ? 18 : 8} fill={fill} stroke="currentColor" strokeWidth="1.4" />
-      <text x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize="11.5" fontWeight={leaf ? 700 : 500} fill="currentColor">
+      <rect
+        x={x - w / 2}
+        y={y - h / 2}
+        width={w}
+        height={h}
+        rx={leaf ? 18 : 8}
+        className={`${leaf ? "fill-foreground" : "fill-background"} stroke-foreground`}
+        strokeWidth="1.4"
+      />
+      <text
+        x={x}
+        y={y}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize="11.5"
+        fontWeight={leaf ? 700 : 500}
+        className={leaf ? "fill-background" : "fill-foreground"}
+      >
         {text}
       </text>
     </g>
