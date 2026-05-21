@@ -13,35 +13,44 @@ const sections: Entry[] = [
   { label: "GitHub", href: "https://github.com/Eeman1113/MLFS" },
 ];
 
-export function DocsSidebar() {
+export function DocsNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  return (
+    <>
+      <Group label="Sections">
+        {sections.map((s) => (
+          <Row
+            key={s.href}
+            href={s.href}
+            active={pathname === s.href}
+            external={s.href.startsWith("http") || s.href.startsWith("./")}
+            onNavigate={onNavigate}
+          >
+            {s.label}
+          </Row>
+        ))}
+      </Group>
+      {PARTS.map((p) => (
+        <Group key={p.num} label={`Part ${p.num} — ${p.title}`}>
+          {CHAPTERS.filter((c) => c.partNum === p.num).map((c) => {
+            const href = `/chapters/${c.slug}`;
+            return (
+              <Row key={c.slug} href={href} active={pathname === href} onNavigate={onNavigate}>
+                {c.title}
+              </Row>
+            );
+          })}
+        </Group>
+      ))}
+    </>
+  );
+}
+
+export function DocsSidebar() {
   return (
     <aside className="hidden md:block w-64 shrink-0 fade-edge-r">
       <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto no-scrollbar fade-mask-y px-4 py-8">
-        <Group label="Sections">
-          {sections.map((s) => (
-            <Row
-              key={s.href}
-              href={s.href}
-              active={pathname === s.href}
-              external={s.href.startsWith("http") || s.href.startsWith("./")}
-            >
-              {s.label}
-            </Row>
-          ))}
-        </Group>
-        {PARTS.map((p) => (
-          <Group key={p.num} label={`Part ${p.num} — ${p.title}`}>
-            {CHAPTERS.filter((c) => c.partNum === p.num).map((c) => {
-              const href = `/chapters/${c.slug}`;
-              return (
-                <Row key={c.slug} href={href} active={pathname === href}>
-                  {c.title}
-                </Row>
-              );
-            })}
-          </Group>
-        ))}
+        <DocsNav />
       </div>
     </aside>
   );
@@ -61,11 +70,13 @@ function Row({
   children,
   active,
   external,
+  onNavigate,
 }: {
   href: string;
   children: React.ReactNode;
   active?: boolean;
   external?: boolean;
+  onNavigate?: () => void;
 }) {
   const cls = `block rounded-md px-2 py-1.5 text-sm transition-colors ${
     active
@@ -74,13 +85,19 @@ function Row({
   }`;
   if (external) {
     return (
-      <a href={href} className={cls} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+      <a
+        href={href}
+        className={cls}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel="noreferrer"
+        onClick={onNavigate}
+      >
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className={cls}>
+    <Link href={href} className={cls} onClick={onNavigate}>
       {children}
     </Link>
   );

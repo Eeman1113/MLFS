@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Highchart, palette } from "@/components/highchart";
+import { useTheme } from "@/components/theme-provider";
 
 /** Toy 1D split visualizer — show gini drop as user chooses a threshold. */
 const RED: number[] = [1, 1.4, 1.7, 2.2, 2.5, 2.6];
@@ -15,6 +16,8 @@ function gini(labels: number[]) {
 }
 
 export function GiniSplitExplorer() {
+  const { theme } = useTheme();
+  const ink = theme === "dark" ? "#fafafa" : "#27272a";
   const [t, setT] = useState(2.8);
   const pts = useMemo(
     () => [
@@ -34,7 +37,7 @@ export function GiniSplitExplorer() {
   const gain = giniBefore - giniSplit;
 
   return (
-    <div className="not-prose my-8 rounded-lg border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-4 sm:p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · move the threshold, watch impurity drop
@@ -56,7 +59,7 @@ export function GiniSplitExplorer() {
         options={{
           chart: { type: "scatter" },
           title: { text: "" },
-          xAxis: { title: { text: "petal length (toy)" }, min: 0, max: 7, plotLines: [{ value: t, color: "#27272a", width: 2, dashStyle: "Dash" }] },
+          xAxis: { title: { text: "petal length (toy)" }, min: 0, max: 7, plotLines: [{ value: t, color: ink, width: 2, dashStyle: "Dash" }] },
           yAxis: { min: -0.5, max: 1.5, tickPositions: [0, 1], categories: ["benign", "malignant"], title: { text: "class" } },
           series: [
             { type: "scatter", name: "benign (0)", data: RED.map((x) => [x, 0]), color: palette.series[0], marker: { radius: 7 } },

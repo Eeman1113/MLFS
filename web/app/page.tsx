@@ -15,7 +15,7 @@ export default function Home() {
             alt="MLFS"
             width={88}
             height={88}
-            className="size-[88px] mb-8"
+            className="size-[88px] mb-8 dark:invert"
             priority
           />
           <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">

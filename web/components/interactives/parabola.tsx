@@ -23,7 +23,7 @@ export function LossCurveExplorer() {
   }, [w, slope]);
 
   return (
-    <div className="not-prose my-8 rounded-lg border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-4 sm:p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           slide the parameter — feel the slope

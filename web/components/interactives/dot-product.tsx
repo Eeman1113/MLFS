@@ -10,7 +10,7 @@ export function DotProductInteractive() {
   const total = a.reduce((s, v, i) => s + v * p[i], 0);
 
   return (
-    <div className="not-prose my-8 rounded-lg border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-4 sm:p-6">
       <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
         Live · drag the sliders
       </div>

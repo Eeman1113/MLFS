@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Highchart, palette } from "@/components/highchart";
+import { useTheme } from "@/components/theme-provider";
 
 const SEED_A: [number, number][] = [[2, 7], [3, 8], [2, 5], [4, 6], [2.5, 7.5], [3.5, 7]];
 const SEED_B: [number, number][] = [[7, 8], [8, 7], [9, 4], [7, 4], [8, 5], [9, 7]];
@@ -11,6 +12,8 @@ function dist(a: number[], b: number[]) {
 }
 
 export function KNNExplorer() {
+  const { theme } = useTheme();
+  const ink = theme === "dark" ? "#fafafa" : "#27272a";
   const [k, setK] = useState(3);
   const [probe, setProbe] = useState<[number, number]>([5, 6]);
 
@@ -42,7 +45,7 @@ export function KNNExplorer() {
   }));
 
   return (
-    <div className="not-prose my-8 rounded-lg border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-4 sm:p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · click the plot to move the probe
@@ -76,7 +79,7 @@ export function KNNExplorer() {
             { type: "scatter", name: "class A", data: SEED_A, color: palette.series[0], marker: { symbol: "circle", radius: 7 } },
             { type: "scatter", name: "class B", data: SEED_B, color: palette.series[1], marker: { symbol: "diamond", radius: 7 } },
             ...neighborLines,
-            { type: "scatter", name: "probe", data: [probe], color: prediction === "A" ? palette.series[0] : palette.series[1], marker: { symbol: "circle", radius: 11, lineColor: "#27272a", lineWidth: 2 } },
+            { type: "scatter", name: "probe", data: [probe], color: prediction === "A" ? palette.series[0] : palette.series[1], marker: { symbol: "circle", radius: 11, lineColor: ink, lineWidth: 2 } },
           ],
         }}
       />

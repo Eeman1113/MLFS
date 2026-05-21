@@ -110,12 +110,12 @@ export function KMeansExplorer() {
   };
 
   return (
-    <div className="not-prose my-8 rounded-lg border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · k-means dance · iter {iter}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button size="sm" onClick={step} variant="outline" disabled={running}>step</Button>
           <Button size="sm" onClick={() => setRunning((r) => !r)} className="gap-1.5">
             {running ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}

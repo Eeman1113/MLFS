@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Highchart, palette } from "@/components/highchart";
+import { useTheme } from "@/components/theme-provider";
 
 const Aclass: [number, number][] = [
   [1, 8], [2, 7], [1, 6], [3, 9], [2, 5], [2.5, 7.5], [1.5, 6.5],
@@ -11,6 +12,8 @@ const Bclass: [number, number][] = [
 ];
 
 export function DecisionBoundaryExplorer() {
+  const { theme } = useTheme();
+  const ink = theme === "dark" ? "#fafafa" : "#27272a";
   const [w1, setW1] = useState(1);
   const [w2, setW2] = useState(0.5);
   const [bias, setBias] = useState(-7);
@@ -35,7 +38,7 @@ export function DecisionBoundaryExplorer() {
   }, [w1, w2, bias]);
 
   return (
-    <div className="not-prose my-8 rounded-lg border bg-card p-6">
+    <div className="not-prose my-8 rounded-lg border bg-card p-4 sm:p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Live · drag the decision boundary
@@ -59,7 +62,7 @@ export function DecisionBoundaryExplorer() {
           series: [
             { type: "scatter", name: "class O", data: Aclass, color: palette.series[0], marker: { symbol: "circle", radius: 7 } },
             { type: "scatter", name: "class X", data: Bclass, color: palette.series[1], marker: { symbol: "diamond", radius: 7 } },
-            { type: "line", name: "boundary", data: line, color: "#27272a", lineWidth: 2, dashStyle: "Dash", marker: { enabled: false }, enableMouseTracking: false },
+            { type: "line", name: "boundary", data: line, color: ink, lineWidth: 2, dashStyle: "Dash", marker: { enabled: false }, enableMouseTracking: false },
           ],
         }}
       />

@@ -30,7 +30,7 @@ export function M({ children, display = false }: { children: string; display?: b
   if (display) {
     return (
       <span
-        className="block my-4 text-center"
+        className="block my-4 text-center overflow-x-auto overflow-y-hidden -mx-2 px-2"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );

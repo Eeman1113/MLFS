@@ -21,7 +21,7 @@ export function ChapterShell({
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
       <DocsSidebar />
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
-        <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
+        <article className="mx-auto w-full min-w-0 max-w-[760px] px-5 sm:px-6 md:px-10 py-8 md:py-10">
           <div className="flex items-start justify-between gap-4 mb-3">
             <div className="min-w-0">
               <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">
