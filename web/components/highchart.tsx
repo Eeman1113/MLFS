@@ -1,8 +1,13 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
+import HighchartsHeatmap from "highcharts/modules/heatmap";
 import HighchartsReact from "highcharts-react-official";
 import { useTheme } from "./theme-provider";
+
+if (typeof window !== "undefined" && typeof HighchartsHeatmap === "function") {
+  (HighchartsHeatmap as unknown as (h: typeof Highcharts) => void)(Highcharts);
+}
 
 export type HCOptions = Highcharts.Options;
 export { palette } from "@/lib/palette";

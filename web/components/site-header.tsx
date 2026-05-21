@@ -2,16 +2,22 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 import { withBase } from "@/lib/utils";
+import { useTheme } from "./theme-provider";
 
 const items = [
   { label: "Introduction", href: "/" },
   { label: "Chapters", href: "/chapters" },
-  { label: "PDF", href: "https://tinyurl.com/mlfs-study", external: true },
+  { label: "PDF", href: "https://drive.google.com/file/d/1AKPArWSJqyYRjcUFYKzgzcgQ3A20FA4M/view", external: true },
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const { theme, toggle } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     if (href.startsWith("/#")) return false;
@@ -27,7 +33,7 @@ export function SiteHeader() {
             alt="MLFS"
             width={40}
             height={40}
-            className="size-10 shrink-0"
+            className="size-10 shrink-0 dark:invert"
             priority
           />
           <span className="font-semibold text-sm tracking-tight">MLFS</span>
@@ -59,6 +65,18 @@ export function SiteHeader() {
             )
           )}
         </nav>
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label="Toggle dark mode"
+          className="ml-auto inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+        >
+          {mounted && theme === "dark" ? (
+            <Sun className="size-4" />
+          ) : (
+            <Moon className="size-4" />
+          )}
+        </button>
       </div>
     </header>
   );

@@ -8,7 +8,7 @@ type Entry = { label: string; href: string };
 const sections: Entry[] = [
   { label: "Introduction", href: "/" },
   { label: "Chapters", href: "/chapters" },
-  { label: "PDF", href: "https://tinyurl.com/mlfs-study" },
+  { label: "PDF", href: "https://drive.google.com/file/d/1AKPArWSJqyYRjcUFYKzgzcgQ3A20FA4M/view" },
   { label: "Flipbook", href: "./backup_index.html" },
   { label: "GitHub", href: "https://github.com/Eeman1113/MLFS" },
 ];

@@ -70,7 +70,7 @@ export default function Home() {
           </div>
 
           <footer className="mt-20 pt-6 border-t flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
-            <a href="https://tinyurl.com/mlfs-study" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
+            <a href="https://drive.google.com/file/d/1AKPArWSJqyYRjcUFYKzgzcgQ3A20FA4M/view" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
               PDF
             </a>
             <Link href="/authors-note" className="hover:text-foreground transition-colors">
