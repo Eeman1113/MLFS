@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { withBase } from "@/lib/utils";
 
 const items = [
   { label: "Docs", href: "/" },
@@ -21,9 +23,14 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-background">
       <div className="mx-auto max-w-screen-2xl flex h-14 items-center px-4 md:px-6 gap-4">
         <Link href="/" className="flex items-center gap-2 mr-1">
-          <div className="size-6 rounded-md bg-foreground text-background grid place-items-center font-bold text-xs">
-            M
-          </div>
+          <Image
+            src={withBase("/logo.png")}
+            alt="MLFS"
+            width={28}
+            height={28}
+            className="size-7 shrink-0"
+            priority
+          />
           <span className="font-semibold text-sm tracking-tight">MLFS</span>
         </Link>
         <nav className="flex items-center gap-1 text-sm">
