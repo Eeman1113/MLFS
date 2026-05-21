@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CHAPTERS, PARTS } from "@/lib/chapters";
+import { CHAPTERS, PARTS, partLabel } from "@/lib/chapters";
 
 type Entry = { label: string; href: string };
 
@@ -31,7 +31,7 @@ export function DocsNav({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </Group>
       {PARTS.map((p) => (
-        <Group key={p.num} label={`Part ${p.num} — ${p.title}`}>
+        <Group key={p.num} label={partLabel(p)}>
           {CHAPTERS.filter((c) => c.partNum === p.num).map((c) => {
             const href = `/chapters/${c.slug}`;
             return (

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { getChapter, getNext, getPrev } from "@/lib/chapters";
+import { getChapter, getNext, getPrev, PARTS } from "@/lib/chapters";
 import { Button } from "./ui/button";
 import { DocsSidebar } from "./docs-sidebar";
 import { OnThisPage } from "./on-this-page";
@@ -16,6 +16,10 @@ export function ChapterShell({
   const next = getNext(slug);
   const prev = getPrev(slug);
   if (!meta) return null;
+  const part = PARTS.find((p) => p.num === meta.partNum);
+  const eyebrow = part?.bonus
+    ? `Bonus · Chapter ${String(meta.num).padStart(2, "0")}`
+    : `Part ${meta.partNum} · Chapter ${String(meta.num).padStart(2, "0")}`;
 
   return (
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
@@ -25,7 +29,7 @@ export function ChapterShell({
           <div className="flex items-start justify-between gap-4 mb-3">
             <div className="min-w-0">
               <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">
-                Part {meta.partNum} · Chapter {String(meta.num).padStart(2, "0")}
+                {eyebrow}
               </p>
               <h1
                 className="font-display"

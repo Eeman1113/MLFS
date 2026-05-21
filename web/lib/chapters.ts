@@ -8,11 +8,23 @@ export type ChapterMeta = {
   emoji?: string;
 };
 
-export const PARTS = [
+export type PartMeta = {
+  num: number;
+  title: string;
+  subtitle: string;
+  bonus?: boolean;
+};
+
+export const PARTS: PartMeta[] = [
   { num: 1, title: "Basic Brain Rewiring", subtitle: "Foundations" },
   { num: 2, title: "Core Machine Learning", subtitle: "Real S#!t Starts Here" },
   { num: 3, title: "Let's Build Things", subtitle: "Projects & Fun Stuff" },
+  { num: 4, title: "Bonus", subtitle: "LLMs & All Their Fun Magic", bonus: true },
 ];
+
+export function partLabel(p: PartMeta) {
+  return p.bonus ? p.title : `Part ${p.num} — ${p.title}`;
+}
 
 export const CHAPTERS: ChapterMeta[] = [
   {
@@ -134,6 +146,15 @@ export const CHAPTERS: ChapterMeta[] = [
     part: "Let's Build Things",
     partNum: 3,
     blurb: "Pick a quest. Build the pipeline. Ship it to the world.",
+  },
+  {
+    slug: "16-llms",
+    num: 16,
+    title: "LLMs and All Their Fun Magic",
+    part: "Bonus",
+    partNum: 4,
+    blurb:
+      "From Attention Is All You Need to models that actually think. Tokens, embeddings, QKV, transformers, RLHF, sampling, KV caches, MoE, chain-of-thought, o1-style reasoning — the whole stack, from scratch.",
   },
 ];
 

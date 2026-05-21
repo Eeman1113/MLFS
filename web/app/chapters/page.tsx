@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CHAPTERS, PARTS } from "@/lib/chapters";
+import { CHAPTERS, PARTS, partLabel } from "@/lib/chapters";
 import { DocsSidebar } from "@/components/docs-sidebar";
 
 export const metadata = { title: "Chapters · MLFS" };
@@ -19,7 +19,7 @@ export default function ChaptersIndex() {
           Chapters
         </h1>
         <p className="text-muted-foreground mt-3" style={{ fontSize: 16, lineHeight: "24px" }}>
-          15 chapters across three parts. Read in order, or jump anywhere.
+          15 chapters across three parts, plus a bonus deep-dive on LLMs. Read in order, or jump anywhere.
         </p>
 
         <div className="prose-book max-w-none mt-10">
@@ -27,9 +27,7 @@ export default function ChaptersIndex() {
             const chapters = CHAPTERS.filter((c) => c.partNum === p.num);
             return (
               <div key={p.num} className="mt-8 first:mt-0">
-                <h2 id={`part-${p.num}`}>
-                  Part {p.num} — {p.title}
-                </h2>
+                <h2 id={`part-${p.num}`}>{partLabel(p)}</h2>
                 <p className="text-sm text-muted-foreground italic !mt-0">{p.subtitle}</p>
                 <ol className="!list-none !pl-0 flex flex-col gap-1.5 !mt-4">
                   {chapters.map((c) => (
