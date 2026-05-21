@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLFS - Machine Learning From Scratch</title>
+    <style>
+        /* Basic Setup and Background */
+        :root {
+            /* The book's height is now based on the viewport height to ensure padding */
+            --book-height: 90vh; 
+            /* The width is calculated from the height to maintain the aspect ratio */
+            --book-width: calc(var(--book-height) / 1.414); 
+            --background-color: #f0f0f0;
+            --dot-color: #d0d0d0;
+            --dot-size: 1.5px;
+            --dot-space: 20px;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: var(--background-color);
+            background-image: 
+                radial-gradient(circle at var(--dot-size) var(--dot-size), 
+                var(--dot-color) var(--dot-size), 
+                transparent 0);
+            background-size: var(--dot-space) var(--dot-space);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Book Container - Now handles clicks */
+        .book-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2500px;
+            cursor: pointer; /* Indicates the area is clickable */
+            user-select: none; /* Prevents text selection when clicking */
+            transition: width 0.5s ease;
+        }
+
+        .book {
+            display: flex;
+            width: calc(var(--book-width) * 2);
+            height: var(--book-height);
+            transition: transform 0.5s;
+        }
+        
+        /* Style for when the book is showing the single cover page */
+        .book.cover-mode {
+            width: var(--book-width);
+        }
+
+        /* Page Styling */
+        .page {
+            width: var(--book-width);
+            height: var(--book-height);
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 1s; /* Removed background and shadow transitions */
+            transform-origin: left center;
+        }
+        
+        .page.left {
+            transform-origin: right center;
+            border-right: 1px solid #ccc;
+        }
+        
+        .page.right {
+            transform-origin: left center;
+            border-left: 1px solid #ccc;
+        }
+
+        .page img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Use contain to ensure the whole image is visible */
+            pointer-events: none; /* Ensures clicks go to the container */
+        }
+        
+        /* New style for the cover page to make its background transparent */
+        .page.is-cover {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        /* Remove the left border specifically for the cover page */
+        .page.right.is-cover {
+            border-left: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive Design for smaller screens */
+        @media (max-width: 1024px) {
+            :root {
+                /* On mobile, width is the primary constraint */
+                --book-width: 90vw;
+                --book-height: calc(var(--book-width) * 1.414);
+            }
+            .book, .book.cover-mode {
+                 width: var(--book-width);
+            }
+            .page.left {
+                display: none; /* On mobile, show one page at a time */
+            }
+            .page.right {
+                border-left: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Book Structure -->
+    <div class="book-container">
+        <div class="book" id="book">
+            <div class="page left" id="left-page">
+                <img id="left-page-img" src="" alt="Left Page">
+            </div>
+            <div class="page right" id="right-page">
+                <img id="right-page-img" src="" alt="Right Page">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_PAGES = 70;
+        const PAGE_FILENAME_PREFIX = './book/MLFS_final_page-';
+        const PAGE_FILENAME_SUFFIX = '.jpg';
+        const DARK_COVER_PATH = './book/dark.png';
+        const LIGHT_COVER_PATH = './book/light.png';
+        // ---------------------
+
+        // --- DOM ELEMENTS ---
+        const bookContainer = document.querySelector('.book-container');
+        const book = document.getElementById('book');
+        const leftPage = document.getElementById('left-page');
+        const rightPage = document.getElementById('right-page');
+        const leftPageImg = document.getElementById('left-page-img');
+        const rightPageImg = document.getElementById('right-page-img');
+
+        // --- STATE ---
+        // currentPage tracks the content page number. 0 means cover.
+        let currentPage = 0; 
+
+        // --- FUNCTIONS ---
+
+        /**
+         * Gets the appropriate cover image based on the user's system theme.
+         * @returns {string} The path to the cover image.
+         */
+        function getCoverImagePath() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return DARK_COVER_PATH;
+            }
+            return LIGHT_COVER_PATH;
+        }
+        
+        /**
+         * Generates the full image path for a given content page number.
+         * @param {number} pageNum - The page number.
+         * @returns {string} The full image path.
+         */
+        function getContentPageImagePath(pageNum) {
+            const pageStr = pageNum.toString().padStart(4, '0');
+            return `${PAGE_FILENAME_PREFIX}${pageStr}${PAGE_FILENAME_SUFFIX}`;
+        }
+
+        /**
+         * Updates the book's view based on the currentPage state.
+         */
+        function updateBookView() {
+            const isSinglePageView = window.innerWidth <= 1024;
+
+            // Reset cover class state on each update
+            rightPage.classList.remove('is-cover');
+            leftPage.classList.remove('is-cover'); // Also reset for left page
+
+            if (isSinglePageView) {
+                // --- MOBILE VIEW ---
+                book.classList.add('cover-mode'); // Always single page on mobile
+                leftPage.classList.add('hidden');
+                rightPage.classList.remove('hidden');
+
+                if (currentPage === 0) {
+                    rightPage.classList.add('is-cover');
+                    rightPageImg.src = getCoverImagePath();
+                } else {
+                    rightPageImg.src = getContentPageImagePath(currentPage);
+                }
+
+            } else {
+                // --- DESKTOP VIEW ---
+                if (currentPage === 0 || currentPage === 1) {
+                    // This is for the cover (0) or the first page (1) which are shown alone
+                    book.classList.add('cover-mode');
+                    leftPage.classList.add('hidden');
+                    rightPage.classList.remove('hidden');
+
+                    if (currentPage === 0) {
+                        rightPage.classList.add('is-cover');
+                        rightPageImg.src = getCoverImagePath();
+                    } else { // currentPage is 1
+                        rightPageImg.src = getContentPageImagePath(1);
+                    }
+                } else {
+                    // This is for all two-page spreads (page 2 and beyond)
+                    book.classList.remove('cover-mode');
+                    leftPage.classList.remove('hidden');
+                    rightPage.classList.remove('hidden');
+
+                    // Ensure the left page is always an even number
+                    const leftPageNumber = (currentPage % 2 === 0) ? currentPage : currentPage - 1;
+                    const rightPageNumber = leftPageNumber + 1;
+
+                    leftPageImg.src = getContentPageImagePath(leftPageNumber);
+
+                    if (rightPageNumber <= TOTAL_PAGES) {
+                        rightPageImg.src = getContentPageImagePath(rightPageNumber);
+                        rightPage.classList.remove('hidden');
+                    } else {
+                        rightPage.classList.add('hidden'); // Hide right page if it's past the end
+                    }
+                }
+            }
+        }
+        
+        /**
+         * Navigates to the next page or spread.
+         */
+        function goToNextPage() {
+            const isSinglePageView = window.innerWidth <= 1024;
+
+            if (isSinglePageView) {
+                if (currentPage < TOTAL_PAGES) {
+                    currentPage++;
+                }
+            } else { // Desktop logic
+                if (currentPage === 0) {
+                    currentPage = 1; // From cover to page 1
+                } else if (currentPage === 1) {
+                    currentPage = 2; // From page 1 to the 2-3 spread
+                } else if (currentPage + 2 <= TOTAL_PAGES) {
+                    currentPage += 2; // Go to next spread
+                }
+            }
+            updateBookView();
+        }
+
+        /**
+         * Navigates to the previous page or spread.
+         */
+        function goToPrevPage() {
+            const isSinglePageView = window.innerWidth <= 1024;
+
+            if (isSinglePageView) {
+                if (currentPage > 0) {
+                    currentPage--;
+                }
+            } else { // Desktop logic
+                if (currentPage === 1) {
+                    currentPage = 0; // From page 1 to cover
+                } else if (currentPage === 2) {
+                    currentPage = 1; // From 2-3 spread to page 1
+                } else if (currentPage > 2) {
+                    currentPage -= 2; // Go to previous spread
+                }
+            }
+            updateBookView();
+        }
+
+        // --- EVENT LISTENERS ---
+
+        // Listen for keyboard arrow keys
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                goToNextPage();
+            } else if (e.key === 'ArrowLeft') {
+                goToPrevPage();
+            }
+        });
+
+        // Listen for clicks on the book container
+        bookContainer.addEventListener('click', (e) => {
+            const rect = bookContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+
+            // Click on the right half to go next, left half to go prev
+            if (clickX > rect.width / 2) {
+                goToNextPage();
+            } else {
+                goToPrevPage();
+            }
+        });
+        
+        // Update view on window resize to handle responsive layout changes
+        window.addEventListener('resize', updateBookView);
+
+        // --- INITIALIZATION ---
+        // Set the initial view when the page loads
+        document.addEventListener('DOMContentLoaded', updateBookView);
+
+    </script>
+</body>
+</html>
