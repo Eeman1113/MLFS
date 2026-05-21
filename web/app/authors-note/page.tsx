@@ -5,9 +5,9 @@ export const metadata = { title: "Author's Note · MLFS" };
 
 export default function AuthorsNotePage() {
   return (
-    <div className="mx-auto max-w-screen-2xl flex">
+    <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
       <DocsSidebar />
-      <article className="flex-1 min-w-0 px-6 md:px-10 lg:px-14 py-10 max-w-[760px] mx-auto xl:mx-0">
+      <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
         <p className="text-sm text-muted-foreground mb-1">Front matter</p>
         <h1 className="font-display font-bold tracking-tight text-3xl md:text-[2rem] leading-[1.18]">
           Author's Note

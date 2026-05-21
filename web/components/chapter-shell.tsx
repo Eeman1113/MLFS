@@ -18,10 +18,10 @@ export function ChapterShell({
   if (!meta) return null;
 
   return (
-    <div className="mx-auto max-w-screen-2xl flex">
+    <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
       <DocsSidebar />
-      <div className="flex-1 min-w-0 flex">
-        <article className="flex-1 min-w-0 px-6 md:px-10 lg:px-14 py-10 max-w-[760px] mx-auto xl:mx-0">
+      <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
+        <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
           <div className="flex items-start justify-between gap-4 mb-6">
             <div className="min-w-0">
               <p className="text-sm text-muted-foreground mb-1">
@@ -32,28 +32,28 @@ export function ChapterShell({
               </h1>
             </div>
             <div className="hidden sm:flex items-center gap-1 shrink-0">
-              <Button asChild variant="outline" size="icon" disabled={!prev} aria-label="Previous chapter">
-                {prev ? (
+              {prev ? (
+                <Button asChild variant="outline" size="icon" aria-label="Previous chapter">
                   <Link href={`/chapters/${prev.slug}`}>
                     <ArrowLeft className="size-4" />
                   </Link>
-                ) : (
-                  <span className="opacity-40 pointer-events-none">
-                    <ArrowLeft className="size-4" />
-                  </span>
-                )}
-              </Button>
-              <Button asChild variant="outline" size="icon" disabled={!next} aria-label="Next chapter">
-                {next ? (
+                </Button>
+              ) : (
+                <Button variant="outline" size="icon" disabled aria-label="Previous chapter">
+                  <ArrowLeft className="size-4" />
+                </Button>
+              )}
+              {next ? (
+                <Button asChild variant="outline" size="icon" aria-label="Next chapter">
                   <Link href={`/chapters/${next.slug}`}>
                     <ArrowRight className="size-4" />
                   </Link>
-                ) : (
-                  <span className="opacity-40 pointer-events-none">
-                    <ArrowRight className="size-4" />
-                  </span>
-                )}
-              </Button>
+                </Button>
+              ) : (
+                <Button variant="outline" size="icon" disabled aria-label="Next chapter">
+                  <ArrowRight className="size-4" />
+                </Button>
+              )}
             </div>
           </div>
           <p className="text-base text-muted-foreground leading-relaxed">{meta.blurb}</p>
