@@ -2,9 +2,8 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getChapter, getNext, getPrev } from "@/lib/chapters";
 import { Button } from "./ui/button";
-import { ReadingProgress } from "./reading-progress";
-import { RightRail } from "./right-rail";
-import { WordCount } from "./word-count";
+import { DocsSidebar } from "./docs-sidebar";
+import { OnThisPage } from "./on-this-page";
 
 export function ChapterShell({
   slug,
@@ -17,63 +16,81 @@ export function ChapterShell({
   const next = getNext(slug);
   const prev = getPrev(slug);
   if (!meta) return null;
+
   return (
-    <>
-      <ReadingProgress />
-      <RightRail />
-      <WordCount />
-      {/* A4-width centered column */}
-      <article className="mx-auto w-full max-w-[760px] px-6 md:px-10 pt-20 md:pt-24 pb-32">
-        <Button asChild variant="outline" size="sm" className="mb-10">
-          <Link href="/#toc">
-            <ArrowLeft className="size-3.5" />
-            Back
-          </Link>
-        </Button>
+    <div className="mx-auto max-w-screen-2xl flex">
+      <DocsSidebar />
+      <div className="flex-1 min-w-0 flex">
+        <article className="flex-1 min-w-0 px-6 md:px-10 lg:px-14 py-10 max-w-[760px] mx-auto xl:mx-0">
+          <div className="flex items-start justify-between gap-4 mb-6">
+            <div className="min-w-0">
+              <p className="text-sm text-muted-foreground mb-1">
+                Part {meta.partNum} · Chapter {String(meta.num).padStart(2, "0")}
+              </p>
+              <h1 className="font-display font-bold tracking-tight text-3xl md:text-[2rem] leading-[1.18]">
+                {meta.title}
+              </h1>
+            </div>
+            <div className="hidden sm:flex items-center gap-1 shrink-0">
+              <Button asChild variant="outline" size="icon" disabled={!prev} aria-label="Previous chapter">
+                {prev ? (
+                  <Link href={`/chapters/${prev.slug}`}>
+                    <ArrowLeft className="size-4" />
+                  </Link>
+                ) : (
+                  <span className="opacity-40 pointer-events-none">
+                    <ArrowLeft className="size-4" />
+                  </span>
+                )}
+              </Button>
+              <Button asChild variant="outline" size="icon" disabled={!next} aria-label="Next chapter">
+                {next ? (
+                  <Link href={`/chapters/${next.slug}`}>
+                    <ArrowRight className="size-4" />
+                  </Link>
+                ) : (
+                  <span className="opacity-40 pointer-events-none">
+                    <ArrowRight className="size-4" />
+                  </span>
+                )}
+              </Button>
+            </div>
+          </div>
+          <p className="text-base text-muted-foreground leading-relaxed">{meta.blurb}</p>
 
-        <h1 className="font-display font-bold tracking-tight text-3xl md:text-4xl leading-[1.18]">
-          {meta.title}
-        </h1>
-        <p className="mt-2 text-muted-foreground text-sm">
-          Part {meta.partNum} · Chapter {String(meta.num).padStart(2, "0")}
-        </p>
-        <p className="mt-6 text-base text-muted-foreground leading-relaxed italic">
-          {meta.blurb}
-        </p>
+          <div className="prose-book max-w-none mt-10">{children}</div>
 
-        <div className="prose-book max-w-none mt-12">{children}</div>
-
-        <nav className="mt-24 pt-6 border-t flex items-center justify-between text-sm">
-          {prev ? (
-            <Link
-              href={`/chapters/${prev.slug}`}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="size-3.5" />
-              <span className="hidden sm:inline">{prev.title}</span>
-              <span className="sm:hidden">Previous</span>
-            </Link>
-          ) : (
-            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
-              ← Home
-            </Link>
-          )}
-          {next ? (
-            <Link
-              href={`/chapters/${next.slug}`}
-              className="flex items-center gap-2 text-foreground hover:opacity-70 transition-opacity"
-            >
-              <span className="hidden sm:inline">{next.title}</span>
-              <span className="sm:hidden">Next</span>
-              <ArrowRight className="size-3.5" />
-            </Link>
-          ) : (
-            <Link href="/" className="text-foreground hover:opacity-70 transition-opacity">
-              Home →
-            </Link>
-          )}
-        </nav>
-      </article>
-    </>
+          <nav className="mt-20 pt-6 border-t flex items-center justify-between text-sm">
+            {prev ? (
+              <Link
+                href={`/chapters/${prev.slug}`}
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="size-3.5" />
+                <span>{prev.title}</span>
+              </Link>
+            ) : (
+              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                ← Home
+              </Link>
+            )}
+            {next ? (
+              <Link
+                href={`/chapters/${next.slug}`}
+                className="flex items-center gap-2 text-foreground hover:opacity-70 transition-opacity"
+              >
+                <span>{next.title}</span>
+                <ArrowRight className="size-3.5" />
+              </Link>
+            ) : (
+              <Link href="/" className="text-foreground hover:opacity-70 transition-opacity">
+                Home →
+              </Link>
+            )}
+          </nav>
+        </article>
+        <OnThisPage />
+      </div>
+    </div>
   );
 }

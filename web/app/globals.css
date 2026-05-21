@@ -59,29 +59,28 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Editorial reading prose — narrow, generous, minimal */
+/* shadcn docs prose */
 .prose-book {
-  font-size: 1.0625rem;
-  line-height: 1.78;
+  font-size: 0.95rem;
+  line-height: 1.7;
   color: hsl(var(--foreground));
   max-width: none;
 }
-.prose-book p { margin: 1.1em 0; }
+.prose-book p { margin: 0.95em 0; }
 .prose-book h1, .prose-book h2, .prose-book h3, .prose-book h4 {
-  font-family: var(--font-poppins);
+  font-family: var(--font-geist-sans);
   letter-spacing: -0.015em;
-  font-weight: 700;
   color: hsl(var(--foreground));
 }
-.prose-book h2 { font-size: 1.5rem; margin-top: 3rem; margin-bottom: 0.6rem; scroll-margin-top: 5rem; }
-.prose-book h3 { font-size: 1.15rem; margin-top: 2.1rem; margin-bottom: 0.4rem; scroll-margin-top: 5rem; }
-.prose-book h4 { font-size: 0.95rem; margin-top: 1.6rem; margin-bottom: 0.4rem; }
-.prose-book ul, .prose-book ol { padding-left: 1.25rem; margin: 1.1em 0; }
+.prose-book h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2.6rem; margin-bottom: 0.6rem; scroll-margin-top: 5rem; }
+.prose-book h3 { font-size: 1.15rem; font-weight: 600; margin-top: 1.8rem; margin-bottom: 0.4rem; scroll-margin-top: 5rem; }
+.prose-book h4 { font-size: 0.95rem; font-weight: 600; margin-top: 1.4rem; margin-bottom: 0.4rem; }
+.prose-book ul, .prose-book ol { padding-left: 1.4rem; margin: 0.9em 0; }
 .prose-book ul { list-style: disc; }
 .prose-book ul li::marker { color: hsl(var(--muted-foreground)); }
 .prose-book ol { list-style: decimal; }
 .prose-book ol li::marker { color: hsl(var(--muted-foreground)); }
-.prose-book li { margin: 0.4em 0; padding-left: 0.2em; }
+.prose-book li { margin: 0.35em 0; padding-left: 0.15em; }
 .prose-book strong { font-weight: 700; }
 .prose-book em { font-style: italic; }
 .prose-book hr { border: none; border-top: 1px solid hsl(var(--border)); margin: 2.2rem 0; }

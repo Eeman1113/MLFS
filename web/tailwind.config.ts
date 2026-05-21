@@ -11,9 +11,9 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-poppins)", "ui-sans-serif", "system-ui"],
-        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular"],
-        display: ["var(--font-poppins)", "ui-sans-serif"],
+        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular"],
+        display: ["var(--font-geist-sans)", "ui-sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
