@@ -85,12 +85,7 @@ except Exception:
     <div className="not-prose my-6 rounded-lg border bg-card overflow-hidden">
       <div className="flex items-center justify-between px-4 py-2.5 border-b bg-muted/40">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="flex gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-            <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-          </div>
-          <span className="ml-2 text-xs font-mono text-muted-foreground truncate">
+          <span className="text-xs font-mono text-muted-foreground truncate">
             {title || "main.py"}
           </span>
         </div>

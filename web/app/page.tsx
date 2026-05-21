@@ -49,7 +49,7 @@ export default function Home() {
                   {p.title}
                 </h3>
                 <div className="text-sm text-muted-foreground italic">{p.subtitle}</div>
-                <ul className="mt-4 space-y-1.5">
+                <ul className="mt-4 flex flex-col gap-1.5">
                   {chapters.map((c) => (
                     <li key={c.slug}>
                       <Link

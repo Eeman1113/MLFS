@@ -21,7 +21,7 @@ export function DotProductInteractive() {
             <div className="text-lg font-display font-bold mb-1">
               {a[i]} × ${p[i]} = <span className="text-foreground">${a[i] * p[i]}</span>
             </div>
-            <div className="space-y-2 mt-2">
+            <div className="flex flex-col gap-2 mt-2">
               <div>
                 <div className="text-[10px] uppercase tracking-wide text-muted-foreground">qty</div>
                 <Slider
