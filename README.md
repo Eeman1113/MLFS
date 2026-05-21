@@ -6,8 +6,7 @@ A 69-page seduction into machine learning. **Now an interactive, runnable book.*
 
 - 🌐 **Live site:** https://eeman1113.github.io/MLFS/
 - 📚 The book is in `Draft.tex` (LaTeX source) and `MLFS.pdf`
-- 🎬 The original flipbook reader is preserved as `backup_index.html`
-- 🛠️ The interactive web version lives in `web/` (Next.js + shadcn + Highcharts + Pyodide)
+
 
 ## What's interactive?
 
@@ -22,26 +21,6 @@ executing in your browser via Pyodide, with charts that respond to your every ke
 - Ch. 10 — Train a tiny neural net on XOR and watch the decision surface emerge.
 - Ch. 12 — Crank the polynomial degree until your model overfits the data into a pretzel.
 
-## Running locally
-
-```bash
-cd web
-npm install
-npm run dev
-```
-
-Open http://localhost:3000
-
-## Building
-
-```bash
-cd web
-NEXT_PUBLIC_BASE_PATH=/MLFS npx next build
-# static export lands in web/out
-```
-
-A GitHub Actions workflow at `.github/workflows/deploy.yml` builds and deploys to GitHub Pages
-on every push to `main`.
 
 ## Credits
 
