@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   description:
     "A book that's only 69 pages long and tries to seduce you into loving ML. Now an interactive web experience.",
   authors: [{ name: "Eeman Majumder" }],
+  icons: {
+    icon: [
+      { url: "/icon-light.png", type: "image/png", media: "(prefers-color-scheme: light)" },
+      { url: "/icon-dark.png", type: "image/png", media: "(prefers-color-scheme: dark)" },
+    ],
+    apple: "/icon-light.png",
+  },
   openGraph: {
     title: "MLFS – Machine Learning From Scratch",
     description: "For those who have the urge to learn everything.",
