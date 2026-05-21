@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { withBase } from "@/lib/utils";
 
 const items = [
-  { label: "Docs", href: "/" },
-  { label: "Chapters", href: "/#toc" },
+  { label: "Chapters", href: "/" },
   { label: "Author's Note", href: "/authors-note" },
   { label: "PDF", href: "https://tinyurl.com/mlfs-study", external: true },
 ];
