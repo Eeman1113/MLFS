@@ -304,7 +304,7 @@ export function MultiHeadSplit() {
               <Box x={290} y={y} w={170} h={40} fill={c} font={11.5}>
                 {`head ${i + 1} · own Q,K,V`}
               </Box>
-              <Arrow d={`M 105 ${180 + (y - 180) * 0.05} L 205 ${y}`} />
+              <Arrow d={`M 105 ${180 + (y - 180) * 0.2} L 205 ${y}`} />
               <Arrow d={`M 375 ${y} L 460 180`} />
             </g>
           );
@@ -546,10 +546,10 @@ export function AlignmentPipeline() {
         <Arrow d="M 615 80 L 650 80" />
 
         {/* PPO → chat model */}
-        <Arrow d="M 730 98 L 765 180" />
+        <Arrow d="M 715 98 L 725 185" />
 
         {/* DPO → chat model */}
-        <Arrow d="M 650 320 L 785 222" />
+        <Arrow d="M 650 320 L 728 216" />
 
         {/* notes in safe zones */}
         <Note x={550} y={38} size={11}>RLHF · three models in memory · KL leash</Note>

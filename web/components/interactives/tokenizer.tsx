@@ -11,6 +11,7 @@ import { palette } from "@/lib/palette";
 const SUFFIXES = ["ization", "ation", "tion", "ness", "ment", "able", "ible", "ing", "ed", "es", "s", "ly", "ity", "er", "or"];
 const PREFIXES = ["un", "re", "pre", "non", "de", "in", "im", "anti", "sub", "super"];
 const PUNCT = /([.,!?;:()"'`\-—])/g;
+const IS_PUNCT = /^[.,!?;:()"'`\-—]$/;
 
 function tokenize(text: string): { tok: string; kind: "word" | "punct" | "space" | "sub" }[] {
   const out: { tok: string; kind: "word" | "punct" | "space" | "sub" }[] = [];
@@ -24,7 +25,7 @@ function tokenize(text: string): { tok: string; kind: "word" | "punct" | "space"
     }
     const chunks = piece.split(PUNCT).filter(Boolean);
     for (const ch of chunks) {
-      if (PUNCT.test(ch)) {
+      if (IS_PUNCT.test(ch)) {
         out.push({ tok: ch, kind: "punct" });
         continue;
       }
@@ -48,7 +49,7 @@ function tokenize(text: string): { tok: string; kind: "word" | "punct" | "space"
         }
       }
       if (prefix) out.push({ tok: prefix, kind: "sub" });
-      out.push({ tok: core, kind: prefix || suffix ? "sub" : "word" });
+      if (core.length > 0) out.push({ tok: core, kind: prefix || suffix ? "sub" : "word" });
       if (suffix) out.push({ tok: suffix, kind: "sub" });
     }
   }
