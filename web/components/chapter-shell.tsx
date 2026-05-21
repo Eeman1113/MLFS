@@ -22,12 +22,15 @@ export function ChapterShell({
       <DocsSidebar />
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
         <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
-          <div className="flex items-start justify-between gap-4 mb-6">
+          <div className="flex items-start justify-between gap-4 mb-3">
             <div className="min-w-0">
-              <p className="text-sm text-muted-foreground mb-1">
+              <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">
                 Part {meta.partNum} · Chapter {String(meta.num).padStart(2, "0")}
               </p>
-              <h1 className="font-display font-bold tracking-tight text-3xl md:text-[2rem] leading-[1.18]">
+              <h1
+                className="font-display"
+                style={{ fontSize: 30, lineHeight: "36px", fontWeight: 600, letterSpacing: "-0.75px" }}
+              >
                 {meta.title}
               </h1>
             </div>
@@ -56,7 +59,9 @@ export function ChapterShell({
               )}
             </div>
           </div>
-          <p className="text-base text-muted-foreground leading-relaxed">{meta.blurb}</p>
+          <p className="text-muted-foreground" style={{ fontSize: 16, lineHeight: "24px" }}>
+            {meta.blurb}
+          </p>
 
           <div className="prose-book max-w-none mt-10">{children}</div>
 

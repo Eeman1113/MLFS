@@ -8,8 +8,11 @@ export default function AuthorsNotePage() {
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
       <DocsSidebar />
       <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
-        <p className="text-sm text-muted-foreground mb-1">Front matter</p>
-        <h1 className="font-display font-bold tracking-tight text-3xl md:text-[2rem] leading-[1.18]">
+        <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">Front matter</p>
+        <h1
+          className="font-display"
+          style={{ fontSize: 30, lineHeight: "36px", fontWeight: 600, letterSpacing: "-0.75px" }}
+        >
           Author's Note
         </h1>
 

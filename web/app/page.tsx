@@ -9,11 +9,16 @@ export default function Home() {
       <DocsSidebar />
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
         <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
-          <p className="text-sm text-muted-foreground mb-1">Machine Learning From Scratch</p>
-          <h1 className="font-display font-bold tracking-tight text-3xl md:text-[2rem] leading-[1.18]">
+          <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">
+            Machine Learning From Scratch
+          </p>
+          <h1
+            className="font-display"
+            style={{ fontSize: 30, lineHeight: "36px", fontWeight: 600, letterSpacing: "-0.75px" }}
+          >
             Introduction
           </h1>
-          <p className="text-base text-muted-foreground leading-relaxed mt-4">
+          <p className="text-muted-foreground mt-3" style={{ fontSize: 16, lineHeight: "24px" }}>
             A 69-page seduction into ML — now an interactive, runnable book.
             For those who have the urge to learn everything.
           </p>
