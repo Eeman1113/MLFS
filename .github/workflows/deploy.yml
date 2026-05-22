@@ -33,7 +33,7 @@ jobs:
       - name: Build (Next.js static export)
         working-directory: web
         env:
-          NEXT_PUBLIC_BASE_PATH: /MLFS
+          NEXT_PUBLIC_BASE_PATH: ""
           NODE_ENV: production
         run: |
           npx next build
