@@ -52,7 +52,14 @@ export default function Home() {
             <p>"Screw it. Let's just do this."</p>
             <p>Thank you for being here.</p>
             <p>Now let's build some smart stuff together.</p>
-            <p className="mt-10 font-display font-semibold">— Eeman Majumder</p>
+            <Image
+              src={withBase("/signature.png")}
+              alt="Eeman Majumder's signature"
+              width={160}
+              height={160}
+              className="mt-10 -mb-2 -ml-3 dark:invert"
+            />
+            <p className="font-display font-semibold">— Eeman Majumder</p>
 
             <p className="mt-10">
               <Link
