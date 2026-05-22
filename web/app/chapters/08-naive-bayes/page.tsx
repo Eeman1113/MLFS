@@ -1,13 +1,82 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 import { Math, tex } from "@/components/math";
 
-export const metadata = { title: "Ch. 8 · Naive Bayes · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 8 · Naive Bayes: Trust Issues but Make It Statistical",
+  description:
+    "Naive Bayes built from probability fundamentals — Bayes' theorem, conditional independence, and why the 'naive' assumption works surprisingly well for text.",
+  keywords: [
+    "naive bayes",
+    "bayes theorem",
+    "probability ML",
+    "text classification",
+    "spam filter",
+    "conditional probability",
+    "naive bayes Python",
+    "generative classifier",
+  ],
+  alternates: { canonical: "/chapters/08-naive-bayes/" },
+  openGraph: {
+    title: "Ch. 8 · Naive Bayes: Trust Issues but Make It Statistical · MLFS",
+    description:
+      "Naive Bayes built from probability fundamentals — Bayes' theorem, conditional independence, and why the 'naive' assumption works surprisingly well for text.",
+    url: "https://mlfs.online/chapters/08-naive-bayes/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 8 · Naive Bayes: Trust Issues but Make It Statistical · MLFS",
+    description:
+      "Naive Bayes built from probability fundamentals — Bayes' theorem, conditional independence, and why the 'naive' assumption works surprisingly well for text.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 8 · Naive Bayes: Trust Issues but Make It Statistical",
+  description:
+    "Naive Bayes built from probability fundamentals — Bayes' theorem, conditional independence, and why the 'naive' assumption works surprisingly well for text.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/08-naive-bayes/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Naive Bayes", "Bayes Theorem", "Text Classification"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Naive Bayes: Trust Issues but Make It Statistical",
+      item: "https://mlfs.online/chapters/08-naive-bayes/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="08-naive-bayes">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, let's talk about an algorithm that is simultaneously brilliant, powerful, and built
         on a foundation of complete and utter delusion.

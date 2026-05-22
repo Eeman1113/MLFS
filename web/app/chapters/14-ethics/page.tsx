@@ -1,12 +1,81 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { Callout } from "@/components/callout";
 
-export const metadata = { title: "Ch. 14 · Ethics, Bias & Bullshit Detectors · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 14 · Ethics, Bias & Bullshit Detectors",
+  description:
+    "Bias, fairness, dataset audits, and how to spot bullshit in ML claims — practical ethics and responsible AI guardrails for machine learning practitioners.",
+  keywords: [
+    "ML ethics",
+    "bias in AI",
+    "fairness",
+    "dataset audit",
+    "responsible AI",
+    "AI bullshit",
+    "algorithmic fairness",
+    "AI accountability",
+  ],
+  alternates: { canonical: "/chapters/14-ethics/" },
+  openGraph: {
+    title: "Ch. 14 · Ethics, Bias & Bullshit Detectors · MLFS",
+    description:
+      "Bias, fairness, dataset audits, and how to spot bullshit in ML claims — practical ethics and responsible AI guardrails for machine learning practitioners.",
+    url: "https://mlfs.online/chapters/14-ethics/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 14 · Ethics, Bias & Bullshit Detectors · MLFS",
+    description:
+      "Bias, fairness, dataset audits, and how to spot bullshit in ML claims — practical ethics and responsible AI guardrails for machine learning practitioners.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 14 · Ethics, Bias & Bullshit Detectors",
+  description:
+    "Bias, fairness, dataset audits, and how to spot bullshit in ML claims — practical ethics and responsible AI guardrails for machine learning practitioners.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/14-ethics/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["AI Ethics", "Algorithmic Bias", "Responsible Machine Learning"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Ethics, Bias & Bullshit Detectors",
+      item: "https://mlfs.online/chapters/14-ethics/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="14-ethics">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         You now have the power to build models that can predict, classify, and cluster. With great
         power comes great responsibility... and the very real possibility of accidentally building a

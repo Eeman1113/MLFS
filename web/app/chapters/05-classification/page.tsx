@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
@@ -5,11 +6,79 @@ import { Math, tex } from "@/components/math";
 import { SigmoidExplorer } from "@/components/interactives/sigmoid";
 import { DecisionBoundaryExplorer } from "@/components/interactives/logistic";
 
-export const metadata = { title: "Ch. 5 · Classification · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 5 · Classification: The Yes or No Saga",
+  description:
+    "Logistic regression and binary classification built from first principles. Interactive sigmoid demo and a from-scratch decision boundary in Python.",
+  keywords: [
+    "classification",
+    "logistic regression",
+    "binary classification",
+    "sigmoid",
+    "supervised learning",
+    "decision boundary",
+    "logistic regression Python",
+    "cross entropy",
+  ],
+  alternates: { canonical: "/chapters/05-classification/" },
+  openGraph: {
+    title: "Ch. 5 · Classification: The Yes or No Saga · MLFS",
+    description:
+      "Logistic regression and binary classification built from first principles. Interactive sigmoid demo and a from-scratch decision boundary in Python.",
+    url: "https://mlfs.online/chapters/05-classification/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 5 · Classification: The Yes or No Saga · MLFS",
+    description:
+      "Logistic regression and binary classification built from first principles. Interactive sigmoid demo and a from-scratch decision boundary in Python.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 5 · Classification: The Yes or No Saga",
+  description:
+    "Logistic regression and binary classification built from first principles. Interactive sigmoid demo and a from-scratch decision boundary in Python.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/05-classification/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Logistic Regression", "Binary Classification", "Supervised Learning"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Classification: The Yes or No Saga",
+      item: "https://mlfs.online/chapters/05-classification/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="05-classification">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Great, you've taught a machine to draw a straight line. Impressive. You can now predict
         house prices, exam scores, and other things that live on a continuous number line.

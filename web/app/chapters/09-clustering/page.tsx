@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
@@ -5,11 +6,79 @@ import { KMeansExplorer } from "@/components/interactives/kmeans";
 import { Highchart } from "@/components/highchart";
 import { palette } from "@/lib/palette";
 
-export const metadata = { title: "Ch. 9 · Clustering · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 9 · Clustering: Group Therapy for Data",
+  description:
+    "K-Means clustering and unsupervised learning from scratch — how machines discover natural groups in unlabeled data, with an interactive centroid explorer and the elbow method.",
+  keywords: [
+    "clustering",
+    "k-means",
+    "unsupervised learning",
+    "centroids",
+    "cluster analysis",
+    "ML grouping",
+    "elbow method",
+    "WCSS",
+  ],
+  alternates: { canonical: "/chapters/09-clustering/" },
+  openGraph: {
+    title: "Ch. 9 · Clustering: Group Therapy for Data · MLFS",
+    description:
+      "K-Means clustering and unsupervised learning from scratch — how machines discover natural groups in unlabeled data, with an interactive centroid explorer and the elbow method.",
+    url: "https://mlfs.online/chapters/09-clustering/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 9 · Clustering: Group Therapy for Data · MLFS",
+    description:
+      "K-Means clustering and unsupervised learning from scratch — how machines discover natural groups in unlabeled data, with an interactive centroid explorer and the elbow method.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 9 · Clustering: Group Therapy for Data",
+  description:
+    "K-Means clustering and unsupervised learning from scratch — how machines discover natural groups in unlabeled data, with an interactive centroid explorer and the elbow method.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/09-clustering/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["K-Means Clustering", "Unsupervised Learning", "Centroid-Based Grouping"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Clustering: Group Therapy for Data",
+      item: "https://mlfs.online/chapters/09-clustering/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="09-clustering">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         So far, we've lived in the cozy, well-lit world of supervised learning. We've always had an
         answer key. Our data was neatly labeled, and our job was to teach a model to predict those

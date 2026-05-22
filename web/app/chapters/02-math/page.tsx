@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { Callout } from "@/components/callout";
@@ -6,11 +7,79 @@ import { M, Math, tex } from "@/components/math";
 import { DotProductInteractive } from "@/components/interactives/dot-product";
 import { LossCurveExplorer } from "@/components/interactives/parabola";
 
-export const metadata = { title: "Ch. 2 · Math You Can't Ignore · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 2 · Math You Can't Ignore (Sorry, Bestie)",
+  description:
+    "The bare-minimum math you actually need for machine learning — vectors, dot products, gradients, and probability — explained intuitively without the gatekeeping.",
+  keywords: [
+    "ML math",
+    "linear algebra",
+    "vectors",
+    "dot product",
+    "calculus for ML",
+    "probability ML",
+    "gradients",
+    "math for machine learning",
+  ],
+  alternates: { canonical: "/chapters/02-math/" },
+  openGraph: {
+    title: "Ch. 2 · Math You Can't Ignore (Sorry, Bestie) · MLFS",
+    description:
+      "The bare-minimum math you actually need for machine learning — vectors, dot products, gradients, and probability — explained intuitively without the gatekeeping.",
+    url: "https://mlfs.online/chapters/02-math/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 2 · Math You Can't Ignore (Sorry, Bestie) · MLFS",
+    description:
+      "The bare-minimum math you actually need for machine learning — vectors, dot products, gradients, and probability — explained intuitively without the gatekeeping.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 2 · Math You Can't Ignore (Sorry, Bestie)",
+  description:
+    "The bare-minimum math you actually need for machine learning — vectors, dot products, gradients, and probability — explained intuitively without the gatekeeping.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/02-math/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Linear Algebra", "Calculus", "Probability"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Math You Can't Ignore (Sorry, Bestie)",
+      item: "https://mlfs.online/chapters/02-math/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="02-math">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>Okay, deep breaths. We need to talk about math.</p>
       <p>
         I know, I know. You became a developer so you could build cool things, not relive your high

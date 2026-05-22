@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
@@ -6,7 +7,67 @@ import { Math, tex } from "@/components/math";
 import { Highchart } from "@/components/highchart";
 import { palette } from "@/lib/palette";
 
-export const metadata = { title: "Ch. 4 · DIY Linear Regression · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 4 · DIY Linear Regression",
+  description:
+    "Build linear regression from scratch in Python and NumPy — the gateway drug to all of supervised ML. Interactive demo with gradient descent included.",
+  keywords: [
+    "linear regression",
+    "regression from scratch",
+    "supervised learning",
+    "least squares",
+    "ML tutorial",
+    "gradient descent",
+    "linear regression Python",
+    "regression NumPy",
+  ],
+  alternates: { canonical: "/chapters/04-linear-regression/" },
+  openGraph: {
+    title: "Ch. 4 · DIY Linear Regression · MLFS",
+    description:
+      "Build linear regression from scratch in Python and NumPy — the gateway drug to all of supervised ML. Interactive demo with gradient descent included.",
+    url: "https://mlfs.online/chapters/04-linear-regression/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 4 · DIY Linear Regression · MLFS",
+    description:
+      "Build linear regression from scratch in Python and NumPy — the gateway drug to all of supervised ML. Interactive demo with gradient descent included.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 4 · DIY Linear Regression",
+  description:
+    "Build linear regression from scratch in Python and NumPy — the gateway drug to all of supervised ML. Interactive demo with gradient descent included.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/04-linear-regression/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Linear Regression", "Supervised Learning", "Gradient Descent"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "DIY Linear Regression",
+      item: "https://mlfs.online/chapters/04-linear-regression/",
+    },
+  ],
+};
 
 const studyHours = [
   [2, 65],
@@ -19,6 +80,14 @@ const studyHours = [
 export default function Page() {
   return (
     <ChapterShell slug="04-linear-regression">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, buckle up. The theory is over. The hand-holding is done. It's time to write some
         code and build our very first model from scratch. No <code>sklearn</code>, no <code>Keras</code>,

@@ -1,12 +1,81 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { Callout } from "@/components/callout";
 
-export const metadata = { title: "Ch. 3 · The Algorithm is a Lazy Genius · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 3 · The Algorithm is a Lazy Genius",
+  description:
+    "What a machine learning algorithm actually does, intuitively. Loss functions, gradient descent, and the training loop demystified without the buzzwords.",
+  keywords: [
+    "ML algorithm",
+    "gradient descent",
+    "loss function",
+    "optimization",
+    "training loop",
+    "cost function",
+    "machine learning training",
+    "model fitting",
+  ],
+  alternates: { canonical: "/chapters/03-algorithm/" },
+  openGraph: {
+    title: "Ch. 3 · The Algorithm is a Lazy Genius · MLFS",
+    description:
+      "What a machine learning algorithm actually does, intuitively. Loss functions, gradient descent, and the training loop demystified without the buzzwords.",
+    url: "https://mlfs.online/chapters/03-algorithm/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 3 · The Algorithm is a Lazy Genius · MLFS",
+    description:
+      "What a machine learning algorithm actually does, intuitively. Loss functions, gradient descent, and the training loop demystified without the buzzwords.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 3 · The Algorithm is a Lazy Genius",
+  description:
+    "What a machine learning algorithm actually does, intuitively. Loss functions, gradient descent, and the training loop demystified without the buzzwords.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/03-algorithm/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Gradient Descent", "Loss Functions", "Optimization"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "The Algorithm is a Lazy Genius",
+      item: "https://mlfs.online/chapters/03-algorithm/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="03-algorithm">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, we've rewired our brains to think in flowcharts and we've stomached the necessary
         math. Now we get to the big question: what the hell is machine learning, really?

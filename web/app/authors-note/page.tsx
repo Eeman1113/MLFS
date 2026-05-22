@@ -1,11 +1,48 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { DocsSidebar } from "@/components/docs-sidebar";
 
-export const metadata = { title: "Author's Note · MLFS" };
+export const metadata: Metadata = {
+  title: "Author's Note",
+  description:
+    "A personal note from Eeman Majumder about why he wrote Machine Learning From Scratch.",
+  keywords: [
+    "Eeman Majumder",
+    "author's note",
+    "MLFS author",
+    "why I wrote MLFS",
+  ],
+  alternates: { canonical: "/authors-note/" },
+  openGraph: {
+    title: "Author's Note · MLFS",
+    description: "A personal note from Eeman Majumder.",
+    url: "https://mlfs.online/authors-note/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Author's Note · MLFS",
+    description: "A personal note from Eeman Majumder.",
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Author's Note", item: "https://mlfs.online/authors-note/" },
+  ],
+};
 
 export default function AuthorsNotePage() {
   return (
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <DocsSidebar />
       <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
         <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">Front matter</p>

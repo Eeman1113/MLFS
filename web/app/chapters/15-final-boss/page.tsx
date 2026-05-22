@@ -1,12 +1,81 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 
-export const metadata = { title: "Ch. 15 · Final Boss: End-to-End ML Project · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 15 · Final Boss: End-to-End ML Project",
+  description:
+    "Build a real end-to-end ML project — data ingestion, training, evaluation, and deployment. The final boss fight that ties every chapter of the book together.",
+  keywords: [
+    "end-to-end ML",
+    "ML project",
+    "ML deployment",
+    "ML pipeline",
+    "full stack ML",
+    "real ML project",
+    "ML capstone",
+    "production machine learning",
+  ],
+  alternates: { canonical: "/chapters/15-final-boss/" },
+  openGraph: {
+    title: "Ch. 15 · Final Boss: End-to-End ML Project · MLFS",
+    description:
+      "Build a real end-to-end ML project — data ingestion, training, evaluation, and deployment. The final boss fight that ties every chapter of the book together.",
+    url: "https://mlfs.online/chapters/15-final-boss/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 15 · Final Boss: End-to-End ML Project · MLFS",
+    description:
+      "Build a real end-to-end ML project — data ingestion, training, evaluation, and deployment. The final boss fight that ties every chapter of the book together.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 15 · Final Boss: End-to-End ML Project",
+  description:
+    "Build a real end-to-end ML project — data ingestion, training, evaluation, and deployment. The final boss fight that ties every chapter of the book together.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/15-final-boss/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["End-to-End ML Project", "ML Deployment", "ML Pipelines"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Final Boss: End-to-End ML Project",
+      item: "https://mlfs.online/chapters/15-final-boss/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="15-final-boss">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, you've made it. You've been through the trenches. You've debugged gradient descent,
         wrestled with recursion, and contemplated the philosophical implications of a biased

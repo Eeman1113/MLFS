@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
@@ -20,11 +21,81 @@ import {
   TestTimeCompute,
 } from "@/components/llm-diagrams";
 
-export const metadata = { title: "Ch. 16 · LLMs and All Their Fun Magic · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 16 · LLMs and All Their Fun Magic",
+  description:
+    "Large Language Models from first principles — tokenization, attention, sampling, and decoder-only transformers, with interactive attention and tokenizer demos.",
+  keywords: [
+    "LLM",
+    "large language models",
+    "transformer",
+    "attention mechanism",
+    "tokenizer",
+    "GPT",
+    "decoder-only",
+    "sampling",
+    "self-attention",
+    "language model",
+  ],
+  alternates: { canonical: "/chapters/16-llms/" },
+  openGraph: {
+    title: "Ch. 16 · LLMs and All Their Fun Magic · MLFS",
+    description:
+      "Large Language Models from first principles — tokenization, attention, sampling, and decoder-only transformers, with interactive attention and tokenizer demos.",
+    url: "https://mlfs.online/chapters/16-llms/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 16 · LLMs and All Their Fun Magic · MLFS",
+    description:
+      "Large Language Models from first principles — tokenization, attention, sampling, and decoder-only transformers, with interactive attention and tokenizer demos.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 16 · LLMs and All Their Fun Magic",
+  description:
+    "Large Language Models from first principles — tokenization, attention, sampling, and decoder-only transformers, with interactive attention and tokenizer demos.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/16-llms/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Large Language Models", "Transformer Architecture", "Attention Mechanism"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "LLMs and All Their Fun Magic",
+      item: "https://mlfs.online/chapters/16-llms/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="16-llms">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright. You&apos;ve made it through fifteen chapters of slowly-but-surely learning the
         actual machinery of machine learning. You can do linear regression by hand. You&apos;ve

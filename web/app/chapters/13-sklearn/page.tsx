@@ -1,12 +1,81 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 
-export const metadata = { title: "Ch. 13 · From Scratch to Sklearn · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 13 · From Scratch to Sklearn",
+  description:
+    "Bridge from-scratch ML implementations to scikit-learn — pipelines, model selection, hyperparameter tuning, and when to use which estimator in production code.",
+  keywords: [
+    "scikit-learn",
+    "sklearn pipeline",
+    "hyperparameter tuning",
+    "model selection",
+    "ML production",
+    "cross validation",
+    "grid search",
+    "python ML library",
+  ],
+  alternates: { canonical: "/chapters/13-sklearn/" },
+  openGraph: {
+    title: "Ch. 13 · From Scratch to Sklearn · MLFS",
+    description:
+      "Bridge from-scratch ML implementations to scikit-learn — pipelines, model selection, hyperparameter tuning, and when to use which estimator in production code.",
+    url: "https://mlfs.online/chapters/13-sklearn/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 13 · From Scratch to Sklearn · MLFS",
+    description:
+      "Bridge from-scratch ML implementations to scikit-learn — pipelines, model selection, hyperparameter tuning, and when to use which estimator in production code.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 13 · From Scratch to Sklearn",
+  description:
+    "Bridge from-scratch ML implementations to scikit-learn — pipelines, model selection, hyperparameter tuning, and when to use which estimator in production code.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/13-sklearn/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["scikit-learn", "ML Pipelines", "Hyperparameter Tuning"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "From Scratch to Sklearn",
+      item: "https://mlfs.online/chapters/13-sklearn/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="13-sklearn">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         You've done the hard work. You've implemented gradient descent by hand. You've built a
         recursive tree-splitter. You've coded up the beautiful, chaotic dance of K-Means centroids.

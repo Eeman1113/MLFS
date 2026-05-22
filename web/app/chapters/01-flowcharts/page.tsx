@@ -1,14 +1,83 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { Callout } from "@/components/callout";
 import { RunnableCode } from "@/components/runnable-code";
 import { DebuggingFlowchart, TakeawayFlowchart } from "@/components/flowcharts";
 
-export const metadata = { title: "Ch. 1 · How to Think in Flowcharts · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 1 · How to Think in Flowcharts",
+  description:
+    "Learn to break down any ML problem into a clear flowchart — the foundation for thinking like a machine learning engineer before writing a single line of code.",
+  keywords: [
+    "flowcharts",
+    "ML thinking",
+    "problem decomposition",
+    "ML workflow",
+    "machine learning basics",
+    "algorithmic thinking",
+    "computational thinking",
+    "if-else logic",
+  ],
+  alternates: { canonical: "/chapters/01-flowcharts/" },
+  openGraph: {
+    title: "Ch. 1 · How to Think in Flowcharts · MLFS",
+    description:
+      "Learn to break down any ML problem into a clear flowchart — the foundation for thinking like a machine learning engineer before writing a single line of code.",
+    url: "https://mlfs.online/chapters/01-flowcharts/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 1 · How to Think in Flowcharts · MLFS",
+    description:
+      "Learn to break down any ML problem into a clear flowchart — the foundation for thinking like a machine learning engineer before writing a single line of code.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 1 · How to Think in Flowcharts",
+  description:
+    "Learn to break down any ML problem into a clear flowchart — the foundation for thinking like a machine learning engineer before writing a single line of code.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/01-flowcharts/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Flowcharts", "Algorithmic Thinking", "Problem Decomposition"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "How to Think in Flowcharts",
+      item: "https://mlfs.online/chapters/01-flowcharts/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="01-flowcharts">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, let's have a little chat. You, me, and your terminal. You've probably got a dozen
         projects on the go, a terminal window that looks like a scene from The Matrix, and a brain

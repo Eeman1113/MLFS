@@ -1,13 +1,82 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 import { OverfitExplorer } from "@/components/interactives/overfit";
 
-export const metadata = { title: "Ch. 12 · When Your Model Screws Up · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 12 · When Your Model Screws Up",
+  description:
+    "Overfitting, underfitting, data leakage, and the most common ML mistakes — with interactive demos so you can feel the bias-variance tradeoff, not just read about it.",
+  keywords: [
+    "overfitting",
+    "underfitting",
+    "data leakage",
+    "ML mistakes",
+    "bias variance tradeoff",
+    "ML debugging",
+    "generalization",
+    "regularization",
+  ],
+  alternates: { canonical: "/chapters/12-screwups/" },
+  openGraph: {
+    title: "Ch. 12 · When Your Model Screws Up · MLFS",
+    description:
+      "Overfitting, underfitting, data leakage, and the most common ML mistakes — with interactive demos so you can feel the bias-variance tradeoff, not just read about it.",
+    url: "https://mlfs.online/chapters/12-screwups/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 12 · When Your Model Screws Up · MLFS",
+    description:
+      "Overfitting, underfitting, data leakage, and the most common ML mistakes — with interactive demos so you can feel the bias-variance tradeoff, not just read about it.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 12 · When Your Model Screws Up",
+  description:
+    "Overfitting, underfitting, data leakage, and the most common ML mistakes — with interactive demos so you can feel the bias-variance tradeoff, not just read about it.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/12-screwups/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Overfitting and Underfitting", "Bias-Variance Tradeoff", "ML Debugging"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "When Your Model Screws Up",
+      item: "https://mlfs.online/chapters/12-screwups/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="12-screwups">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         So, you've built a model. You fed it data, you watched the loss curve go down, and you got
         a prediction. You might have even calculated its accuracy and seen a glorious 99% printed to

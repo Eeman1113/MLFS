@@ -1,12 +1,65 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { CHAPTERS, PARTS, partLabel } from "@/lib/chapters";
 import { DocsSidebar } from "@/components/docs-sidebar";
 
-export const metadata = { title: "Chapters · MLFS" };
+export const metadata: Metadata = {
+  title: "All Chapters",
+  description:
+    "Browse all 16 chapters of Machine Learning From Scratch — from flowcharts and linear regression to neural networks, ethics, and LLMs. Free, interactive, 69 pages total.",
+  keywords: [
+    "MLFS chapters",
+    "machine learning chapters",
+    "ML curriculum",
+    "free ML book chapters",
+    "interactive ML lessons",
+  ],
+  alternates: { canonical: "/chapters/" },
+  openGraph: {
+    title: "All Chapters · MLFS",
+    description: "All 16 chapters of Machine Learning From Scratch.",
+    url: "https://mlfs.online/chapters/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "All Chapters · MLFS",
+    description: "All 16 chapters of Machine Learning From Scratch.",
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+  ],
+};
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "MLFS Chapters",
+  itemListElement: CHAPTERS.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: c.title,
+    url: `https://mlfs.online/chapters/${c.slug}/`,
+  })),
+};
 
 export default function ChaptersIndex() {
   return (
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <DocsSidebar />
       <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
         <p className="text-[14px] leading-5 text-muted-foreground mb-1.5">

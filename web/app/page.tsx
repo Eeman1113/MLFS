@@ -1,15 +1,94 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { DocsSidebar } from "@/components/docs-sidebar";
 import { OnThisPage } from "@/components/on-this-page";
 import { withBase } from "@/lib/utils";
 
+export const metadata: Metadata = {
+  title: "Introduction – Get seduced into loving ML",
+  description:
+    "A 69-page book that seduces you into loving machine learning. Read the introduction by Eeman Majumder — irreverent, beginner-friendly, free.",
+  keywords: [
+    "machine learning book",
+    "ml from scratch",
+    "learn machine learning",
+    "ML for beginners",
+    "Eeman Majumder",
+    "MLFS",
+    "free ML book",
+    "interactive ML",
+    "python machine learning",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "MLFS – Machine Learning From Scratch",
+    description: "A 69-page book that seduces you into loving machine learning.",
+    url: "https://mlfs.online/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MLFS – Machine Learning From Scratch",
+    description: "A 69-page book that seduces you into loving machine learning.",
+  },
+};
+
+const BOOK_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  name: "Machine Learning From Scratch",
+  alternateName: "MLFS",
+  url: "https://mlfs.online/",
+  author: {
+    "@type": "Person",
+    name: "Eeman Majumder",
+    url: "https://github.com/Eeman1113",
+  },
+  inLanguage: "en",
+  bookFormat: "https://schema.org/EBook",
+  numberOfPages: 69,
+  isAccessibleForFree: true,
+  genre: ["Technology", "Education", "Machine Learning"],
+  description:
+    "A hands-on, no-fluff introduction to ML in just 69 pages. Interactive demos for linear regression, decision trees, KNN, naive Bayes, clustering, neural networks, ethics, end-to-end projects, and LLMs.",
+  abstract:
+    "Machine Learning From Scratch is an irreverent, beginner-friendly book and interactive website that gets you from zero to building real ML models — fast.",
+  image: "https://mlfs.online/opengraph-image",
+  publisher: { "@type": "Person", "name": "Eeman Majumder" },
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://mlfs.online/",
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
       <DocsSidebar />
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
-        <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">
+        <article
+          aria-label="Introduction"
+          className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10"
+        >
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(BOOK_JSONLD) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+          />
           <Image
             src={withBase("/logo.png")}
             alt="MLFS"

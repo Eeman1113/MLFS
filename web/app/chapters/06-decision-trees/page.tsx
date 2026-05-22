@@ -1,14 +1,83 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 import { Math, tex } from "@/components/math";
 import { GiniSplitExplorer, PrettyTree } from "@/components/interactives/decision-tree";
 
-export const metadata = { title: "Ch. 6 · Decision Trees · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 6 · Decision Trees: The Judgmental Algorithm",
+  description:
+    "How decision trees actually split, what entropy and Gini impurity mean, and why they remain the most interpretable model in machine learning.",
+  keywords: [
+    "decision trees",
+    "entropy",
+    "information gain",
+    "interpretable ML",
+    "CART",
+    "splitting criteria",
+    "Gini impurity",
+    "decision tree Python",
+  ],
+  alternates: { canonical: "/chapters/06-decision-trees/" },
+  openGraph: {
+    title: "Ch. 6 · Decision Trees: The Judgmental Algorithm · MLFS",
+    description:
+      "How decision trees actually split, what entropy and Gini impurity mean, and why they remain the most interpretable model in machine learning.",
+    url: "https://mlfs.online/chapters/06-decision-trees/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 6 · Decision Trees: The Judgmental Algorithm · MLFS",
+    description:
+      "How decision trees actually split, what entropy and Gini impurity mean, and why they remain the most interpretable model in machine learning.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 6 · Decision Trees: The Judgmental Algorithm",
+  description:
+    "How decision trees actually split, what entropy and Gini impurity mean, and why they remain the most interpretable model in machine learning.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/06-decision-trees/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Decision Trees", "Entropy", "Information Gain"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Decision Trees: The Judgmental Algorithm",
+      item: "https://mlfs.online/chapters/06-decision-trees/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="06-decision-trees">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         So far, the models we've built have been a bit... abstract. They find the best-fit line or
         the best-separating plane by fiddling with weights and biases. They give us an answer, but

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
@@ -5,11 +6,79 @@ import { Math, tex } from "@/components/math";
 import { SigmoidExplorer } from "@/components/interactives/sigmoid";
 import { XORTrainer } from "@/components/interactives/neural-net";
 
-export const metadata = { title: "Ch. 10 · Neural Networks · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 10 · Intro to Neural Networks: Baby's First Brain",
+  description:
+    "Build neural networks from scratch — perceptrons, activations, forward pass and backpropagation, with an interactive XOR trainer and sigmoid explorer.",
+  keywords: [
+    "neural networks",
+    "perceptron",
+    "backpropagation",
+    "deep learning intro",
+    "activation functions",
+    "MLP",
+    "sigmoid",
+    "XOR problem",
+  ],
+  alternates: { canonical: "/chapters/10-neural-networks/" },
+  openGraph: {
+    title: "Ch. 10 · Intro to Neural Networks: Baby's First Brain · MLFS",
+    description:
+      "Build neural networks from scratch — perceptrons, activations, forward pass and backpropagation, with an interactive XOR trainer and sigmoid explorer.",
+    url: "https://mlfs.online/chapters/10-neural-networks/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 10 · Intro to Neural Networks: Baby's First Brain · MLFS",
+    description:
+      "Build neural networks from scratch — perceptrons, activations, forward pass and backpropagation, with an interactive XOR trainer and sigmoid explorer.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 10 · Intro to Neural Networks: Baby's First Brain",
+  description:
+    "Build neural networks from scratch — perceptrons, activations, forward pass and backpropagation, with an interactive XOR trainer and sigmoid explorer.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/10-neural-networks/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Neural Networks", "Backpropagation", "Multi-Layer Perceptron"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Intro to Neural Networks: Baby's First Brain",
+      item: "https://mlfs.online/chapters/10-neural-networks/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="10-neural-networks">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, we've built models that can draw lines, ask questions, and find cliques. We've been
         building with Lego bricks. Now it's time to build the Death Star.

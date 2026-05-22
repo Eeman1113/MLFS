@@ -1,12 +1,80 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 
-export const metadata = { title: "Ch. 11 · ML Playground · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 11 · ML Playground: Code Like You Mean It",
+  description:
+    "Hands-on machine learning coding patterns, project structure, and the muscle memory you need to actually ship ML code — taking from-scratch models for a real spin.",
+  keywords: [
+    "ML coding",
+    "python ML",
+    "scikit-learn basics",
+    "ML project structure",
+    "ML practice",
+    "ML workflow",
+    "applied machine learning",
+  ],
+  alternates: { canonical: "/chapters/11-playground/" },
+  openGraph: {
+    title: "Ch. 11 · ML Playground: Code Like You Mean It · MLFS",
+    description:
+      "Hands-on machine learning coding patterns, project structure, and the muscle memory you need to actually ship ML code — taking from-scratch models for a real spin.",
+    url: "https://mlfs.online/chapters/11-playground/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 11 · ML Playground: Code Like You Mean It · MLFS",
+    description:
+      "Hands-on machine learning coding patterns, project structure, and the muscle memory you need to actually ship ML code — taking from-scratch models for a real spin.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 11 · ML Playground: Code Like You Mean It",
+  description:
+    "Hands-on machine learning coding patterns, project structure, and the muscle memory you need to actually ship ML code — taking from-scratch models for a real spin.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/11-playground/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["Applied Machine Learning", "ML Project Structure", "Python ML Workflow"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "ML Playground: Code Like You Mean It",
+      item: "https://mlfs.online/chapters/11-playground/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="11-playground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, enough theory. You've built the engines, you understand the mechanics, you've
         stared into the mathematical abyss and didn't blink. Theory's over. Time to build cool shit.

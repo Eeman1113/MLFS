@@ -1,13 +1,82 @@
+import type { Metadata } from "next";
 import { ChapterShell } from "@/components/chapter-shell";
 import { ChallengeBox } from "@/components/challenge-box";
 import { RunnableCode } from "@/components/runnable-code";
 import { KNNExplorer } from "@/components/interactives/knn";
 
-export const metadata = { title: "Ch. 7 · KNN · MLFS" };
+export const metadata: Metadata = {
+  title: "Ch. 7 · KNN: The Neighborhood Watch",
+  description:
+    "K-Nearest Neighbors explained from scratch: distance metrics, choosing k, the curse of dimensionality, and why the simplest algorithm is sometimes best.",
+  keywords: [
+    "KNN",
+    "k-nearest neighbors",
+    "distance metrics",
+    "lazy learning",
+    "instance-based learning",
+    "Euclidean distance",
+    "curse of dimensionality",
+    "KNN Python",
+  ],
+  alternates: { canonical: "/chapters/07-knn/" },
+  openGraph: {
+    title: "Ch. 7 · KNN: The Neighborhood Watch · MLFS",
+    description:
+      "K-Nearest Neighbors explained from scratch: distance metrics, choosing k, the curse of dimensionality, and why the simplest algorithm is sometimes best.",
+    url: "https://mlfs.online/chapters/07-knn/",
+    type: "article",
+    authors: ["Eeman Majumder"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ch. 7 · KNN: The Neighborhood Watch · MLFS",
+    description:
+      "K-Nearest Neighbors explained from scratch: distance metrics, choosing k, the curse of dimensionality, and why the simplest algorithm is sometimes best.",
+  },
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ch. 7 · KNN: The Neighborhood Watch",
+  description:
+    "K-Nearest Neighbors explained from scratch: distance metrics, choosing k, the curse of dimensionality, and why the simplest algorithm is sometimes best.",
+  author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  url: "https://mlfs.online/chapters/07-knn/",
+  isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
+  inLanguage: "en",
+  image: "https://mlfs.online/opengraph-image",
+  proficiencyLevel: "Beginner",
+  about: ["K-Nearest Neighbors", "Distance Metrics", "Lazy Learning"],
+};
+
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://mlfs.online/" },
+    { "@type": "ListItem", position: 2, name: "Chapters", item: "https://mlfs.online/chapters/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "KNN: The Neighborhood Watch",
+      item: "https://mlfs.online/chapters/07-knn/",
+    },
+  ],
+};
 
 export default function Page() {
   return (
     <ChapterShell slug="07-knn">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
       <p>
         Alright, let's talk about the laziest, most intuitive, and possibly most relatable algorithm
         in all of machine learning: <strong>K-Nearest Neighbors (KNN)</strong>.
