@@ -2,7 +2,7 @@
 
 > _For those who have the urge to learn everything._
 
-A 69-page seduction into machine learning. **Now an interactive, runnable book.**
+A 69-page into machine learning. **Now an interactive, runnable book.**
 
 - 🌐 **Live site:** https://mlfs.online/
 - 📚 The book is in `Draft.tex` (LaTeX source) and `MLFS.pdf`
