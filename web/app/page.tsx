@@ -57,7 +57,9 @@ export default function Home() {
               alt="Eeman Majumder's signature"
               width={160}
               height={160}
-              className="mt-10 -mb-2 -ml-3 dark:invert"
+              sizes="(min-width: 640px) 160px, 128px"
+              className="mt-2 -mb-12 sm:-mb-14 -ml-2 sm:-ml-3 w-32 sm:w-40 h-auto dark:invert"
+              style={{ height: "auto" }}
             />
             <p className="font-display font-semibold">— Eeman Majumder</p>
 
