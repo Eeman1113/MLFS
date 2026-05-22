@@ -11,6 +11,14 @@ const FILL: Record<Fill, string> = {
   plain: "fill-background",
 };
 
+const TEXT_FILL: Record<Fill, string> = {
+  yellow: "fill-neutral-900",
+  green: "fill-neutral-900",
+  blue: "fill-neutral-900",
+  red: "fill-neutral-900",
+  plain: "fill-foreground",
+};
+
 const Node = ({
   x,
   y,
@@ -50,7 +58,7 @@ const Node = ({
           dominantBaseline="middle"
           fontSize={fontSize}
           fontWeight={600}
-          className="fill-foreground"
+          className={TEXT_FILL[fill]}
         >
           {children}
         </text>
@@ -69,7 +77,7 @@ const Node = ({
           dominantBaseline="middle"
           fontSize={fontSize}
           fontWeight={600}
-          className="fill-foreground"
+          className={TEXT_FILL[fill]}
         >
           {children}
         </text>
@@ -95,7 +103,7 @@ const Node = ({
         dominantBaseline="middle"
         fontSize={fontSize}
         fontWeight={500}
-        className="fill-foreground"
+        className={TEXT_FILL[fill]}
       >
         {children}
       </text>

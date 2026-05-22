@@ -20,6 +20,16 @@ const FILL: Record<Fill, string> = {
   plain: "fill-background",
 };
 
+const TEXT_FILL: Record<Fill, string> = {
+  yellow: "fill-neutral-900",
+  green: "fill-neutral-900",
+  blue: "fill-neutral-900",
+  red: "fill-neutral-900",
+  purple: "fill-neutral-900",
+  orange: "fill-neutral-900",
+  plain: "fill-foreground",
+};
+
 const Box = ({
   x,
   y,
@@ -59,7 +69,7 @@ const Box = ({
       dominantBaseline="middle"
       fontSize={font}
       fontWeight={bold}
-      className="fill-foreground"
+      className={TEXT_FILL[fill]}
     >
       {children}
     </text>
@@ -206,7 +216,7 @@ export function EmbeddingPlusPosition() {
         {/* + node */}
         <g>
           <circle cx={370} cy={145} r={26} className="fill-yellow-100 stroke-foreground" strokeWidth={1.3} />
-          <text x={370} y={145} textAnchor="middle" dominantBaseline="middle" fontSize={20} fontWeight={600} className="fill-foreground">＋</text>
+          <text x={370} y={145} textAnchor="middle" dominantBaseline="middle" fontSize={20} fontWeight={600} className="fill-neutral-900">＋</text>
         </g>
 
         <Box x={560} y={145} w={170} h={50} fill="blue" font={12}>into block 1</Box>
@@ -358,7 +368,7 @@ export function TransformerBlock() {
         {/* + merge for attention */}
         <g>
           <circle cx={335} cy={300} r={20} className="fill-yellow-100 stroke-foreground" strokeWidth={1.3} />
-          <text x={335} y={300} textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight={600} className="fill-foreground">＋</text>
+          <text x={335} y={300} textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight={600} className="fill-neutral-900">＋</text>
         </g>
 
         {/* FFN branch on the left */}
@@ -368,7 +378,7 @@ export function TransformerBlock() {
         {/* + merge for FFN */}
         <g>
           <circle cx={335} cy={510} r={20} className="fill-yellow-100 stroke-foreground" strokeWidth={1.3} />
-          <text x={335} y={510} textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight={600} className="fill-foreground">＋</text>
+          <text x={335} y={510} textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight={600} className="fill-neutral-900">＋</text>
         </g>
 
         {/* arrows: stream → branch in, branch out → merge */}
