@@ -4,7 +4,7 @@
 
 A 69-page seduction into machine learning. **Now an interactive, runnable book.**
 
-- 🌐 **Live site:** https://eeman1113.github.io/MLFS/
+- 🌐 **Live site:** https://mlfs.online/
 - 📚 The book is in `Draft.tex` (LaTeX source) and `MLFS.pdf`
 
 
