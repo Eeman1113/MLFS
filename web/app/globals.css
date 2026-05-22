@@ -145,6 +145,12 @@ body {
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .no-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
+/* Hide the global page scrollbar while preserving scroll behavior. */
+html { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar { width: 0; height: 0; display: none; }
+body { scrollbar-width: none; -ms-overflow-style: none; }
+body::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
 .fade-mask-y {
   -webkit-mask-image: linear-gradient(
     to bottom,
