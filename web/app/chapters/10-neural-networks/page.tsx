@@ -46,11 +46,87 @@ const ARTICLE_JSONLD = {
   author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
   publisher: { "@type": "Person", name: "Eeman Majumder" },
   url: "https://mlfs.online/chapters/10-neural-networks/",
+  mainEntityOfPage: "https://mlfs.online/chapters/10-neural-networks/",
   isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
   inLanguage: "en",
-  image: "https://mlfs.online/opengraph-image",
-  proficiencyLevel: "Beginner",
+  image: "https://mlfs.online/chapters/10-neural-networks/opengraph-image",
+  proficiencyLevel: "Intermediate",
   about: ["Neural Networks", "Backpropagation", "Multi-Layer Perceptron"],
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  timeRequired: "PT1H",
+  wordCount: 3200,
+  articleSection: "Core Machine Learning",
+  learningResourceType: "tutorial",
+  educationalLevel: "Intermediate",
+  isAccessibleForFree: true,
+  teaches: [
+    "Perceptrons",
+    "Activation functions",
+    "Forward propagation",
+    "Backpropagation",
+    "Solving XOR with a multi-layer perceptron",
+  ],
+  keywords: [
+    "neural networks",
+    "perceptron",
+    "backpropagation",
+    "deep learning intro",
+    "activation functions",
+    "MLP",
+    "sigmoid",
+    "XOR problem",
+  ],
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
+  },
+  mentions: ["Perceptron", "Backpropagation", "Sigmoid", "ReLU", "XOR Problem", "Multi-Layer Perceptron"],
+};
+
+const HOWTO_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Build a Neural Network from Scratch in Python",
+  description:
+    "Implement a small multi-layer perceptron in Python and NumPy with forward propagation and backpropagation, and train it to solve XOR.",
+  totalTime: "PT1H",
+  inLanguage: "en",
+  supply: [
+    { "@type": "HowToSupply", name: "A laptop" },
+    { "@type": "HowToSupply", name: "Python 3 installation" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "Python" },
+    { "@type": "HowToTool", name: "NumPy" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Define the architecture",
+      text: "Pick the input size, one or two hidden layers, and an output layer. For XOR, two inputs, one hidden layer of two units, and one output is enough.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Initialize weights and biases",
+      text: "Sample small random values for every weight matrix and bias vector so the network starts asymmetric and trainable.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Forward propagate",
+      text: "Multiply inputs by weights, add the bias, and apply an activation function like sigmoid at each layer to produce a prediction.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Backpropagate the error",
+      text: "Compute the loss, then use the chain rule to push gradients backward through each layer to find how every weight should change.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Update and repeat",
+      text: "Update weights with gradient descent. Loop over many epochs until the network learns the XOR pattern.",
+    },
+  ],
 };
 
 const BREADCRUMB_JSONLD = {
@@ -74,6 +150,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOWTO_JSONLD) }}
       />
       <script
         type="application/ld+json"

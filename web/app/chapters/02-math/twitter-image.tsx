@@ -1,6 +1,10 @@
 import { ImageResponse } from "next/og";
+import { CHAPTERS } from "@/lib/chapters";
 
-export const alt = "MLFS – Machine Learning From Scratch by Eeman Majumder";
+const SLUG = "02-math";
+const chapter = CHAPTERS.find((c) => c.slug === SLUG)!;
+
+export const alt = `Ch. ${chapter.num} – ${chapter.title} · MLFS`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -15,7 +19,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          gap: 24,
+          gap: 20,
           background: "#fafaf7",
           color: "#0a0a0a",
           padding: "80px",
@@ -31,20 +35,31 @@ export default async function Image() {
             fontWeight: 600,
           }}
         >
-          MLFS · Machine Learning From Scratch
+          {`MLFS · Ch. ${chapter.num}`}
         </div>
         <div
           style={{
-            fontSize: 88,
+            fontSize: 78,
             fontWeight: 700,
             lineHeight: 1.05,
             letterSpacing: -2,
             maxWidth: 1040,
           }}
         >
-          A 69-page book that gets you addicted to ML.
+          {chapter.title}
         </div>
-        <div style={{ fontSize: 32, opacity: 0.6 }}>
+        <div
+          style={{
+            fontSize: 30,
+            opacity: 0.7,
+            maxWidth: 1040,
+            marginTop: 20,
+            lineHeight: 1.3,
+          }}
+        >
+          {chapter.blurb}
+        </div>
+        <div style={{ fontSize: 32, opacity: 0.6, marginTop: 12 }}>
           by Eeman Majumder · mlfs.online
         </div>
       </div>

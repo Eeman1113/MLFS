@@ -6,9 +6,9 @@ import { OnThisPage } from "@/components/on-this-page";
 import { withBase } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Introduction – Get seduced into loving ML",
+  title: "Introduction – Get addicted to ML",
   description:
-    "A 69-page book that seduces you into loving machine learning. Read the introduction by Eeman Majumder — irreverent, beginner-friendly, free.",
+    "A 69-page book that gets you addicted to machine learning. Read the introduction by Eeman Majumder — irreverent, beginner-friendly, free.",
   keywords: [
     "machine learning book",
     "ml from scratch",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title: "MLFS – Machine Learning From Scratch",
-    description: "A 69-page book that seduces you into loving machine learning.",
+    description: "A 69-page book that gets you addicted to machine learning.",
     url: "https://mlfs.online/",
     type: "article",
     authors: ["Eeman Majumder"],
@@ -31,9 +31,50 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "MLFS – Machine Learning From Scratch",
-    description: "A 69-page book that seduces you into loving machine learning.",
+    description: "A 69-page book that gets you addicted to machine learning.",
   },
 };
+
+const CHAPTER_PARTS = [
+  { slug: "01-flowcharts", name: "How to Think in Flowcharts" },
+  { slug: "02-math", name: "Math You Can't Ignore (Sorry, Bestie)" },
+  { slug: "03-algorithm", name: "The Algorithm is a Lazy Genius" },
+  { slug: "04-linear-regression", name: "DIY Linear Regression" },
+  { slug: "05-classification", name: "Classification: The Yes or No Saga" },
+  { slug: "06-decision-trees", name: "Decision Trees: The Judgmental Algorithm" },
+  { slug: "07-knn", name: "KNN: The Neighborhood Watch" },
+  { slug: "08-naive-bayes", name: "Naive Bayes: Trust Issues but Make It Statistical" },
+  { slug: "09-clustering", name: "Clustering: Group Therapy for Data" },
+  { slug: "10-neural-networks", name: "Intro to Neural Networks: Baby's First Brain" },
+  { slug: "11-playground", name: "ML Playground: Code Like You Mean It" },
+  { slug: "12-screwups", name: "When Your Model Screws Up" },
+  { slug: "13-sklearn", name: "From Scratch to Sklearn" },
+  { slug: "14-ethics", name: "Ethics, Bias & Bullshit Detectors" },
+  { slug: "15-final-boss", name: "Final Boss: End-to-End ML Project" },
+  { slug: "16-llms", name: "LLMs and All Their Fun Magic" },
+];
+
+const TEACHES_SKILLS = [
+  "Algorithmic Thinking",
+  "Linear Algebra for Machine Learning",
+  "Probability and Statistics",
+  "Gradient Descent",
+  "Linear Regression",
+  "Logistic Regression",
+  "Decision Trees",
+  "K-Nearest Neighbors",
+  "Naive Bayes",
+  "K-Means Clustering",
+  "Neural Networks",
+  "Backpropagation",
+  "Bias-Variance Tradeoff",
+  "scikit-learn",
+  "ML Ethics and Fairness",
+  "End-to-End ML Projects",
+  "Large Language Models",
+  "Transformer Architecture",
+  "Attention Mechanism",
+];
 
 const BOOK_JSONLD = {
   "@context": "https://schema.org",
@@ -45,9 +86,11 @@ const BOOK_JSONLD = {
     "@type": "Person",
     name: "Eeman Majumder",
     url: "https://github.com/Eeman1113",
+    sameAs: ["https://github.com/Eeman1113"],
   },
   inLanguage: "en",
   bookFormat: "https://schema.org/EBook",
+  bookEdition: "First Edition",
   numberOfPages: 69,
   isAccessibleForFree: true,
   genre: ["Technology", "Education", "Machine Learning"],
@@ -56,7 +99,126 @@ const BOOK_JSONLD = {
   abstract:
     "Machine Learning From Scratch is an irreverent, beginner-friendly book and interactive website that gets you from zero to building real ML models — fast.",
   image: "https://mlfs.online/opengraph-image",
-  publisher: { "@type": "Person", "name": "Eeman Majumder" },
+  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  copyrightYear: 2025,
+  copyrightHolder: {
+    "@type": "Person",
+    name: "Eeman Majumder",
+    url: "https://github.com/Eeman1113",
+  },
+  learningResourceType: "Book",
+  educationalLevel: "Beginner",
+  audience: {
+    "@type": "Audience",
+    audienceType: "students, self-learners, software engineers",
+  },
+  teaches: TEACHES_SKILLS,
+  timeRequired: "PT10H",
+  hasPart: CHAPTER_PARTS.map((c) => ({
+    "@type": "Chapter",
+    name: c.name,
+    url: `https://mlfs.online/chapters/${c.slug}/`,
+  })),
+};
+
+const COURSE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Machine Learning From Scratch",
+  description:
+    "A free, self-paced course that teaches machine learning from first principles — vectors, gradient descent, linear and logistic regression, decision trees, KNN, naive Bayes, clustering, neural networks, ethics, end-to-end projects, and LLMs — through 16 interactive chapters.",
+  url: "https://mlfs.online/",
+  provider: {
+    "@type": "Person",
+    name: "Eeman Majumder",
+    url: "https://github.com/Eeman1113",
+    sameAs: ["https://github.com/Eeman1113"],
+  },
+  inLanguage: "en",
+  isAccessibleForFree: true,
+  educationalCredentialAwarded: "Self-paced completion",
+  coursePrerequisites: "Basic Python familiarity",
+  teaches: TEACHES_SKILLS,
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "online",
+    courseWorkload: "PT10H",
+    inLanguage: "en",
+    isAccessibleForFree: true,
+  },
+};
+
+const FAQ_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is MLFS free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Machine Learning From Scratch is completely free to read online at mlfs.online, with a free PDF and a GitHub repository as well.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need a math background to read MLFS?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No advanced math is required. Chapter 2 covers the only math you actually need — vectors, basic calculus, and probability — explained intuitively without gatekeeping.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What programming language does MLFS use?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MLFS uses Python with NumPy for from-scratch implementations, then introduces scikit-learn later. Basic Python familiarity is the only prerequisite.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long does it take to read MLFS?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The book is 69 pages across 16 chapters. Most readers finish it in roughly 8 to 12 hours, including time spent playing with the interactive demos.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is MLFS for complete beginners?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. MLFS is written for beginners who have never touched machine learning before. It starts from flowchart thinking and builds up to neural networks and LLMs.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need a GPU to follow along?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No GPU is required. Every model in MLFS is small enough to train on a regular laptop CPU. The book focuses on understanding, not scale.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I read MLFS offline?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. A downloadable PDF is available from the homepage, and the full source code lives on GitHub at github.com/Eeman1113/MLFS.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Who wrote MLFS?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MLFS was written by Eeman Majumder, an independent author and engineer who builds the book to make machine learning approachable for self-learners.",
+      },
+    },
+  ],
 };
 
 const BREADCRUMB_JSONLD = {
@@ -84,6 +246,14 @@ export default function Home() {
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(BOOK_JSONLD) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(COURSE_JSONLD) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSONLD) }}
           />
           <script
             type="application/ld+json"

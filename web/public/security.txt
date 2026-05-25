@@ -1,0 +1,8 @@
+# If you've found a security issue with MLFS (https://mlfs.online),
+# please report it through the GitHub issues tracker linked below.
+# This file follows RFC 9116.
+
+Contact: https://github.com/Eeman1113/MLFS/issues
+Expires: 2027-05-25T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://mlfs.online/.well-known/security.txt

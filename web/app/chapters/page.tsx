@@ -41,12 +41,50 @@ const itemListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "MLFS Chapters",
+  numberOfItems: CHAPTERS.length,
+  itemListOrder: "https://schema.org/ItemListOrderAscending",
   itemListElement: CHAPTERS.map((c, i) => ({
     "@type": "ListItem",
     position: i + 1,
-    name: c.title,
     url: `https://mlfs.online/chapters/${c.slug}/`,
+    item: {
+      "@type": "TechArticle",
+      name: c.title,
+      headline: `Ch. ${c.num} · ${c.title}`,
+      description: c.blurb,
+      url: `https://mlfs.online/chapters/${c.slug}/`,
+      articleSection: c.part,
+      inLanguage: "en",
+      isAccessibleForFree: true,
+      author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
+      isPartOf: {
+        "@type": "Book",
+        name: "Machine Learning From Scratch",
+        url: "https://mlfs.online/",
+      },
+    },
   })),
+};
+
+const collectionPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "All Chapters · MLFS",
+  url: "https://mlfs.online/chapters/",
+  description:
+    "Browse all 16 chapters of Machine Learning From Scratch — from flowcharts and linear regression to neural networks, ethics, and LLMs.",
+  inLanguage: "en",
+  isPartOf: {
+    "@type": "Book",
+    name: "Machine Learning From Scratch",
+    url: "https://mlfs.online/",
+  },
+  about: {
+    "@type": "Book",
+    name: "Machine Learning From Scratch",
+    url: "https://mlfs.online/",
+  },
+  mainEntity: itemListJsonLd,
 };
 
 export default function ChaptersIndex() {
@@ -59,6 +97,10 @@ export default function ChaptersIndex() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
       />
       <DocsSidebar />
       <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">

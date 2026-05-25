@@ -1,0 +1,23 @@
+/* TEAM */
+
+  Author, designer, engineer: Eeman Majumder
+  Contact: https://github.com/Eeman1113
+  GitHub: https://github.com/Eeman1113
+  From: India
+
+/* THANKS */
+
+  Every reader, contributor, and friend who pointed out a typo or a missing
+  intuition. The open-source community behind Next.js, React, Tailwind CSS,
+  Pyodide, MDX, and shadcn/ui — none of this would exist without you.
+
+/* SITE */
+
+  Last update: 2026-05-25
+  Language: English
+  Doctype: HTML5
+  IDE: VS Code, Neovim
+  Standards: HTML5, CSS3, ES2022, WCAG 2.1
+  Components: Next.js, React, TypeScript, Tailwind CSS, MDX, Pyodide,
+              shadcn/ui, Radix UI
+  Source: https://github.com/Eeman1113/MLFS

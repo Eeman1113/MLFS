@@ -47,11 +47,87 @@ const ARTICLE_JSONLD = {
   author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
   publisher: { "@type": "Person", name: "Eeman Majumder" },
   url: "https://mlfs.online/chapters/04-linear-regression/",
+  mainEntityOfPage: "https://mlfs.online/chapters/04-linear-regression/",
   isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
   inLanguage: "en",
-  image: "https://mlfs.online/opengraph-image",
+  image: "https://mlfs.online/chapters/04-linear-regression/opengraph-image",
   proficiencyLevel: "Beginner",
   about: ["Linear Regression", "Supervised Learning", "Gradient Descent"],
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  timeRequired: "PT45M",
+  wordCount: 2700,
+  articleSection: "Core Machine Learning",
+  learningResourceType: "tutorial",
+  educationalLevel: "Beginner",
+  isAccessibleForFree: true,
+  teaches: [
+    "Linear regression from scratch",
+    "Least squares loss",
+    "Gradient descent in NumPy",
+    "Model evaluation with MSE",
+    "Fitting a line to data",
+  ],
+  keywords: [
+    "linear regression",
+    "regression from scratch",
+    "supervised learning",
+    "least squares",
+    "ML tutorial",
+    "gradient descent",
+    "linear regression Python",
+    "regression NumPy",
+  ],
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
+  },
+  mentions: ["Linear Regression", "Gradient Descent", "Mean Squared Error", "NumPy", "Slope and Intercept"],
+};
+
+const HOWTO_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Build Linear Regression from Scratch in Python",
+  description:
+    "Implement linear regression in Python and NumPy using gradient descent — your first from-scratch supervised ML model.",
+  totalTime: "PT45M",
+  inLanguage: "en",
+  supply: [
+    { "@type": "HowToSupply", name: "A laptop" },
+    { "@type": "HowToSupply", name: "Python 3 installation" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "Python" },
+    { "@type": "HowToTool", name: "NumPy" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Prepare your dataset",
+      text: "Collect a small dataset with one input feature and one numeric target — for example, study hours and exam scores.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Initialize slope and intercept",
+      text: "Start with a random slope and intercept. These are the parameters your model will learn.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Compute predictions and loss",
+      text: "Use y = mx + b to make predictions, then compute mean squared error between predictions and the true values.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Update with gradient descent",
+      text: "Calculate gradients of the loss with respect to slope and intercept, then update both by stepping in the opposite direction.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Repeat and evaluate",
+      text: "Iterate until the loss stops dropping. Plot the fitted line and confirm it tracks your data.",
+    },
+  ],
 };
 
 const BREADCRUMB_JSONLD = {
@@ -83,6 +159,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOWTO_JSONLD) }}
       />
       <script
         type="application/ld+json"

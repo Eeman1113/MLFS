@@ -36,12 +36,63 @@ const breadcrumbJsonLd = {
   ],
 };
 
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: "https://mlfs.online/authors-note/",
+  name: "Author's Note · Eeman Majumder",
+  dateCreated: "2025-01-01",
+  dateModified: "2026-05-25",
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "Person",
+    name: "Eeman Majumder",
+    url: "https://github.com/Eeman1113",
+    description:
+      "Independent author and engineer who wrote Machine Learning From Scratch, a free 69-page interactive ML book.",
+    sameAs: [
+      "https://github.com/Eeman1113",
+      "https://mlfs.online/",
+    ],
+  },
+};
+
+const aboutPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  url: "https://mlfs.online/authors-note/",
+  name: "About the Author · MLFS",
+  description:
+    "A personal note from Eeman Majumder about why he wrote Machine Learning From Scratch — what the book is, who it's for, and what he hopes readers take away from it.",
+  inLanguage: "en",
+  dateCreated: "2025-01-01",
+  dateModified: "2026-05-25",
+  isPartOf: {
+    "@type": "Book",
+    name: "Machine Learning From Scratch",
+    url: "https://mlfs.online/",
+  },
+  about: {
+    "@type": "Person",
+    name: "Eeman Majumder",
+    url: "https://github.com/Eeman1113",
+  },
+};
+
 export default function AuthorsNotePage() {
   return (
     <div className="mx-auto max-w-screen-2xl md:grid md:grid-cols-[16rem_minmax(0,1fr)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}
       />
       <DocsSidebar />
       <article className="mx-auto w-full min-w-0 max-w-[760px] px-6 md:px-10 py-10">

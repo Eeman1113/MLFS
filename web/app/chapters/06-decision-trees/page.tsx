@@ -45,11 +45,82 @@ const ARTICLE_JSONLD = {
   author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
   publisher: { "@type": "Person", name: "Eeman Majumder" },
   url: "https://mlfs.online/chapters/06-decision-trees/",
+  mainEntityOfPage: "https://mlfs.online/chapters/06-decision-trees/",
   isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
   inLanguage: "en",
-  image: "https://mlfs.online/opengraph-image",
+  image: "https://mlfs.online/chapters/06-decision-trees/opengraph-image",
   proficiencyLevel: "Beginner",
   about: ["Decision Trees", "Entropy", "Information Gain"],
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  timeRequired: "PT40M",
+  wordCount: 2500,
+  articleSection: "Core Machine Learning",
+  learningResourceType: "tutorial",
+  educationalLevel: "Beginner",
+  isAccessibleForFree: true,
+  teaches: [
+    "Decision tree splits",
+    "Gini impurity",
+    "Entropy and information gain",
+    "Recursive partitioning",
+    "Interpretable models",
+  ],
+  keywords: [
+    "decision trees",
+    "entropy",
+    "information gain",
+    "interpretable ML",
+    "CART",
+    "splitting criteria",
+    "Gini impurity",
+    "decision tree Python",
+  ],
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
+  },
+  mentions: ["Decision Tree", "Gini Impurity", "Entropy", "Information Gain", "CART"],
+};
+
+const HOWTO_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Build a Decision Tree from Scratch",
+  description:
+    "Implement a decision tree classifier in Python using Gini impurity and information gain to recursively split data into pure leaves.",
+  totalTime: "PT40M",
+  inLanguage: "en",
+  supply: [
+    { "@type": "HowToSupply", name: "A laptop" },
+    { "@type": "HowToSupply", name: "Python 3 installation" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "Python" },
+    { "@type": "HowToTool", name: "NumPy" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Pick a splitting criterion",
+      text: "Choose between Gini impurity and entropy. Both measure how mixed the labels are inside a node.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Find the best split",
+      text: "For every feature and threshold, calculate how much the impurity drops after splitting. Keep the split with the biggest gain.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Recurse on each child",
+      text: "Repeat the splitting process on the left and right subsets until the node is pure or you hit a depth limit.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Predict by walking the tree",
+      text: "For each new sample, follow the decisions from the root down to a leaf and return the leaf's majority class.",
+    },
+  ],
 };
 
 const BREADCRUMB_JSONLD = {
@@ -73,6 +144,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOWTO_JSONLD) }}
       />
       <script
         type="application/ld+json"

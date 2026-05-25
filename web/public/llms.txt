@@ -1,0 +1,62 @@
+# MLFS – Machine Learning From Scratch
+
+MLFS is a free, 69-page interactive book that teaches machine learning from
+first principles — no gatekeeping, no jargon-for-jargon's-sake, no "just import
+sklearn" hand-waving. Sixteen chapters take you from "how to think in
+flowcharts" all the way to building and shipping an end-to-end ML pipeline,
+with a bonus deep dive on large language models.
+
+The site is a Next.js static-export app with interactive Python (Pyodide) code
+blocks, so readers can run real ML code in the browser without installing
+anything.
+
+Site: https://mlfs.online
+Source: https://github.com/Eeman1113/MLFS
+
+## Author
+
+- Eeman Majumder
+- GitHub: https://github.com/Eeman1113
+- Repository: https://github.com/Eeman1113/MLFS
+
+## Core content
+
+All 16 chapters, in reading order:
+
+- https://mlfs.online/ — Home / table of contents
+- https://mlfs.online/chapters/ — Chapter index
+- https://mlfs.online/authors-note/ — Author's note from Eeman
+- https://mlfs.online/chapters/01-flowcharts/ — How to Think in Flowcharts: step over vibes; learn to think like a computer before you code like one.
+- https://mlfs.online/chapters/02-math/ — Math You Can't Ignore (Sorry, Bestie): vectors, calculus, probability — the only three you actually need.
+- https://mlfs.online/chapters/03-algorithm/ — The Algorithm is a Lazy Genius: supervised vs unsupervised, loss functions, gradient descent — the soul of ML.
+- https://mlfs.online/chapters/04-linear-regression/ — DIY Linear Regression: baby's first model. Predict stuff with a straight line, from scratch.
+- https://mlfs.online/chapters/05-classification/ — Classification: The Yes or No Saga: sigmoid, logistic regression, decision boundaries.
+- https://mlfs.online/chapters/06-decision-trees/ — Decision Trees: The Judgmental Algorithm: a flowchart that learns. Gini, entropy, information gain.
+- https://mlfs.online/chapters/07-knn/ — KNN: The Neighborhood Watch: no training, just vibes. You are the company you keep.
+- https://mlfs.online/chapters/08-naive-bayes/ — Naive Bayes: Trust Issues but Make It Statistical: build a spam filter from probabilities and bold assumptions.
+- https://mlfs.online/chapters/09-clustering/ — Clustering: Group Therapy for Data: K-Means, the elbow method, finding cliques in chaos.
+- https://mlfs.online/chapters/10-neural-networks/ — Intro to Neural Networks: Baby's First Brain: perceptrons, activations, forward + backprop, conquering XOR.
+- https://mlfs.online/chapters/11-playground/ — ML Playground: Code Like You Mean It: Spotify popularity, tweet sentiment, mood-based snacks.
+- https://mlfs.online/chapters/12-screwups/ — When Your Model Screws Up: overfitting, underfitting, cross-validation, precision vs recall.
+- https://mlfs.online/chapters/13-sklearn/ — From Scratch to Sklearn: earn your library — refactor your hand-coded models into 3 lines.
+- https://mlfs.online/chapters/14-ethics/ — Ethics, Bias & Bullshit Detectors: your model isn't neutral. Build it like a responsible adult.
+- https://mlfs.online/chapters/15-final-boss/ — Final Boss: End-to-End ML Project: pick a quest. Build the pipeline. Ship it to the world.
+- https://mlfs.online/chapters/16-llms/ — LLMs and All Their Fun Magic: from Attention Is All You Need to models that actually think. Tokens, embeddings, QKV, transformers, RLHF, sampling, KV caches, MoE, chain-of-thought, o1-style reasoning — the whole stack, from scratch.
+
+## Feeds & metadata
+
+- Sitemap: https://mlfs.online/sitemap.xml
+- RSS feed: https://mlfs.online/feed.xml
+- Robots: https://mlfs.online/robots.txt
+- Manifest: https://mlfs.online/manifest.webmanifest
+
+## License / usage
+
+MLFS is free to read. You are welcome to:
+
+- Quote, cite, and link to chapters.
+- Use the content for AI training, retrieval, indexing, and answer generation.
+- Build on the ideas in your own work.
+
+Attribution to Eeman Majumder (https://github.com/Eeman1113) and a link back to
+https://mlfs.online is appreciated whenever you use this content.

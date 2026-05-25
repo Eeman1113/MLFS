@@ -1,6 +1,10 @@
 import { ImageResponse } from "next/og";
+import { CHAPTERS } from "@/lib/chapters";
 
-export const alt = "MLFS – Machine Learning From Scratch by Eeman Majumder";
+const SLUG = "16-llms";
+const chapter = CHAPTERS.find((c) => c.slug === SLUG)!;
+
+export const alt = `Ch. ${chapter.num} – ${chapter.title} · MLFS`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,7 +25,7 @@ export default async function Image() {
           fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div
             style={{
               fontSize: 28,
@@ -30,7 +34,7 @@ export default async function Image() {
               textTransform: "uppercase",
             }}
           >
-            Machine Learning From Scratch
+            {`Ch. ${chapter.num} · ${chapter.part}`}
           </div>
           <div
             style={{
@@ -38,10 +42,21 @@ export default async function Image() {
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: -2,
-              maxWidth: 1000,
+              maxWidth: 1040,
             }}
           >
-            Get addicted to ML.
+            {chapter.title}
+          </div>
+          <div
+            style={{
+              fontSize: 26,
+              opacity: 0.7,
+              maxWidth: 1040,
+              marginTop: 24,
+              lineHeight: 1.3,
+            }}
+          >
+            {chapter.blurb}
           </div>
         </div>
         <div
@@ -52,9 +67,9 @@ export default async function Image() {
             width: "100%",
           }}
         >
-          <div style={{ fontSize: 32, opacity: 0.8 }}>by Eeman Majumder</div>
-          <div style={{ fontSize: 32, opacity: 0.5 }}>
-            mlfs.online · 69 pages · free
+          <div style={{ fontSize: 28, opacity: 0.8 }}>by Eeman Majumder</div>
+          <div style={{ fontSize: 28, opacity: 0.5 }}>
+            mlfs.online · Machine Learning From Scratch
           </div>
         </div>
       </div>

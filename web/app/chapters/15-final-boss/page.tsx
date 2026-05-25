@@ -43,11 +43,89 @@ const ARTICLE_JSONLD = {
   author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
   publisher: { "@type": "Person", name: "Eeman Majumder" },
   url: "https://mlfs.online/chapters/15-final-boss/",
+  mainEntityOfPage: "https://mlfs.online/chapters/15-final-boss/",
   isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
   inLanguage: "en",
-  image: "https://mlfs.online/opengraph-image",
-  proficiencyLevel: "Beginner",
+  image: "https://mlfs.online/chapters/15-final-boss/opengraph-image",
+  proficiencyLevel: "Intermediate",
   about: ["End-to-End ML Project", "ML Deployment", "ML Pipelines"],
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  timeRequired: "PT1H",
+  wordCount: 2800,
+  articleSection: "Let's Build Things",
+  learningResourceType: "tutorial",
+  educationalLevel: "Intermediate",
+  isAccessibleForFree: true,
+  teaches: [
+    "End-to-end ML project structure",
+    "Data ingestion and cleaning",
+    "Training and evaluation",
+    "Shipping a model to the web",
+    "Iterating on real datasets",
+  ],
+  keywords: [
+    "end-to-end ML",
+    "ML project",
+    "ML deployment",
+    "ML pipeline",
+    "full stack ML",
+    "real ML project",
+    "ML capstone",
+    "production machine learning",
+  ],
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
+  },
+  mentions: ["ML Pipeline", "Model Deployment", "Data Ingestion", "Evaluation Metrics", "Production ML"],
+};
+
+const HOWTO_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Build an End-to-End Machine Learning Project",
+  description:
+    "Take a project idea from raw data all the way to a shipped model — collect data, train, evaluate, and deploy.",
+  totalTime: "PT1H",
+  inLanguage: "en",
+  supply: [
+    { "@type": "HowToSupply", name: "A laptop" },
+    { "@type": "HowToSupply", name: "Python 3 installation" },
+    { "@type": "HowToSupply", name: "A dataset relevant to your chosen problem" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "Python" },
+    { "@type": "HowToTool", name: "NumPy" },
+    { "@type": "HowToTool", name: "scikit-learn" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Pick a quest",
+      text: "Choose a real problem you care about. Define the input, the prediction target, and what success looks like.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Get and clean the data",
+      text: "Load the dataset, handle missing values, encode categorical features, and split into train and test sets.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Train a baseline model",
+      text: "Fit a simple model — linear, logistic, or a small tree — so you have a number to beat before reaching for anything fancy.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Evaluate honestly",
+      text: "Look at the right metric for your task, inspect failure cases, and decide whether the model is good enough or needs more iteration.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Ship it",
+      text: "Wrap the model in a small script, notebook, or web app so someone other than you can actually use it.",
+    },
+  ],
 };
 
 const BREADCRUMB_JSONLD = {
@@ -71,6 +149,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOWTO_JSONLD) }}
       />
       <script
         type="application/ld+json"

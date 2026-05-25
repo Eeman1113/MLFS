@@ -44,11 +44,81 @@ const ARTICLE_JSONLD = {
   author: { "@type": "Person", name: "Eeman Majumder", url: "https://github.com/Eeman1113" },
   publisher: { "@type": "Person", name: "Eeman Majumder" },
   url: "https://mlfs.online/chapters/08-naive-bayes/",
+  mainEntityOfPage: "https://mlfs.online/chapters/08-naive-bayes/",
   isPartOf: { "@type": "Book", name: "Machine Learning From Scratch", url: "https://mlfs.online/" },
   inLanguage: "en",
-  image: "https://mlfs.online/opengraph-image",
+  image: "https://mlfs.online/chapters/08-naive-bayes/opengraph-image",
   proficiencyLevel: "Beginner",
   about: ["Naive Bayes", "Bayes Theorem", "Text Classification"],
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  timeRequired: "PT35M",
+  wordCount: 2400,
+  articleSection: "Core Machine Learning",
+  learningResourceType: "tutorial",
+  educationalLevel: "Beginner",
+  isAccessibleForFree: true,
+  teaches: [
+    "Bayes' theorem",
+    "Conditional probability",
+    "Naive Bayes classifier",
+    "Text classification",
+    "Building a spam filter",
+  ],
+  keywords: [
+    "naive bayes",
+    "bayes theorem",
+    "probability ML",
+    "text classification",
+    "spam filter",
+    "conditional probability",
+    "naive bayes Python",
+    "generative classifier",
+  ],
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
+  },
+  mentions: ["Naive Bayes", "Bayes' Theorem", "Conditional Probability", "Spam Filter", "Text Classification"],
+};
+
+const HOWTO_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Build a Naive Bayes Spam Filter from Scratch",
+  description:
+    "Use Bayes' theorem and word counts to build a simple, surprisingly effective spam filter in Python without any ML library.",
+  totalTime: "PT35M",
+  inLanguage: "en",
+  supply: [
+    { "@type": "HowToSupply", name: "A laptop" },
+    { "@type": "HowToSupply", name: "Python 3 installation" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "Python" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Collect labeled examples",
+      text: "Gather a small set of messages labeled as spam or not spam. Tokenize each one into lowercase words.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Count word occurrences per class",
+      text: "Tally how often each word appears in spam messages and in normal messages. Add Laplace smoothing so unseen words don't zero out.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Compute class priors",
+      text: "Calculate the prior probability of spam and not-spam from the proportions in your training data.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Score a new message",
+      text: "For a new message, multiply (or sum logs of) the word likelihoods together with the class prior. Pick the class with the higher score.",
+    },
+  ],
 };
 
 const BREADCRUMB_JSONLD = {
@@ -72,6 +142,10 @@ export default function Page() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOWTO_JSONLD) }}
       />
       <script
         type="application/ld+json"

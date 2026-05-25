@@ -1,0 +1,163 @@
+# MLFS – Machine Learning From Scratch (full)
+
+MLFS is a free, 69-page interactive book that teaches machine learning from
+first principles. No gatekeeping. No "just import sklearn" hand-waving. No
+jargon-for-jargon's-sake. Sixteen chapters take readers from "how to think in
+flowcharts" all the way to building and shipping an end-to-end ML pipeline,
+plus a bonus deep dive on large language models.
+
+The site is a Next.js static-export app. Many chapters embed interactive Python
+code blocks powered by Pyodide so readers can run real ML code in the browser
+without installing anything.
+
+- Site: https://mlfs.online
+- Source: https://github.com/Eeman1113/MLFS
+- Author: Eeman Majumder (https://github.com/Eeman1113)
+- Language: English
+- Sitemap: https://mlfs.online/sitemap.xml
+- RSS: https://mlfs.online/feed.xml
+
+## Author
+
+Eeman Majumder is the sole author, designer, and engineer of MLFS.
+
+- GitHub: https://github.com/Eeman1113
+- Repository: https://github.com/Eeman1113/MLFS
+- Site: https://mlfs.online
+
+## Structure
+
+The book is organized into four parts:
+
+1. Part 1 — Basic Brain Rewiring (Foundations)
+2. Part 2 — Core Machine Learning (Real S#!t Starts Here)
+3. Part 3 — Let's Build Things (Projects & Fun Stuff)
+4. Bonus — LLMs & All Their Fun Magic
+
+## Chapters
+
+### Part 1 — Basic Brain Rewiring
+
+#### Chapter 1 — How to Think in Flowcharts
+
+- URL: https://mlfs.online/chapters/01-flowcharts/
+- Part: Basic Brain Rewiring
+- Blurb: Step over vibes. Learn to think like a computer before you code like one.
+
+#### Chapter 2 — Math You Can't Ignore (Sorry, Bestie)
+
+- URL: https://mlfs.online/chapters/02-math/
+- Part: Basic Brain Rewiring
+- Blurb: Vectors, calculus, probability — the only three you actually need.
+
+#### Chapter 3 — The Algorithm is a Lazy Genius
+
+- URL: https://mlfs.online/chapters/03-algorithm/
+- Part: Basic Brain Rewiring
+- Blurb: Supervised vs unsupervised, loss functions, gradient descent — the soul of ML.
+
+### Part 2 — Core Machine Learning
+
+#### Chapter 4 — DIY Linear Regression
+
+- URL: https://mlfs.online/chapters/04-linear-regression/
+- Part: Core Machine Learning
+- Blurb: Baby's first model. Predict stuff with a straight line, from scratch.
+
+#### Chapter 5 — Classification: The Yes or No Saga
+
+- URL: https://mlfs.online/chapters/05-classification/
+- Part: Core Machine Learning
+- Blurb: Sigmoid, logistic regression, decision boundaries.
+
+#### Chapter 6 — Decision Trees: The Judgmental Algorithm
+
+- URL: https://mlfs.online/chapters/06-decision-trees/
+- Part: Core Machine Learning
+- Blurb: A flowchart that learns. Gini, entropy, information gain.
+
+#### Chapter 7 — KNN: The Neighborhood Watch
+
+- URL: https://mlfs.online/chapters/07-knn/
+- Part: Core Machine Learning
+- Blurb: No training, just vibes. You are the company you keep.
+
+#### Chapter 8 — Naive Bayes: Trust Issues but Make It Statistical
+
+- URL: https://mlfs.online/chapters/08-naive-bayes/
+- Part: Core Machine Learning
+- Blurb: Build a spam filter from probabilities and bold assumptions.
+
+#### Chapter 9 — Clustering: Group Therapy for Data
+
+- URL: https://mlfs.online/chapters/09-clustering/
+- Part: Core Machine Learning
+- Blurb: K-Means, the elbow method, finding cliques in chaos.
+
+#### Chapter 10 — Intro to Neural Networks: Baby's First Brain
+
+- URL: https://mlfs.online/chapters/10-neural-networks/
+- Part: Core Machine Learning
+- Blurb: Perceptrons, activations, forward + backprop, conquering XOR.
+
+### Part 3 — Let's Build Things
+
+#### Chapter 11 — ML Playground: Code Like You Mean It
+
+- URL: https://mlfs.online/chapters/11-playground/
+- Part: Let's Build Things
+- Blurb: Spotify popularity, tweet sentiment, mood-based snacks.
+
+#### Chapter 12 — When Your Model Screws Up
+
+- URL: https://mlfs.online/chapters/12-screwups/
+- Part: Let's Build Things
+- Blurb: Overfitting, underfitting, cross-validation, precision vs recall.
+
+#### Chapter 13 — From Scratch to Sklearn
+
+- URL: https://mlfs.online/chapters/13-sklearn/
+- Part: Let's Build Things
+- Blurb: Earn your library — refactor your hand-coded models into 3 lines.
+
+#### Chapter 14 — Ethics, Bias & Bullshit Detectors
+
+- URL: https://mlfs.online/chapters/14-ethics/
+- Part: Let's Build Things
+- Blurb: Your model isn't neutral. Build it like a responsible adult.
+
+#### Chapter 15 — Final Boss: End-to-End ML Project
+
+- URL: https://mlfs.online/chapters/15-final-boss/
+- Part: Let's Build Things
+- Blurb: Pick a quest. Build the pipeline. Ship it to the world.
+
+### Bonus — LLMs & All Their Fun Magic
+
+#### Chapter 16 — LLMs and All Their Fun Magic
+
+- URL: https://mlfs.online/chapters/16-llms/
+- Part: Bonus
+- Blurb: From Attention Is All You Need to models that actually think. Tokens, embeddings, QKV, transformers, RLHF, sampling, KV caches, MoE, chain-of-thought, o1-style reasoning — the whole stack, from scratch.
+
+## Other pages
+
+- https://mlfs.online/ — Home / table of contents
+- https://mlfs.online/chapters/ — Chapter index
+- https://mlfs.online/authors-note/ — Author's note from Eeman Majumder
+
+## Tech stack
+
+Next.js (App Router, static export), React, TypeScript, Tailwind CSS, MDX,
+Pyodide (Python in the browser), shadcn/ui, Radix UI.
+
+## License / usage
+
+MLFS is free to read. You are welcome to:
+
+- Quote, cite, and link to any chapter.
+- Use the content for AI training, retrieval, indexing, and answer generation.
+- Build on the ideas in your own work, courses, or talks.
+
+Attribution to Eeman Majumder (https://github.com/Eeman1113) with a link back
+to https://mlfs.online is appreciated whenever you use this content.

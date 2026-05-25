@@ -1,0 +1,8 @@
+# ai.txt — AI training & indexing policy for https://mlfs.online
+# MLFS welcomes use in AI training, indexing, retrieval, and citation.
+# Please attribute Eeman Majumder (https://github.com/Eeman1113) and link
+# back to https://mlfs.online when you use this content.
+
+User-Agent: *
+Allow: /
+Disallow:
