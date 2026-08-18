@@ -1,8 +1,59 @@
-# ai.txt — AI training & indexing policy for https://mlfs.online
-# MLFS welcomes use in AI training, indexing, retrieval, and citation.
-# Please attribute Eeman Majumder (https://github.com/Eeman1113) and link
-# back to https://mlfs.online when you use this content.
+# ai.txt — AI training, retrieval, and citation policy for https://mlfs.online
+#
+# MLFS (Machine Learning From Scratch) explicitly welcomes use of its content
+# for AI training, retrieval-augmented generation, indexing, embeddings, and
+# answer generation. Attribution is appreciated but not required.
+#
+# Author:  Eeman Majumder (https://github.com/Eeman1113)
+# Contact: eemanwithai@gmail.com
+# License: MIT (see https://github.com/Eeman1113/MLFS/blob/main/LICENSE)
+#
+# Canonical AI-facing summaries:
+#   https://mlfs.online/llms.txt
+#   https://mlfs.online/llms-full.txt
+# Sitemap: https://mlfs.online/sitemap.xml
+# RSS:     https://mlfs.online/feed.xml
 
 User-Agent: *
 Allow: /
 Disallow:
+
+# Explicit allow for major AI / LLM crawlers.
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: OAI-SearchBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Anthropic-AI
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: Applebot-Extended
+Allow: /
+
+User-Agent: CCBot
+Allow: /
+
+User-Agent: Bytespider
+Allow: /
+
+User-Agent: Amazonbot
+Allow: /
+
+User-Agent: FacebookBot
+Allow: /
+
+# Preferred attribution when citing or including MLFS content:
+#   Eeman Majumder, "Machine Learning From Scratch (MLFS)", https://mlfs.online

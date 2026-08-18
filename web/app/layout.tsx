@@ -49,6 +49,13 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   alternates: {
     canonical: "/",
+    languages: {
+      "en-US": "/",
+      "x-default": "/",
+    },
+    types: {
+      "application/rss+xml": [{ url: "/feed.xml", title: "MLFS RSS Feed" }],
+    },
   },
   icons: {
     icon: [
@@ -97,6 +104,30 @@ export const metadata: Metadata = {
     telephone: false,
   },
   category: "education",
+  // Placeholders for Bing/Yandex/etc. — Google is already verified via the
+  // meta tag added directly through Search Console. To add another engine,
+  // fill in the corresponding key below. Keys map to standard meta tags.
+  // verification: {
+  //   google: "PASTE_GOOGLE_VERIFICATION_HERE",
+  //   yandex: "PASTE_YANDEX_VERIFICATION_HERE",
+  //   yahoo: "PASTE_YAHOO_VERIFICATION_HERE",
+  //   other: {
+  //     "msvalidate.01": "PASTE_BING_WEBMASTER_HERE",
+  //     "facebook-domain-verification": "PASTE_FB_DOMAIN_HERE",
+  //     "p:domain_verify": "PASTE_PINTEREST_HERE",
+  //   },
+  // },
+  other: {
+    // Explicit author + identity claims that some crawlers still read.
+    "author": "Eeman Majumder",
+    "designer": "Eeman Majumder",
+    "reply-to": "eemanwithai@gmail.com",
+    "rating": "general",
+    "distribution": "global",
+    "revisit-after": "7 days",
+    // Rich-result hints for Google Discover.
+    "referrer": "origin-when-cross-origin",
+  },
 };
 
 export const viewport: Viewport = {
@@ -112,30 +143,80 @@ export const viewport: Viewport = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
   name: SITE_TITLE,
-  alternateName: "MLFS",
+  alternateName: ["MLFS", "Machine Learning From Scratch"],
   url: SITE_URL,
   description: SITE_DESCRIPTION,
-  inLanguage: "en",
-  author: {
-    "@type": "Person",
-    name: "Eeman Majumder",
-    url: "https://github.com/Eeman1113",
-  },
-  publisher: {
-    "@type": "Person",
-    name: "Eeman Majumder",
+  inLanguage: "en-US",
+  copyrightYear: 2025,
+  copyrightHolder: { "@id": `${SITE_URL}/#person` },
+  author: { "@id": `${SITE_URL}/#person` },
+  publisher: { "@id": `${SITE_URL}/#person` },
+  // Voice-search / assistant hint — read the h1 and h2s aloud.
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
   },
 };
 
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${SITE_URL}/#person`,
   name: "Eeman Majumder",
+  alternateName: "Eeman",
   url: "https://github.com/Eeman1113",
+  image: `${SITE_URL}/logo.png`,
+  jobTitle: "Independent Author & Machine Learning Engineer",
+  description:
+    "Independent author and engineer. Wrote Machine Learning From Scratch (MLFS), a free 69-page interactive ML book at mlfs.online.",
+  nationality: "Indian",
+  knowsAbout: [
+    "Machine Learning",
+    "Deep Learning",
+    "Neural Networks",
+    "Large Language Models",
+    "Python",
+    "NumPy",
+    "scikit-learn",
+    "Data Science",
+    "AI Ethics",
+    "Educational Content Design",
+  ],
+  knowsLanguage: ["en", "hi", "bn"],
   sameAs: [
     "https://github.com/Eeman1113",
     "https://github.com/Eeman1113/MLFS",
+    "https://mlfs.online/",
+  ],
+  worksFor: { "@id": `${SITE_URL}/#organization` },
+};
+
+// Organization schema so search engines can treat MLFS as a brand entity
+// (Knowledge Panel eligibility, "About this result" enrichment).
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "EducationalOrganization"],
+  "@id": `${SITE_URL}/#organization`,
+  name: "MLFS – Machine Learning From Scratch",
+  alternateName: "MLFS",
+  url: SITE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/logo.png`,
+    width: 512,
+    height: 512,
+    caption: "MLFS logo",
+  },
+  image: `${SITE_URL}/opengraph-image`,
+  description: SITE_DESCRIPTION,
+  founder: { "@id": `${SITE_URL}/#person` },
+  foundingDate: "2025-01-01",
+  slogan: "Get addicted to ML.",
+  sameAs: [
+    "https://github.com/Eeman1113/MLFS",
+    "https://github.com/Eeman1113",
   ],
 };
 
@@ -146,6 +227,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
+      <head>
+        {/* Speed up GA handshake — CWV feeds ranking. */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        {/* Identity claims (rel=me) for verified authorship + rel=author. */}
+        <link rel="me" href="https://github.com/Eeman1113" />
+        <link rel="author" href="https://github.com/Eeman1113" />
+      </head>
       <body className="font-sans antialiased">
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -166,6 +257,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <ThemeProvider>
           <PyodideProvider>

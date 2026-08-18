@@ -43,6 +43,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    // Downloadable book — exposed so Google's file indexing can pick it up.
+    {
+      url: `${SITE_URL}/MLFS.pdf`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
+    // AI-friendly summaries — help LLM crawlers discover the canonical summary.
+    {
+      url: `${SITE_URL}/llms.txt`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${SITE_URL}/llms-full.txt`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
   ];
 
   const chapterEntries: SitemapEntry[] = CHAPTERS.map((chapter) => ({

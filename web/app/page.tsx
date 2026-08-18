@@ -79,11 +79,18 @@ const TEACHES_SKILLS = [
 const BOOK_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Book",
+  "@id": "https://mlfs.online/#book",
   name: "Machine Learning From Scratch",
-  alternateName: "MLFS",
+  alternateName: ["MLFS", "Machine Learning From Scratch by Eeman Majumder"],
   url: "https://mlfs.online/",
+  mainEntityOfPage: "https://mlfs.online/",
+  identifier: [
+    { "@type": "PropertyValue", propertyID: "URL", value: "https://mlfs.online/" },
+    { "@type": "PropertyValue", propertyID: "GitHub", value: "Eeman1113/MLFS" },
+  ],
   author: {
     "@type": "Person",
+    "@id": "https://mlfs.online/#person",
     name: "Eeman Majumder",
     url: "https://github.com/Eeman1113",
     sameAs: ["https://github.com/Eeman1113"],
@@ -93,34 +100,105 @@ const BOOK_JSONLD = {
   bookEdition: "First Edition",
   numberOfPages: 69,
   isAccessibleForFree: true,
+  isFamilyFriendly: true,
+  license: "https://opensource.org/licenses/MIT",
   genre: ["Technology", "Education", "Machine Learning"],
+  keywords:
+    "machine learning, ml from scratch, python machine learning, neural networks, deep learning, LLMs, free ML book, interactive ML, beginner machine learning",
   description:
     "A hands-on, no-fluff introduction to ML in just 69 pages. Interactive demos for linear regression, decision trees, KNN, naive Bayes, clustering, neural networks, ethics, end-to-end projects, and LLMs.",
   abstract:
     "Machine Learning From Scratch is an irreverent, beginner-friendly book and interactive website that gets you from zero to building real ML models — fast.",
   image: "https://mlfs.online/opengraph-image",
-  publisher: { "@type": "Person", name: "Eeman Majumder" },
+  thumbnailUrl: "https://mlfs.online/logo.png",
+  publisher: {
+    "@type": "Person",
+    "@id": "https://mlfs.online/#person",
+    name: "Eeman Majumder",
+  },
   datePublished: "2025-01-01",
   dateModified: "2026-05-25",
   copyrightYear: 2025,
   copyrightHolder: {
     "@type": "Person",
+    "@id": "https://mlfs.online/#person",
     name: "Eeman Majumder",
     url: "https://github.com/Eeman1113",
   },
   learningResourceType: "Book",
   educationalLevel: "Beginner",
+  educationalUse: ["self-study", "reference", "supplementary reading"],
   audience: {
-    "@type": "Audience",
+    "@type": "EducationalAudience",
+    educationalRole: "student",
     audienceType: "students, self-learners, software engineers",
   },
   teaches: TEACHES_SKILLS,
   timeRequired: "PT10H",
+  // Alternate editions / channels — helps Google connect the dots.
+  workExample: [
+    {
+      "@type": "Book",
+      bookFormat: "https://schema.org/EBook",
+      encodingFormat: "application/pdf",
+      name: "MLFS – Machine Learning From Scratch (PDF)",
+      url: "https://drive.google.com/file/d/1AKPArWSJqyYRjcUFYKzgzcgQ3A20FA4M/view",
+      inLanguage: "en",
+      isAccessibleForFree: true,
+    },
+    {
+      "@type": "CreativeWork",
+      name: "MLFS Source Code Repository",
+      url: "https://github.com/Eeman1113/MLFS",
+      inLanguage: "en",
+      isAccessibleForFree: true,
+    },
+    {
+      "@type": "CreativeWork",
+      name: "MLFS Flipbook",
+      url: "https://mlfs.online/backup_index.html",
+      inLanguage: "en",
+      isAccessibleForFree: true,
+    },
+  ],
   hasPart: CHAPTER_PARTS.map((c) => ({
     "@type": "Chapter",
     name: c.name,
     url: `https://mlfs.online/chapters/${c.slug}/`,
+    isPartOf: { "@id": "https://mlfs.online/#book" },
   })),
+};
+
+const ARTICLE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": ["Article", "LearningResource"],
+  headline: "Introduction – Get addicted to ML",
+  name: "Introduction – Machine Learning From Scratch",
+  description:
+    "A 69-page book that gets you addicted to machine learning. Read the introduction by Eeman Majumder — irreverent, beginner-friendly, free.",
+  url: "https://mlfs.online/",
+  mainEntityOfPage: "https://mlfs.online/",
+  image: "https://mlfs.online/opengraph-image",
+  author: { "@id": "https://mlfs.online/#person" },
+  publisher: { "@id": "https://mlfs.online/#organization" },
+  datePublished: "2025-01-01",
+  dateModified: "2026-05-25",
+  inLanguage: "en",
+  isPartOf: { "@id": "https://mlfs.online/#book" },
+  isAccessibleForFree: true,
+  learningResourceType: "Introduction",
+  educationalLevel: "Beginner",
+  audience: {
+    "@type": "EducationalAudience",
+    educationalRole: "student",
+  },
+  teaches: TEACHES_SKILLS,
+  keywords:
+    "machine learning book, ml from scratch, learn machine learning, ML for beginners, Eeman Majumder, MLFS, free ML book, interactive ML, python machine learning",
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "h2"],
+  },
 };
 
 const COURSE_JSONLD = {
@@ -250,6 +328,10 @@ export default function Home() {
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(COURSE_JSONLD) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
           />
           <script
             type="application/ld+json"
